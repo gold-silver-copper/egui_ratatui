@@ -56,6 +56,7 @@ impl eframe::egui::Widget for &mut RataguiBackend {
         let av_size = ui.available_size_before_wrap();
         let av_width = av_size.x;
         let av_height = av_size.y;
+        //
         // println!("AV WIDTH IS {:#?}", av_width);
         //  println!("AV height IS {:#?}", av_height);
         let char_height = self.get_font_size() as f32;
