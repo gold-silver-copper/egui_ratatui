@@ -3,11 +3,11 @@ use eframe::epaint::{
     text::{LayoutJob, TextFormat},
     Color32, FontFamily, FontId, Fonts,
 };
-use ratagui::RataguiBackend;
 use ratatui::{
     prelude::{Stylize, Terminal},
     widgets::Paragraph,
 };
+use ratframe::RataguiBackend;
 
 pub fn main() {
     let options = eframe::NativeOptions {

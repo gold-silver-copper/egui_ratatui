@@ -21,7 +21,15 @@ name = "hello_world_minimum"
 doc-scrape-examples = true
 
 [[example]]
+name = "hello_world_web"
+doc-scrape-examples = true
+
+[[example]]
 name = "demo"
+doc-scrape-examples = true
+
+[[example]]
+name = "multi"
 doc-scrape-examples = true
 
 

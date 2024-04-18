@@ -10,8 +10,8 @@ use eframe::epaint::{
     Color32, FontFamily, FontId, Fonts,
 };
 
-use ratagui::*;
 use ratatui::prelude::*;
+use ratframe::*;
 
 use crate::{app::App, ui};
 
