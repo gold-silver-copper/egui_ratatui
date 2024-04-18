@@ -14,10 +14,15 @@ targets = ["x86_64-unknown-linux-gnu", "wasm32-unknown-unknown"]
 once_cell = { version = "1.19.0" }
 rand = { version = "0.8.5", default-features = false, features = ["small_rng"] }
 argh = "0.1.12"
+itertools = "0.12.1"
 
 
 [[example]]
 name = "hello_world_minimum"
+doc-scrape-examples = true
+
+[[example]]
+name = "colors_web"
 doc-scrape-examples = true
 
 [[example]]
@@ -49,6 +54,7 @@ log = "0.4"
 
 # You only need serde if you want app persistence:
 serde = { version = "1", features = ["derive"] }
+
 
 # native:
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]

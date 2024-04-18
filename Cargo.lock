@@ -2141,6 +2141,7 @@ dependencies = [
  "eframe",
  "egui",
  "env_logger",
+ "itertools",
  "log",
  "once_cell",
  "rand",
