@@ -30,11 +30,7 @@ name = "hello_world_web"
 doc-scrape-examples = true
 
 [[example]]
-name = "demo"
-doc-scrape-examples = true
-
-[[example]]
-name = "multi"
+name = "demo_web"
 doc-scrape-examples = true
 
 

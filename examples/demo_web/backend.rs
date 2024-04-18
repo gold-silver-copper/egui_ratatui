@@ -11,15 +11,6 @@ use ratframe::*;
 
 use crate::{app::RatApp, ui};
 
-pub fn run(tick_rate: Duration, enhanced_graphics: bool) -> Result<(), Box<dyn Error>> {
-    // create app and run it
-    //
-
-    let res = run_app();
-
-    Ok(())
-}
-
 pub struct DemoApp {
     terminal: Terminal<RataguiBackend>,
     app: RatApp<'static>,
@@ -88,18 +79,6 @@ impl eframe::App for DemoApp {
             panic!("a wonderful way to quit");
         }
     }
-}
-fn run_app() {
-    let options = eframe::NativeOptions {
-        viewport: egui::ViewportBuilder::default().with_inner_size([1000.0, 800.0]),
-        ..Default::default()
-    };
-    eframe::run_native(
-        "egui example: custom font",
-        options,
-        Box::new(|cc| Box::new(DemoApp::new(cc))),
-    );
-    ()
 }
 
 fn setup_custom_fonts(ctx: &egui::Context) {

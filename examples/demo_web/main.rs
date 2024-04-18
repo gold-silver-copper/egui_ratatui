@@ -24,7 +24,7 @@ use argh::FromArgs;
 mod app;
 
 mod backend;
-use backend::run;
+pub use crate::backend::DemoApp;
 
 mod ui;
 
@@ -49,7 +49,7 @@ fn main() -> eframe::Result<()> {
     eframe::run_native(
         "gold silver copper",
         native_options,
-        Box::new(|cc| Box::new(DemoApp::new(cc))),
+        Box::new(|cc| Box::new(crate::backend::DemoApp::new(cc))),
     )
 }
 
@@ -66,7 +66,7 @@ fn main() {
             .start(
                 "the_canvas_id", // hardcode it
                 web_options,
-                Box::new(|cc| Box::new(ratframe::DemoApp::new(cc))),
+                Box::new(|cc| Box::new(crate::backend::DemoApp::new(cc))),
             )
             .await
             .expect("failed to start eframe");
