@@ -30,17 +30,35 @@ impl HelloApp {
 impl eframe::App for HelloApp {
     /// Called each time the UI needs repainting, which may be many times per second.
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
-        // Put your widgets into a `SidePanel`, `TopBottomPanel`, `CentralPanel`, `Window` or `Area`.
-        // For inspiration and more examples, go to https://emilk.github.io/egui
+        ctx.request_repaint();
+        self.terminal
+            .draw(|frame| {
+                let area = frame.size();
+                frame.render_widget(Paragraph::new("Hello Rataguiii").white().on_blue(), area);
+            })
+            .expect("epic fail");
 
         egui::CentralPanel::default().show(ctx, |ui| {
-            // The central panel the region left after adding TopPanel's and SidePanel's
-            ui.heading("eframe Hello");
-
-            ui.horizontal(|ui| {
-                ui.label("Write something: ");
-                ui.add(self.terminal.backend_mut());
-            });
+            ui.add(self.terminal.backend_mut());
+            if ui.input(|i| i.key_released(egui::Key::H)) {
+                ()
+            }
+            if ui.input(|i| i.key_released(egui::Key::K)) {
+                ()
+            }
+            if ui.input(|i| i.key_released(egui::Key::L)) {
+                ()
+            }
+            if ui.input(|i| i.key_released(egui::Key::J)) {
+                ()
+            }
+            if ui.input(|i| i.key_released(egui::Key::Q)) {
+                panic!("HAVE A NICE WEEK");
+            }
+            if ui.input(|i| i.key_released(egui::Key::T)) {
+                ()
+            }
+            //KeyCode::Char(c) => app.on_key(c),
         });
     }
 }
