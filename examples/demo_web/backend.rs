@@ -1,8 +1,5 @@
-use std::{
-    error::Error,
-    io,
-    time::{Duration, Instant},
-};
+use std::{error::Error, io};
+use web_time::{Duration, Instant, SystemTime};
 
 use eframe::egui::{self, Context, Label};
 

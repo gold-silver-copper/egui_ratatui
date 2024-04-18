@@ -9,7 +9,7 @@ use eframe::epaint::{
 };
 use ratatui::style::{Color, Modifier};
 use std::io;
-use std::time::Instant;
+use web_time::{Instant, SystemTime};
 
 use ratatui::{
     backend::{Backend, ClearType, WindowSize},
