@@ -40,18 +40,7 @@ impl eframe::App for HelloApp {
 
         egui::CentralPanel::default().show(ctx, |ui| {
             ui.add(self.terminal.backend_mut());
-            if ui.input(|i| i.key_released(egui::Key::H)) {
-                ()
-            }
-            if ui.input(|i| i.key_released(egui::Key::K)) {
-                ()
-            }
-            if ui.input(|i| i.key_released(egui::Key::L)) {
-                ()
-            }
-            if ui.input(|i| i.key_released(egui::Key::J)) {
-                ()
-            }
+
             if ui.input(|i| i.key_released(egui::Key::Q)) {
                 panic!("HAVE A NICE WEEK");
             }
