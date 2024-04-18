@@ -37,15 +37,18 @@ pub struct RataguiBackend {
 impl eframe::egui::Widget for &mut RataguiBackend {
     fn ui(self, ui: &mut Ui) -> Response {
         let elpsd = self.timestamp.elapsed().as_millis();
-        let e_rate = (elpsd / 300);
+        let e_rate = (elpsd / 2000);
         if e_rate == 0 {
+            self.set_font_size(20);
             self.blinking_fast = false;
             self.blinking_slow = false;
         }
         if e_rate == 1 {
+            self.set_font_size(10);
             self.blinking_fast = true;
         }
         if e_rate == 2 {
+            self.set_font_size(5);
             self.blinking_slow = true;
             self.blinking_fast = false;
         }
@@ -61,10 +64,12 @@ impl eframe::egui::Widget for &mut RataguiBackend {
         //  println!("AV height IS {:#?}", av_height);
         let char_height = self.get_font_size() as f32;
         let char_width = ui.fonts(|fx| self.get_font_width(fx));
+
+        let ratio = 1.26992;
         //I am not sure why but if i dont subtract by 4 here the rendering breaks lol ,,, fixed?
         let available_chars_width = (av_width / (char_width)) as u16;
         //I am not sure why but if i dont multiply it by 1.15 here the rendering breaks lol ,,, not fixed...
-        let available_chars_height = (av_height / (char_height * 1.3)) as u16;
+        let available_chars_height = (av_height / (char_height * ratio)) as u16;
         let cur_size = self.size().expect("COULD NOT GET CURRENT BACKEND SIZE");
 
         if (cur_size.width != available_chars_width) || (cur_size.height != available_chars_height)
@@ -244,7 +249,7 @@ impl RataguiBackend {
         self.height = height;
     }
     pub fn get_font_width(&self, fontiki: &Fonts) -> f32 {
-        let fid = self.regular_font.clone();
+        let fid = self.bolditalic_font.clone();
         fontiki.glyph_width(&fid, 'A')
     }
 
@@ -252,9 +257,9 @@ impl RataguiBackend {
         match rat_col {
             Color::Reset => {
                 if is_a_fg {
-                    Color32::from_rgb(33, 33, 33)
+                    Color32::from_rgb(35, 33, 31)
                 } else {
-                    Color32::from_rgb(99, 99, 99)
+                    Color32::from_rgb(97, 99, 103)
                 }
             }
             Color::Black => Color32::BLACK,
@@ -262,7 +267,7 @@ impl RataguiBackend {
             Color::Green => Color32::DARK_GREEN,
             Color::Yellow => Color32::GOLD,
             Color::Blue => Color32::DARK_BLUE,
-            Color::Magenta => Color32::from_rgb(99, 0, 99),
+            Color::Magenta => Color32::from_rgb(99, 9, 99),
             Color::Cyan => Color32::BLUE,
             Color::Gray => Color32::GRAY,
             Color::DarkGray => Color32::DARK_GRAY,

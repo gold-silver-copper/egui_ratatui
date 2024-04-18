@@ -1,8 +1,5 @@
-use eframe::egui::{self, Label};
-use eframe::epaint::{
-    text::{LayoutJob, TextFormat},
-    Color32, FontFamily, FontId, Fonts,
-};
+use eframe::egui::{self};
+
 use ratatui::{
     prelude::{Stylize, Terminal},
     widgets::Paragraph,
@@ -28,6 +25,9 @@ pub fn main() {
             .expect("epic fail");
         egui::CentralPanel::default().show(ctx, |ui| {
             ui.add(terminal.backend_mut());
+            if ui.input(|i| i.key_released(egui::Key::Q)) {
+                panic!("HAVE A NICE WEEK");
+            }
         });
     })
     .expect("epic fail");
