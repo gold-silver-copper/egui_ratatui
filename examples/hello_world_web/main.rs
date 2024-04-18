@@ -2,8 +2,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")] // hide console window on Windows in release
 
 mod app;
-pub use app::TemplateApp;
-
+pub use app::HelloApp;
 
 // When compiling natively:
 #[cfg(not(target_arch = "wasm32"))]
@@ -22,9 +21,9 @@ fn main() -> eframe::Result<()> {
         ..Default::default()
     };
     eframe::run_native(
-        "eframe template",
+        "gold silver copper",
         native_options,
-        Box::new(|cc| Box::new(TemplateApp::new(cc))),
+        Box::new(|cc| Box::new(HelloApp::new(cc))),
     )
 }
 
