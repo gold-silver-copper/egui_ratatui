@@ -273,7 +273,11 @@ impl RataguiBackend {
             Color::LightMagenta => Color32::from_rgb(139, 0, 139),
             Color::LightCyan => Color32::from_rgb(224, 255, 255),
             Color::White => Color32::WHITE,
-            Color::Indexed(i) => Color32::from_rgb(i.to_owned(), i.to_owned(), i.to_owned()),
+            Color::Indexed(i) => Color32::from_rgb(
+                i.overflowing_mul(i.to_owned()).0,
+                i.overflowing_add(i.to_owned()).0,
+                i.to_owned(),
+            ),
             Color::Rgb(r, g, b) => Color32::from_rgb(r.to_owned(), g.to_owned(), b.to_owned()),
         }
     }
