@@ -220,7 +220,7 @@ pub struct Server<'a> {
     pub status: &'a str,
 }
 
-pub struct App<'a> {
+pub struct RatApp<'a> {
     pub title: &'a str,
     pub should_quit: bool,
     pub tabs: TabsState<'a>,
@@ -235,7 +235,7 @@ pub struct App<'a> {
     pub enhanced_graphics: bool,
 }
 
-impl<'a> App<'a> {
+impl<'a> RatApp<'a> {
     pub fn new(title: &'a str, enhanced_graphics: bool) -> Self {
         let mut rand_signal = RandomSignal::new(0, 100);
         let sparkline_points = rand_signal.by_ref().take(300).collect();
@@ -243,7 +243,7 @@ impl<'a> App<'a> {
         let sin1_points = sin_signal.by_ref().take(100).collect();
         let mut sin_signal2 = SinSignal::new(0.1, 2.0, 10.0);
         let sin2_points = sin_signal2.by_ref().take(200).collect();
-        App {
+        RatApp {
             title,
             should_quit: false,
             tabs: TabsState::new(vec!["Tab0", "Tab1", "Tab2"]),

@@ -20,10 +20,18 @@ struct CustomApp {
 
 impl CustomApp {
     fn new(cc: &eframe::CreationContext<'_>) -> Self {
-        //  setup_custom_fonts(&cc.egui_ctx);
+        setup_custom_fonts(&cc.egui_ctx);
 
         //Creating the Ratatui backend/ Egui widget here
-        let backend = RataguiBackend::new(100, 100);
+        //pass in font names after initializing fonts through egui
+        let backend = RataguiBackend::new_with_fonts(
+            100,
+            100,
+            "Regular".into(),
+            "Bold".into(),
+            "Oblique".into(),
+            "BoldOblique".into(),
+        );
         let mut terminal = Terminal::new(backend).unwrap();
         Self { terminal: terminal }
     }
@@ -40,24 +48,11 @@ impl eframe::App for CustomApp {
 
         egui::CentralPanel::default().show(ctx, |ui| {
             ui.add(self.terminal.backend_mut());
-            if ui.input(|i| i.key_released(egui::Key::H)) {
-                ()
-            }
-            if ui.input(|i| i.key_released(egui::Key::K)) {
-                ()
-            }
-            if ui.input(|i| i.key_released(egui::Key::L)) {
-                ()
-            }
-            if ui.input(|i| i.key_released(egui::Key::J)) {
-                ()
-            }
+
             if ui.input(|i| i.key_released(egui::Key::Q)) {
                 panic!("HAVE A NICE WEEK");
             }
-            if ui.input(|i| i.key_released(egui::Key::T)) {
-                ()
-            }
+
             //KeyCode::Char(c) => app.on_key(c),
         });
     }
@@ -73,4 +68,49 @@ fn run_app() {
         Box::new(|cc| Box::new(CustomApp::new(cc))),
     );
     ()
+}
+
+fn setup_custom_fonts(ctx: &egui::Context) {
+    // Start with the default fonts (we will be adding to them rather than replacing them).
+    let mut fonts = egui::FontDefinitions::default();
+
+    // Install my own font (maybe supporting non-latin characters).
+    // .ttf and .otf files supported.
+    fonts.font_data.insert(
+        "Regular".to_owned(),
+        egui::FontData::from_static(include_bytes!("../../assets/fonts/Iosevka-Regular.ttf")),
+    );
+    fonts.families.insert(
+        egui::FontFamily::Name("Regular".into()),
+        vec!["Regular".to_owned()],
+    );
+    fonts.font_data.insert(
+        "Bold".to_owned(),
+        egui::FontData::from_static(include_bytes!("../../assets/fonts/Iosevka-Bold.ttf")),
+    );
+    fonts.families.insert(
+        egui::FontFamily::Name("Bold".into()),
+        vec!["Bold".to_owned()],
+    );
+
+    fonts.font_data.insert(
+        "Oblique".to_owned(),
+        egui::FontData::from_static(include_bytes!("../assets/fonts/Iosevka-Oblique.ttf")),
+    );
+    fonts.families.insert(
+        egui::FontFamily::Name("Oblique".into()),
+        vec!["Oblique".to_owned()],
+    );
+
+    fonts.font_data.insert(
+        "BoldOblique".to_owned(),
+        egui::FontData::from_static(include_bytes!("../assets/fonts/Iosevka-BoldOblique.ttf")),
+    );
+    fonts.families.insert(
+        egui::FontFamily::Name("BoldOblique".into()),
+        vec!["BoldOblique".to_owned()],
+    );
+
+    // Tell egui to use these fonts:
+    ctx.set_fonts(fonts);
 }

@@ -5,15 +5,11 @@ use std::{
 };
 
 use eframe::egui::{self, Context, Label};
-use eframe::epaint::{
-    text::{LayoutJob, TextFormat},
-    Color32, FontFamily, FontId, Fonts,
-};
 
 use ratatui::prelude::*;
 use ratframe::*;
 
-use crate::{app::App, ui};
+use crate::{app::RatApp, ui};
 
 pub fn run(tick_rate: Duration, enhanced_graphics: bool) -> Result<(), Box<dyn Error>> {
     // create app and run it
@@ -24,15 +20,15 @@ pub fn run(tick_rate: Duration, enhanced_graphics: bool) -> Result<(), Box<dyn E
     Ok(())
 }
 
-struct MyApp {
+pub struct DemoApp {
     terminal: Terminal<RataguiBackend>,
-    app: App<'static>,
+    app: RatApp<'static>,
     tick_rate: Duration,
     last_tick: Instant,
 }
 
-impl MyApp {
-    fn new(cc: &eframe::CreationContext<'_>) -> Self {
+impl DemoApp {
+    pub fn new(cc: &eframe::CreationContext<'_>) -> Self {
         setup_custom_fonts(&cc.egui_ctx);
         // setup terminal
 
@@ -47,13 +43,13 @@ impl MyApp {
         let mut terminal = Terminal::new(backend).unwrap();
         Self {
             terminal: terminal,
-            app: App::new("WASM Demo", true),
+            app: RatApp::new("WASM Demo", true),
             tick_rate: Duration::from_millis(80),
             last_tick: Instant::now(),
         }
     }
 }
-impl eframe::App for MyApp {
+impl eframe::App for DemoApp {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         ctx.request_repaint();
         self.terminal.draw(|f| ui::draw(f, &mut self.app));
@@ -101,7 +97,7 @@ fn run_app() {
     eframe::run_native(
         "egui example: custom font",
         options,
-        Box::new(|cc| Box::new(MyApp::new(cc))),
+        Box::new(|cc| Box::new(DemoApp::new(cc))),
     );
     ()
 }

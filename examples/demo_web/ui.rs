@@ -4,9 +4,9 @@ use ratatui::{
     widgets::{canvas::*, *},
 };
 
-use crate::app::App;
+use crate::app::RatApp;
 
-pub fn draw(f: &mut Frame, app: &mut App) {
+pub fn draw(f: &mut Frame, app: &mut RatApp) {
     let chunks = Layout::vertical([Constraint::Length(3), Constraint::Min(0)]).split(f.size());
     let tabs = app
         .tabs
@@ -26,7 +26,7 @@ pub fn draw(f: &mut Frame, app: &mut App) {
     };
 }
 
-fn draw_first_tab(f: &mut Frame, app: &mut App, area: Rect) {
+fn draw_first_tab(f: &mut Frame, app: &mut RatApp, area: Rect) {
     let chunks = Layout::vertical([
         Constraint::Length(9),
         Constraint::Min(8),
@@ -38,7 +38,7 @@ fn draw_first_tab(f: &mut Frame, app: &mut App, area: Rect) {
     draw_text(f, chunks[2]);
 }
 
-fn draw_gauges(f: &mut Frame, app: &mut App, area: Rect) {
+fn draw_gauges(f: &mut Frame, app: &mut RatApp, area: Rect) {
     let chunks = Layout::vertical([
         Constraint::Length(2),
         Constraint::Length(3),
@@ -87,7 +87,7 @@ fn draw_gauges(f: &mut Frame, app: &mut App, area: Rect) {
 }
 
 #[allow(clippy::too_many_lines)]
-fn draw_charts(f: &mut Frame, app: &mut App, area: Rect) {
+fn draw_charts(f: &mut Frame, app: &mut RatApp, area: Rect) {
     let constraints = if app.show_chart {
         vec![Constraint::Percentage(50), Constraint::Percentage(50)]
     } else {
@@ -264,7 +264,7 @@ fn draw_text(f: &mut Frame, area: Rect) {
     f.render_widget(paragraph, area);
 }
 
-fn draw_second_tab(f: &mut Frame, app: &mut App, area: Rect) {
+fn draw_second_tab(f: &mut Frame, app: &mut RatApp, area: Rect) {
     let chunks =
         Layout::horizontal([Constraint::Percentage(30), Constraint::Percentage(70)]).split(area);
     let up_style = Style::default().fg(Color::Green);
@@ -350,7 +350,7 @@ fn draw_second_tab(f: &mut Frame, app: &mut App, area: Rect) {
     f.render_widget(map, chunks[1]);
 }
 
-fn draw_third_tab(f: &mut Frame, _app: &mut App, area: Rect) {
+fn draw_third_tab(f: &mut Frame, _app: &mut RatApp, area: Rect) {
     let chunks = Layout::horizontal([Constraint::Ratio(1, 2), Constraint::Ratio(1, 2)]).split(area);
     let colors = [
         Color::Reset,
