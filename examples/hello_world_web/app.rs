@@ -9,6 +9,7 @@ pub struct TemplateApp {
     value: f32,
 }
 
+//l
 impl Default for TemplateApp {
     fn default() -> Self {
         Self {
