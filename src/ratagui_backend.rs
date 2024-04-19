@@ -10,7 +10,7 @@ use eframe::epaint::{
 use ratatui::style::{Color, Modifier};
 use std::f32::INFINITY;
 use std::io;
-use web_time::{Instant, SystemTime};
+use web_time::Instant;
 
 use ratatui::{
     backend::{Backend, ClearType, WindowSize},
@@ -91,7 +91,7 @@ impl eframe::egui::Widget for &mut RataguiBackend {
         for y in 0..available_chars_height {
             let mut job = LayoutJob {
                 wrap: singular_wrapping.to_owned(),
-                halign: egui::Align::Min,
+                //       halign: egui::Align::Min,
                 ..Default::default()
             };
             for x in 0..available_chars_width {
@@ -163,7 +163,7 @@ impl eframe::egui::Widget for &mut RataguiBackend {
                     background: tf_bg_color,
                     strikethrough: tf_stroke,
                     underline: tf_underline,
-                    valign: egui::Align::Min,
+                    //     valign: egui::Align::Min,
                     //  line_height: Some(char_height - 0.01),
                     ..Default::default()
                 };
