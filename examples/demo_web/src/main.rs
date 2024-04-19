@@ -76,7 +76,7 @@ fn setup_custom_fonts(ctx: &egui::Context) {
     // .ttf and .otf files supported.
     fonts.font_data.insert(
         "Regular".to_owned(),
-        egui::FontData::from_static(include_bytes!("../../assets/fonts/Iosevka-Regular.ttf")),
+        egui::FontData::from_static(include_bytes!("../../../assets/fonts/Iosevka-Regular.ttf")),
     );
     fonts.families.insert(
         egui::FontFamily::Name("Regular".into()),
@@ -84,7 +84,7 @@ fn setup_custom_fonts(ctx: &egui::Context) {
     );
     fonts.font_data.insert(
         "Bold".to_owned(),
-        egui::FontData::from_static(include_bytes!("../../assets/fonts/Iosevka-Bold.ttf")),
+        egui::FontData::from_static(include_bytes!("../../../assets/fonts/Iosevka-Bold.ttf")),
     );
     fonts.families.insert(
         egui::FontFamily::Name("Bold".into()),
@@ -93,7 +93,7 @@ fn setup_custom_fonts(ctx: &egui::Context) {
 
     fonts.font_data.insert(
         "Oblique".to_owned(),
-        egui::FontData::from_static(include_bytes!("../../assets/fonts/Iosevka-Oblique.ttf")),
+        egui::FontData::from_static(include_bytes!("../../../assets/fonts/Iosevka-Oblique.ttf")),
     );
     fonts.families.insert(
         egui::FontFamily::Name("Oblique".into()),
@@ -102,7 +102,9 @@ fn setup_custom_fonts(ctx: &egui::Context) {
 
     fonts.font_data.insert(
         "BoldOblique".to_owned(),
-        egui::FontData::from_static(include_bytes!("../../assets/fonts/Iosevka-BoldOblique.ttf")),
+        egui::FontData::from_static(include_bytes!(
+            "../../../assets/fonts/Iosevka-BoldOblique.ttf"
+        )),
     );
     fonts.families.insert(
         egui::FontFamily::Name("BoldOblique".into()),
