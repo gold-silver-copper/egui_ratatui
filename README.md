@@ -58,7 +58,7 @@ pub fn main() {
 }
 ```
 
-the rest is just eframe template docs I don't feel like deleting :D
+the rest is eframe template docs
 
 ## Getting started
 
