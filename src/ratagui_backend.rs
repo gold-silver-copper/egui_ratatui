@@ -8,6 +8,7 @@ use eframe::epaint::{
     Color32, FontFamily, FontId, Fonts,
 };
 use ratatui::style::{Color, Modifier};
+use std::f32::INFINITY;
 use std::io;
 use web_time::{Instant, SystemTime};
 
@@ -36,6 +37,8 @@ pub struct RataguiBackend {
 }
 impl eframe::egui::Widget for &mut RataguiBackend {
     fn ui(self, ui: &mut Ui) -> Response {
+        ui.spacing_mut().item_spacing.x = 0.0;
+        ui.spacing_mut().item_spacing.y = 0.0;
         let elpsd = self.timestamp.elapsed().as_millis();
         let e_rate = (elpsd / 300);
         if e_rate == 0 {
@@ -78,9 +81,19 @@ impl eframe::egui::Widget for &mut RataguiBackend {
         }
         let cur_buf = self.buffer();
 
-        let mut job = LayoutJob::default();
+        let singular_wrapping = TextWrapping {
+            max_width: INFINITY,
+            max_rows: 1,
+            break_anywhere: true,
+            overflow_character: None,
+        };
 
         for y in 0..available_chars_height {
+            let mut job = LayoutJob {
+                wrap: singular_wrapping.to_owned(),
+                halign: egui::Align::Min,
+                ..Default::default()
+            };
             for x in 0..available_chars_width {
                 let cur_cell = cur_buf.get(x, y);
 
@@ -150,7 +163,8 @@ impl eframe::egui::Widget for &mut RataguiBackend {
                     background: tf_bg_color,
                     strikethrough: tf_stroke,
                     underline: tf_underline,
-
+                    valign: egui::Align::Min,
+                    //  line_height: Some(char_height - 0.01),
                     ..Default::default()
                 };
                 // let
@@ -160,24 +174,16 @@ impl eframe::egui::Widget for &mut RataguiBackend {
                 //NOTICE
                 //NOTICE
                 if x == (available_chars_width - 1) {
-                    job.append(
-                        "\n",
-                        0.0,
-                        TextFormat {
-                            font_id: FontId::new(0.1, FontFamily::Monospace),
-                            color: tf_fg_color,
-                            background: tf_bg_color,
+                    let boop = Label::new(job.clone());
 
-                            ..Default::default()
-                        },
-                    );
+                    ui.add(boop);
                 }
             }
         }
 
-        let boop = Label::new(job.clone());
+        let emd = Label::new("");
 
-        ui.add(boop)
+        ui.add(emd)
     }
 }
 
