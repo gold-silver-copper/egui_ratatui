@@ -1,9 +1,12 @@
 #![warn(clippy::all, rust_2018_idioms)]
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")] // hide console window on Windows in release
 
+pub trait NewCC {
+    fn new(cc: &eframe::CreationContext<'_>) -> Self;
+}
 // When compiling natively:
 #[cfg(not(target_arch = "wasm32"))]
-pub fn native_setup<T: eframe::App + Default + 'static>(eapp: T) -> eframe::Result<()> {
+pub fn native_setup<T: eframe::App + NewCC + 'static>(eapp: T) -> eframe::Result<()> {
     env_logger::init(); // Log to stderr (if you run with `RUST_LOG=debug`).
 
     let native_options = eframe::NativeOptions {
@@ -20,7 +23,7 @@ pub fn native_setup<T: eframe::App + Default + 'static>(eapp: T) -> eframe::Resu
     eframe::run_native(
         "gold silver copper",
         native_options,
-        Box::new(|cc| Box::new(T::default())),
+        Box::new(|cc| Box::new(T::new(cc))),
     )
 }
 
@@ -36,7 +39,7 @@ pub fn wasm_setup<T: eframe::App + Default + 'static>(eapp: T) {
             .start(
                 "the_canvas_id", // hardcode it
                 web_options,
-                Box::new(|cc| Box::new(T::default())),
+                Box::new(|cc| Box::new(T::new(cc))),
             )
             .await
             .expect("failed to start eframe");

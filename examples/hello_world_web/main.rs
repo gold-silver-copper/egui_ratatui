@@ -4,6 +4,8 @@ use ratatui::{
 };
 use ratframe::RataguiBackend;
 
+use ratframe::NewCC;
+
 #[cfg(not(target_arch = "wasm32"))]
 use ratframe::native_setup;
 
@@ -36,9 +38,9 @@ impl Default for HelloApp {
     }
 }
 
-impl HelloApp {
+impl NewCC for HelloApp {
     /// Called once before the first frame.
-    pub fn new(cc: &eframe::CreationContext<'_>) -> Self {
+    fn new(cc: &eframe::CreationContext<'_>) -> Self {
         Default::default()
     }
 }

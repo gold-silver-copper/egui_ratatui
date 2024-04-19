@@ -1,76 +1,167 @@
-//! # [Ratatui] Original Demo example
-//!
-//! The latest version of this example is available in the [examples] folder in the repository.
-//!
-//! Please note that the examples are designed to be run against the `main` branch of the Github
-//! repository. This means that you may not be able to compile with the latest release version on
-//! crates.io, or the one that you have installed locally.
-//!
-//! See the [examples readme] for more information on finding examples that match the version of the
-//! library you are using.
-//!
-//! [Ratatui]: https://github.com/ratatui-org/ratatui
-//! [examples]: https://github.com/ratatui-org/ratatui/blob/main/examples
-//! [examples readme]: https://github.com/ratatui-org/ratatui/blob/main/examples/README.md
+use std::{error::Error, io};
+use web_time::{Duration, Instant, SystemTime};
 
-#![warn(clippy::all, rust_2018_idioms)]
-#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")] // hide console window on Windows in release
+use eframe::egui::{self, Context, Label};
 
-pub use app::RatApp;
-use std::{error::Error, };
-use web_time::{Duration,Instant, SystemTime};
-
-
-use argh::FromArgs;
-
+use ratatui::prelude::*;
+use ratframe::*;
 mod app;
-
-mod backend;
-pub use crate::backend::DemoApp;
-
 mod ui;
 
-// When compiling natively:
+use crate::app::RatApp;
+
 #[cfg(not(target_arch = "wasm32"))]
-fn main() -> eframe::Result<()> {
-    use backend::DemoApp;
+use ratframe::native_setup;
 
-    env_logger::init(); // Log to stderr (if you run with `RUST_LOG=debug`).
-
-    let native_options = eframe::NativeOptions {
-        viewport: egui::ViewportBuilder::default()
-            .with_inner_size([400.0, 300.0])
-            .with_min_inner_size([300.0, 220.0])
-            .with_icon(
-                // NOTE: Adding an icon is optional
-                eframe::icon_data::from_png_bytes(&include_bytes!("../../assets/icon-256.png")[..])
-                    .expect("Failed to load icon"),
-            ),
-        ..Default::default()
-    };
-    eframe::run_native(
-        "gold silver copper",
-        native_options,
-        Box::new(|cc| Box::new(crate::backend::DemoApp::new(cc))),
-    )
-}
+#[cfg(target_arch = "wasm32")]
+use ratframe::wasm_setup;
 
 // When compiling to web using trunk:
 #[cfg(target_arch = "wasm32")]
 fn main() {
-    // Redirect `log` message to `console.log` and friends:
-    eframe::WebLogger::init(log::LevelFilter::Debug).ok();
+    wasm_setup(DemoApp::default());
+}
+// When compiling natively:
+#[cfg(not(target_arch = "wasm32"))]
+fn main() -> eframe::Result<()> {
+    native_setup(DemoApp::default())
+}
 
-    let web_options = eframe::WebOptions::default();
+impl eframe::App for DemoApp {
+    fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
+        ctx.request_repaint();
+        self.terminal.draw(|f| ui::draw(f, &mut self.app));
 
-    wasm_bindgen_futures::spawn_local(async {
-        eframe::WebRunner::new()
-            .start(
-                "the_canvas_id", // hardcode it
-                web_options,
-                Box::new(|cc| Box::new(crate::backend::DemoApp::new(cc))),
-            )
-            .await
-            .expect("failed to start eframe");
-    });
+        let timeout = self.tick_rate.saturating_sub(self.last_tick.elapsed());
+
+        egui::CentralPanel::default().show(ctx, |ui| {
+            ui.add(self.terminal.backend_mut());
+            if ui.input(|i| i.key_released(egui::Key::H)) {
+                self.app.on_left()
+            }
+            if ui.input(|i| i.key_released(egui::Key::K)) {
+                self.app.on_up()
+            }
+            if ui.input(|i| i.key_released(egui::Key::L)) {
+                self.app.on_right()
+            }
+            if ui.input(|i| i.key_released(egui::Key::J)) {
+                self.app.on_down()
+            }
+            if ui.input(|i| i.key_released(egui::Key::Q)) {
+                self.app.on_key('q')
+            }
+            if ui.input(|i| i.key_released(egui::Key::T)) {
+                self.app.on_key('t')
+            }
+            //KeyCode::Char(c) => app.on_key(c),
+        });
+
+        if self.last_tick.elapsed() >= timeout {
+            self.app.on_tick();
+            self.last_tick = Instant::now();
+        }
+
+        if self.app.should_quit {
+            panic!("a wonderful way to quit");
+        }
+    }
+}
+
+fn setup_custom_fonts(ctx: &egui::Context) {
+    // Start with the default fonts (we will be adding to them rather than replacing them).
+    let mut fonts = egui::FontDefinitions::default();
+
+    // Install my own font (maybe supporting non-latin characters).
+    // .ttf and .otf files supported.
+    fonts.font_data.insert(
+        "Regular".to_owned(),
+        egui::FontData::from_static(include_bytes!("../../assets/fonts/Iosevka-Regular.ttf")),
+    );
+    fonts.families.insert(
+        egui::FontFamily::Name("Regular".into()),
+        vec!["Regular".to_owned()],
+    );
+    fonts.font_data.insert(
+        "Bold".to_owned(),
+        egui::FontData::from_static(include_bytes!("../../assets/fonts/Iosevka-Bold.ttf")),
+    );
+    fonts.families.insert(
+        egui::FontFamily::Name("Bold".into()),
+        vec!["Bold".to_owned()],
+    );
+
+    fonts.font_data.insert(
+        "Oblique".to_owned(),
+        egui::FontData::from_static(include_bytes!("../../assets/fonts/Iosevka-Oblique.ttf")),
+    );
+    fonts.families.insert(
+        egui::FontFamily::Name("Oblique".into()),
+        vec!["Oblique".to_owned()],
+    );
+
+    fonts.font_data.insert(
+        "BoldOblique".to_owned(),
+        egui::FontData::from_static(include_bytes!("../../assets/fonts/Iosevka-BoldOblique.ttf")),
+    );
+    fonts.families.insert(
+        egui::FontFamily::Name("BoldOblique".into()),
+        vec!["BoldOblique".to_owned()],
+    );
+
+    // Tell egui to use these fonts:
+    ctx.set_fonts(fonts);
+}
+
+pub struct DemoApp {
+    terminal: Terminal<RataguiBackend>,
+    app: RatApp<'static>,
+    tick_rate: Duration,
+    last_tick: Instant,
+}
+
+impl NewCC for DemoApp {
+    fn new(cc: &eframe::CreationContext<'_>) -> Self {
+        setup_custom_fonts(&cc.egui_ctx);
+        // setup terminal
+
+        let backend = RataguiBackend::new_with_fonts(
+            100,
+            100,
+            "Regular".into(),
+            "Bold".into(),
+            "Oblique".into(),
+            "BoldOblique".into(),
+        );
+        let mut terminal = Terminal::new(backend).unwrap();
+        Self {
+            terminal: terminal,
+            app: RatApp::new("WASM Demo", true),
+            tick_rate: Duration::from_millis(80),
+            last_tick: Instant::now(),
+        }
+    }
+}
+
+impl Default for DemoApp {
+    fn default() -> Self {
+        //   setup_custom_fonts(&cc.egui_ctx);
+        // setup terminal
+
+        let backend = RataguiBackend::new_with_fonts(
+            100,
+            100,
+            "Regular".into(),
+            "Bold".into(),
+            "Oblique".into(),
+            "BoldOblique".into(),
+        );
+        let mut terminal = Terminal::new(backend).unwrap();
+        Self {
+            terminal: terminal,
+            app: RatApp::new("WASM Demo", true),
+            tick_rate: Duration::from_millis(80),
+            last_tick: Instant::now(),
+        }
+    }
 }
