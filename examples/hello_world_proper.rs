@@ -78,7 +78,7 @@ fn setup_custom_fonts(ctx: &egui::Context) {
     // .ttf and .otf files supported.
     fonts.font_data.insert(
         "Regular".to_owned(),
-        egui::FontData::from_static(include_bytes!("../../assets/fonts/Iosevka-Regular.ttf")),
+        egui::FontData::from_static(include_bytes!("../assets/fonts/Iosevka-Regular.ttf")),
     );
     fonts.families.insert(
         egui::FontFamily::Name("Regular".into()),
@@ -86,7 +86,7 @@ fn setup_custom_fonts(ctx: &egui::Context) {
     );
     fonts.font_data.insert(
         "Bold".to_owned(),
-        egui::FontData::from_static(include_bytes!("../../assets/fonts/Iosevka-Bold.ttf")),
+        egui::FontData::from_static(include_bytes!("../assets/fonts/Iosevka-Bold.ttf")),
     );
     fonts.families.insert(
         egui::FontFamily::Name("Bold".into()),

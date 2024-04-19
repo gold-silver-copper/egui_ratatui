@@ -37,18 +37,18 @@ pub struct RataguiBackend {
 impl eframe::egui::Widget for &mut RataguiBackend {
     fn ui(self, ui: &mut Ui) -> Response {
         let elpsd = self.timestamp.elapsed().as_millis();
-        let e_rate = (elpsd / 2000);
+        let e_rate = (elpsd / 300);
         if e_rate == 0 {
-            self.set_font_size(20);
+            // self.set_font_size(20);
             self.blinking_fast = false;
             self.blinking_slow = false;
         }
         if e_rate == 1 {
-            self.set_font_size(10);
+            //    self.set_font_size(10);
             self.blinking_fast = true;
         }
         if e_rate == 2 {
-            self.set_font_size(5);
+            //   self.set_font_size(5);
             self.blinking_slow = true;
             self.blinking_fast = false;
         }
