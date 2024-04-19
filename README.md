@@ -1,7 +1,11 @@
 # ratatui egui
+```cargo add ratframe```
 
 This repo provides the Ratagui Backend, which is also a Widget for egui. So you can have a whole ratatui terminal inside of egui. Also since egui is so WASM compatible, this means we can use this to compile ratatui to WASM !
 Look at examples, you can run the basic ones by doing
+
+
+
 ```cargo run --example hello_world_minimum```
 
 To run a web version, enter an example directory such as demo_web or colors_web , then simply execute in the directory
