@@ -1,10 +1,12 @@
 [package]
 name = "ratframe"
 version = "1.0.0"
-authors = ["meowmeow"]
+authors = ["gold-silver-copper"]
 edition = "2021"
 include = ["LICENSE-APACHE", "LICENSE-MIT", "**/*.rs", "Cargo.toml"]
 rust-version = "1.76"
+description = "WASM ratatui with egui"
+license = "MIT OR Apache-2.0"
 
 [package.metadata.docs.rs]
 all-features = true
