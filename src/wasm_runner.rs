@@ -28,7 +28,7 @@ pub fn native_setup<T: eframe::App + NewCC + 'static>(eapp: T) -> eframe::Result
 }
 
 #[cfg(target_arch = "wasm32")]
-pub fn wasm_setup<T: eframe::App + Default + 'static>(eapp: T) {
+pub fn wasm_setup<T: eframe::App + NewCC + 'static>(eapp: T) {
     // Redirect `log` message to `console.log` and friends:
     eframe::WebLogger::init(log::LevelFilter::Debug).ok();
 

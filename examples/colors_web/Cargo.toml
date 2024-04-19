@@ -26,6 +26,7 @@ once_cell = { version = "1.19.0" }
 rand = { version = "0.8.5", default-features = false, features = ["small_rng"] }
 argh = "0.1.12"
 itertools = "0.12.1"
+ratframe = { path = "../../" }
 
 # You only need serde if you want app persistence:
 serde = { version = "1", features = ["derive"] }
