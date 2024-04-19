@@ -25,7 +25,7 @@ doc-scrape-examples = true
 
 [[example]]
 name = "hello_world_proper"
-doc-scrape-examples = true
+doc-scrape-examples = false
 
 
 [lib]
