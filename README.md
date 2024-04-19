@@ -17,7 +17,7 @@ You can compile your app natively or for the web, and share it using Github Page
 
 Here is the simplest hello world
 
-```
+```rust
 use eframe::egui::{self};
 
 use ratatui::{
