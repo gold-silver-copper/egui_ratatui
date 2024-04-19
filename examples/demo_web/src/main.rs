@@ -27,6 +27,59 @@ fn main() -> eframe::Result<()> {
     native_setup(DemoApp::default())
 }
 
+pub struct DemoApp {
+    terminal: Terminal<RataguiBackend>,
+    app: RatApp<'static>,
+    tick_rate: Duration,
+    last_tick: Instant,
+}
+
+impl NewCC for DemoApp {
+    fn new(cc: &eframe::CreationContext<'_>) -> Self {
+        setup_custom_fonts(&cc.egui_ctx);
+        // setup terminal
+
+        let backend = RataguiBackend::new_with_fonts(
+            100,
+            100,
+            "Regular".into(),
+            "Bold".into(),
+            "Oblique".into(),
+            "BoldOblique".into(),
+        );
+        let mut terminal = Terminal::new(backend).unwrap();
+        Self {
+            terminal: terminal,
+            app: RatApp::new("WASM Demo", true),
+            tick_rate: Duration::from_millis(80),
+            last_tick: Instant::now(),
+        }
+    }
+}
+
+impl Default for DemoApp {
+    fn default() -> Self {
+        //   setup_custom_fonts(&cc.egui_ctx);
+        // setup terminal
+
+        let backend = RataguiBackend::new_with_fonts(
+            100,
+            100,
+            "Regular".into(),
+            "Bold".into(),
+            "Oblique".into(),
+            "BoldOblique".into(),
+        );
+        let mut terminal = Terminal::new(backend).unwrap();
+        Self {
+            terminal: terminal,
+            app: RatApp::new("WASM Demo", true),
+            tick_rate: Duration::from_millis(80),
+            last_tick: Instant::now(),
+        }
+    }
+}
+
 impl eframe::App for DemoApp {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         ctx.request_repaint();
@@ -113,57 +166,4 @@ fn setup_custom_fonts(ctx: &egui::Context) {
 
     // Tell egui to use these fonts:
     ctx.set_fonts(fonts);
-}
-
-pub struct DemoApp {
-    terminal: Terminal<RataguiBackend>,
-    app: RatApp<'static>,
-    tick_rate: Duration,
-    last_tick: Instant,
-}
-
-impl NewCC for DemoApp {
-    fn new(cc: &eframe::CreationContext<'_>) -> Self {
-        setup_custom_fonts(&cc.egui_ctx);
-        // setup terminal
-
-        let backend = RataguiBackend::new_with_fonts(
-            100,
-            100,
-            "Regular".into(),
-            "Bold".into(),
-            "Oblique".into(),
-            "BoldOblique".into(),
-        );
-        let mut terminal = Terminal::new(backend).unwrap();
-        Self {
-            terminal: terminal,
-            app: RatApp::new("WASM Demo", true),
-            tick_rate: Duration::from_millis(80),
-            last_tick: Instant::now(),
-        }
-    }
-}
-
-impl Default for DemoApp {
-    fn default() -> Self {
-        //   setup_custom_fonts(&cc.egui_ctx);
-        // setup terminal
-
-        let backend = RataguiBackend::new_with_fonts(
-            100,
-            100,
-            "Regular".into(),
-            "Bold".into(),
-            "Oblique".into(),
-            "BoldOblique".into(),
-        );
-        let mut terminal = Terminal::new(backend).unwrap();
-        Self {
-            terminal: terminal,
-            app: RatApp::new("WASM Demo", true),
-            tick_rate: Duration::from_millis(80),
-            last_tick: Instant::now(),
-        }
-    }
 }
