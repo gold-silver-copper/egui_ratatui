@@ -4,7 +4,7 @@ This repo provides the Ratagui Backend, which is also a Widget for egui. So you 
 Look at examples, you can run the basic ones by doing
 ```cargo run --example hello_world_minimum```
 
-To run a web version, enter an example such as demo_web or colors_web , then simply execute in the directory
+To run a web version, enter an example directory such as demo_web or colors_web , then simply execute in the directory
 
 ```trunk serve```
 or to build
