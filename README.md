@@ -1,13 +1,21 @@
-# eframe template
+# ratatui egui
 
-[![dependency status](https://deps.rs/repo/github/emilk/eframe_template/status.svg)](https://deps.rs/repo/github/emilk/eframe_template)
-[![Build Status](https://github.com/emilk/eframe_template/workflows/CI/badge.svg)](https://github.com/emilk/eframe_template/actions?workflow=CI)
+This repo provides the Ratagui Backend, which is also a Widget for egui. So you can have a whole ratatui terminal inside of egui. Also since egui is so WASM compatible, this means we can use this to compile ratatui to WASM !
+Look at examples, you can run the basic ones by doing
+```cargo run --example hello_world_minimum```
 
-This is a template repo for [eframe](https://github.com/emilk/egui/tree/master/crates/eframe), a framework for writing apps using [egui](https://github.com/emilk/egui/).
+To run a web version, enter an example such as demo_web or colors_web , then simply execute in the directory
 
-The goal is for this to be the simplest way to get started writing a GUI app in Rust.
+```trunk serve```
+or to build
+```trunk build --release```
+
+
+The goal is for this to be the simplest way to write a TUI app for WASM  in Rust.
 
 You can compile your app natively or for the web, and share it using Github Pages.
+
+the rest is just eframe template docs I don't feel like deleting :D
 
 ## Getting started
 
@@ -24,6 +32,9 @@ Change the name of the crate: Chose a good name for your project, and change the
 * `assets/sw.js`
   * Change the `'./eframe_template.js'` to `./your_crate.js` (in `filesToCache` array)
   * Change the `'./eframe_template_bg.wasm'` to `./your_crate_bg.wasm` (in `filesToCache` array)
+
+
+
 
 ### Learning about egui
 
