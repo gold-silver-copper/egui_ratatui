@@ -15,8 +15,11 @@ Look at examples, you can run the basic ones by doing
 To run a web version, enter an example directory such as demo_web or colors_web , then simply execute in the directory
 
 ```cd examples/demo_web```
+
 ```trunk serve```
+
 or to build
+
 ```trunk build --release```
 
 
