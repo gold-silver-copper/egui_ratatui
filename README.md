@@ -1,4 +1,9 @@
 # ratframe : egui widget + ratatui backend (WASM)
+[![Crates.io](https://img.shields.io/crates/v/ratframe.svg)](https://crates.io/crates/ratframe)
+[![Documentation](https://docs.rs/ratframe/badge.svg)](https://docs.rs/ratframe/latest/ratframe/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bevyengine/bevy/blob/master/LICENSE)
+[![Downloads](https://img.shields.io/crates/d/ratframe.svg)](https://crates.io/crates/ratframe)
+
 
 RataguiBackend is the name of the backend/widget in code
 
