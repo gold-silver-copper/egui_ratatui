@@ -1,5 +1,5 @@
 # ratframe : egui widget + ratatui backend
-works on wasm 
+works on wasm \n
 RataguiBackend is the name of the backend/widget in code
 
 ```cargo add ratframe```
