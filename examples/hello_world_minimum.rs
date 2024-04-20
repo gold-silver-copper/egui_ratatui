@@ -1,5 +1,4 @@
 use eframe::egui::{self};
-
 use ratatui::{
     prelude::{Stylize, Terminal},
     widgets::Paragraph,
@@ -11,11 +10,9 @@ pub fn main() {
         viewport: egui::ViewportBuilder::default().with_inner_size([320.0, 240.0]),
         ..Default::default()
     };
-
     let boop = RataguiBackend::new(100, 50);
     let mut terminal = Terminal::new(boop).unwrap();
     terminal.clear().expect("epic fail");
-
     eframe::run_simple_native("My egui App", options, move |ctx, _frame| {
         terminal
             .draw(|frame| {
