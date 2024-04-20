@@ -1,5 +1,7 @@
 # ratframe : egui widget + ratatui backend
 works on wasm 
+RataguiBackend is the name of the backend/widget in code
+
 ```cargo add ratframe```
 
 This repo provides the Ratagui Backend, which is also a Widget for egui. So you can have a whole ratatui terminal inside of egui. Also since egui is so WASM compatible, this means we can use this to compile ratatui to WASM !
