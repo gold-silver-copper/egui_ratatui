@@ -265,9 +265,9 @@ impl RataguiBackend {
         match rat_col {
             Color::Reset => {
                 if is_a_fg {
-                    Color32::from_rgb(35, 33, 31)
+                    Color32::from_rgb(204, 204, 255)
                 } else {
-                    Color32::from_rgb(97, 99, 103)
+                    Color32::from_rgb(15, 15, 112)
                 }
             }
             Color::Black => Color32::BLACK,
