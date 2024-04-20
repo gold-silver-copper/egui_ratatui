@@ -29,8 +29,6 @@ pub struct HelloApp {
 //l
 impl Default for HelloApp {
     fn default() -> Self {
-        //  setup_custom_fonts(&cc.egui_ctx);
-
         //Creating the Ratatui backend/ Egui widget here
         let backend = RataguiBackend::new(100, 100);
         let mut terminal = Terminal::new(backend).unwrap();
@@ -41,6 +39,7 @@ impl Default for HelloApp {
 impl NewCC for HelloApp {
     /// Called once before the first frame.
     fn new(cc: &eframe::CreationContext<'_>) -> Self {
+        //  setup_custom_fonts(&cc.egui_ctx);
         Default::default()
     }
 }
@@ -48,6 +47,7 @@ impl NewCC for HelloApp {
 impl eframe::App for HelloApp {
     /// Called each time the UI needs repainting, which may be many times per second.
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
+        //call repaint here so that app runs continuously, remove if you dont need that
         ctx.request_repaint();
         self.terminal
             .draw(|frame| {
