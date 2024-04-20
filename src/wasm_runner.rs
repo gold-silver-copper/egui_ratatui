@@ -7,10 +7,8 @@ pub trait NewCC {
     fn new(cc: &eframe::CreationContext<'_>) -> Self;
 }
 /// When compiling natively this function generates an eframe::NativeOptions then
-/// does eframe::run_native() on your eframe::App
-///
-/// NOTE THERE IS ANOTHER FUNCTION CALLED 'wasm_setup' that is exactly the same but for wasm
-///
+/// does eframe::run_native() on your eframe::App .
+/// NOTE THERE IS ANOTHER FUNCTION CALLED 'wasm_setup' that is exactly the same but for wasm...
 /// look inside the examples folder and README !!!!! I couldn't figure out how to make docs.rs show it :D
 #[cfg(not(target_arch = "wasm32"))]
 pub fn native_setup<T: eframe::App + NewCC + 'static>(eapp: T) -> eframe::Result<()> {

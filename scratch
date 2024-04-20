@@ -1,0 +1,8 @@
+Hello everyone ! I present to you my newest crate - ratatui_egui_wasm .
+It allows you to create Terminal User Interfaces with ratatui inside of EGUI , and is wasm compatible
+Previously I had made bevy_ratatui , but it was not very good , now I created a new backend for ratatui which uses egui.
+Thus this new crate supercedes my old bevy_ratatui crate , since now you can use bevy_egui + ratatui_egui_wasm to get a much better experience
+Plus performance is like 100x times better :D
+Check out a web demo here: https://gold-silver-copper.github.io/
+(use the h j k l t keys to interact)
+You can find the repository here - https://github.com/gold-silver-copper/ratatui_egui_wasm

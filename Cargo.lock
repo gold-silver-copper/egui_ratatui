@@ -2135,13 +2135,14 @@ dependencies = [
 
 [[package]]
 name = "ratframe"
-version = "1.0.2"
+version = "1.0.8"
 dependencies = [
  "argh",
  "eframe",
  "egui",
  "env_logger",
  "itertools",
+ "log",
  "once_cell",
  "rand",
  "ratatui",

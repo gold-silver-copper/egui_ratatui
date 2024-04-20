@@ -18,10 +18,10 @@ use ratatui::{
     layout::{Rect, Size},
 };
 
-///The RataguiBackend is the widget+backend itself , from which you can make a ratatui terminal
-/// then you can do ui.add(terminal.backend_mut()) inside an egui context
-/// spawn with RataguiBackend::new() or RataguiBackend::new_with_fonts()
-/// see the hello_world_proper example for custom font usage
+///The RataguiBackend is the widget+backend itself , from which you can make a ratatui terminal ,
+/// then you can do ui.add(terminal.backend_mut()) inside an egui context    .
+/// Spawn with RataguiBackend::new() or RataguiBackend::new_with_fonts()   .
+/// See the hello_world_proper example for custom font usage
 #[derive(Debug, Clone, PartialEq, Hash)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct RataguiBackend {
