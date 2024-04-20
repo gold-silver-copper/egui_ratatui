@@ -1,49 +1,27 @@
 [package]
-name = "ratframe"
-version = "1.0.10"
+name = "colors"
+version = "1.0.2"
 authors = ["gold-silver-copper"]
 edition = "2021"
 include = ["LICENSE-APACHE", "LICENSE-MIT", "**/*.rs", "Cargo.toml"]
 rust-version = "1.76"
-description = "WASM ratatui with egui"
-license = "MIT OR Apache-2.0"
 
 [package.metadata.docs.rs]
 all-features = true
 targets = ["x86_64-unknown-linux-gnu", "wasm32-unknown-unknown"]
 
-[dev-dependencies]
-once_cell = { version = "1.19.0" }
-rand = { version = "0.8.5", default-features = false, features = ["small_rng"] }
-argh = "0.1.12"
-itertools = "0.12.1"
-
-
-[[example]]
-name = "hello_world_minimum"
-doc-scrape-examples = true
-
-[[example]]
-name = "hello_world_proper"
-doc-scrape-examples = false
-
-
-[lib]
-crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-ratatui = { version = "0.26.2", default-features = false }
-egui = "0.27.2"
-eframe = { version = "0.27.2", default-features = false, features = [
+ratatui = { version = "0.26.1", default-features = false }
+egui = "0.27.0"
+eframe = { version = "0.27.0", default-features = false, features = [
     "accesskit",     # Make egui comptaible with screen readers. NOTE: adds a lot of dependencies.
     "default_fonts", # Embed the default egui fonts.
     "glow",          # Use the glow rendering backend. Alternative: "wgpu".
     "persistence",   # Enable restoring app state when restarting the app.
 ] }
-
+ratframe = { path = "../../" }
 web-time = "1"
-
-
 # native:
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
 env_logger = "0.10"
@@ -52,7 +30,6 @@ env_logger = "0.10"
 [target.'cfg(target_arch = "wasm32")'.dependencies]
 wasm-bindgen-futures = "0.4"
 log = "0.4"
-
 
 [profile.release]
 opt-level = 2 # fast and small wasm

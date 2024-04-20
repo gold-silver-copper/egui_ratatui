@@ -7,6 +7,7 @@ use eframe::epaint::{
     text::{LayoutJob, TextFormat},
     Color32, FontFamily, FontId, Fonts,
 };
+
 use ratatui::style::{Color, Modifier};
 use std::f32::INFINITY;
 use std::io;
