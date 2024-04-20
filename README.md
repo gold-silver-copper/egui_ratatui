@@ -2,7 +2,7 @@
 
 RataguiBackend is the name of the backend/widget in code
 
-`cargo add ratframe`
+```cargo add ratframe```
 
 This repo provides the Ratagui Backend, which is also a Widget for egui. So you can have a whole ratatui terminal inside of egui. Also since egui is so WASM compatible, this means we can use this to compile ratatui to WASM !
 Look at examples, you can run the basic ones by doing
@@ -19,9 +19,7 @@ or to build
 
 `trunk build --release`
 
-The goal is for this to be the simplest way to write a TUI app for WASM in Rust.
-
-You can compile your app natively or for the web, and share it using Github Pages.
+The goal is for this to be the simplest way to write a TUI app for WASM in Rust. You can compile your app natively or for the web, and share it using Github Pages.
 
 Here is the simplest hello world
 
@@ -61,7 +59,6 @@ pub fn main() {
     .expect("epic fail");
 }
 ```
-
 REST IS FROM ETEMPLATE DOCS
 
 ## Getting started
