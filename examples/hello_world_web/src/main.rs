@@ -2,9 +2,9 @@ use ratatui::{
     prelude::{Stylize, Terminal},
     widgets::Paragraph,
 };
-use ratframe::RataguiBackend;
-
 use ratframe::NewCC;
+use ratframe::RataguiBackend;
+use web_time::{Duration, Instant};
 
 #[cfg(not(target_arch = "wasm32"))]
 use ratframe::native_setup;
