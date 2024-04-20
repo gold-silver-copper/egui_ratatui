@@ -21,7 +21,7 @@ use ratatui::{
 ///The RataguiBackend is the widget+backend itself , from which you can make a ratatui terminal ,
 /// then you can do ui.add(terminal.backend_mut()) inside an egui context    .
 /// Spawn with RataguiBackend::new() or RataguiBackend::new_with_fonts()   .
-/// See the hello_world_proper example for custom font usage
+/// See the hello_world_web example for custom font usage
 #[derive(Debug, Clone, PartialEq, Hash)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct RataguiBackend {
@@ -178,9 +178,7 @@ impl eframe::egui::Widget for &mut RataguiBackend {
                 //NOTICE
                 //NOTICE
                 if x == (available_chars_width - 1) {
-                    let boop = Label::new(job.clone());
-
-                    ui.add(boop);
+                    ui.add(Label::new(job.clone()));
                 }
             }
         }
@@ -267,9 +265,9 @@ impl RataguiBackend {
         match rat_col {
             Color::Reset => {
                 if is_a_fg {
-                    Color32::from_rgb(35, 33, 31)
+                    Color32::from_rgb(204, 204, 255)
                 } else {
-                    Color32::from_rgb(97, 99, 103)
+                    Color32::from_rgb(15, 15, 112)
                 }
             }
             Color::Black => Color32::BLACK,

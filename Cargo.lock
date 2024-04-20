@@ -2135,7 +2135,7 @@ dependencies = [
 
 [[package]]
 name = "ratframe"
-version = "1.0.8"
+version = "1.0.9"
 dependencies = [
  "argh",
  "eframe",
