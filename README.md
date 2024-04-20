@@ -5,10 +5,17 @@
 [![Downloads](https://img.shields.io/crates/d/ratframe.svg)](https://crates.io/crates/ratframe)
 
 
+[![Crates.io](https://img.shields.io/crates/v/ratframe.svg)](https://crates.io/crates/ratframe)
+[![Documentation](https://docs.rs/ratframe/badge.svg)](https://docs.rs/ratframe/latest/ratframe/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bevyengine/bevy/blob/master/LICENSE)
+[![Downloads](https://img.shields.io/crates/d/ratframe.svg)](https://crates.io/crates/ratframe)
+
 RataguiBackend is the name of the backend/widget in code
 
-```cargo add ratframe```
-```git clone https://github.com/gold-silver-copper/ratatui_egui_wasm.git```
+
+`cargo add ratframe`
+`git clone https://github.com/gold-silver-copper/ratatui_egui_wasm.git`
+
 
 This repo provides the Ratagui Backend, which is also a Widget for egui. So you can have a whole ratatui terminal inside of egui. Also since egui is so WASM compatible, this means we can use this to compile ratatui to WASM !
 Look at examples, you can run the basic ones by doing
@@ -65,6 +72,7 @@ pub fn main() {
     .expect("epic fail");
 }
 ```
+
 REST IS FROM ETEMPLATE DOCS
 
 ## Getting started
