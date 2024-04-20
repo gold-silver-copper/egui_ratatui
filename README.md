@@ -5,6 +5,10 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bevyengine/bevy/blob/master/LICENSE)
 [![Downloads](https://img.shields.io/crates/d/ratframe.svg)](https://crates.io/crates/ratframe)
 
+See also:
+https://ratatui.rs/
+https://github.com/emilk/egui
+
 RataguiBackend is the name of the backend/widget in code
 
 `cargo add ratframe`
