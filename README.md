@@ -1,5 +1,4 @@
-# ratframe : egui widget + ratatui backend
-works on wasm 
+# ratframe : egui widget + ratatui backend (WASM)
 
 RataguiBackend is the name of the backend/widget in code
 
