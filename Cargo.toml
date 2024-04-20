@@ -1,6 +1,6 @@
 [package]
 name = "ratframe"
-version = "1.0.5"
+version = "1.0.6"
 authors = ["gold-silver-copper"]
 edition = "2021"
 include = ["LICENSE-APACHE", "LICENSE-MIT", "**/*.rs", "Cargo.toml"]
