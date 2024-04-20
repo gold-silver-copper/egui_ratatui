@@ -2132,14 +2132,12 @@ dependencies = [
 
 [[package]]
 name = "ratframe"
-version = "1.0.0"
+version = "1.0.2"
 dependencies = [
  "eframe",
  "egui",
  "env_logger",
- "log",
  "ratatui",
- "serde",
  "wasm-bindgen-futures",
  "web-time 1.1.0",
 ]

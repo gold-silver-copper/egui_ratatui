@@ -888,9 +888,9 @@ checksum = "9ea835d29036a4087793836fa931b08837ad5e957da9e23886b29586fb9b6650"
 
 [[package]]
 name = "ecolor"
-version = "0.27.0"
+version = "0.27.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c416b34b29e8f6b2492b5c80319cf9792d339550f0d75a54b53ed070045bbdeb"
+checksum = "20930a432bbd57a6d55e07976089708d4893f3d556cf42a0d79e9e321fa73b10"
 dependencies = [
  "bytemuck",
  "serde",
@@ -898,9 +898,9 @@ dependencies = [
 
 [[package]]
 name = "eframe"
-version = "0.27.0"
+version = "0.27.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "86811b20df847cfa73637020ee78de780407110f49785df2dea6741146ea5aac"
+checksum = "020e2ccef6bbcec71dbc542f7eed64a5846fc3076727f5746da8fd307c91bab2"
 dependencies = [
  "bytemuck",
  "cocoa",
@@ -934,9 +934,9 @@ dependencies = [
 
 [[package]]
 name = "egui"
-version = "0.27.0"
+version = "0.27.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f8e20541e5d3da08cf817eb5c8a2bc4024f21aad7acf98de201442d6d76e0ecc"
+checksum = "584c5d1bf9a67b25778a3323af222dbe1a1feb532190e103901187f92c7fe29a"
 dependencies = [
  "accesskit",
  "ahash",
@@ -949,9 +949,9 @@ dependencies = [
 
 [[package]]
 name = "egui-winit"
-version = "0.27.0"
+version = "0.27.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ff4fc01bc3617dba9280475e9ab2382015e298f401d2318c2a1d78c419b6dffe"
+checksum = "2e3da0cbe020f341450c599b35b92de4af7b00abde85624fd16f09c885573609"
 dependencies = [
  "accesskit_winit",
  "arboard",
@@ -967,9 +967,9 @@ dependencies = [
 
 [[package]]
 name = "egui_glow"
-version = "0.27.0"
+version = "0.27.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "743380a1c0f1dbb7bfe29663ce62b10785adda51105c9bb4e544e2f9955b4958"
+checksum = "e0e5d975f3c86edc3d35b1db88bb27c15dde7c55d3b5af164968ab5ede3f44ca"
 dependencies = [
  "bytemuck",
  "egui",
@@ -988,9 +988,9 @@ checksum = "a47c1c47d2f5964e29c61246e81db715514cd532db6b5116a25ea3c03d6780a2"
 
 [[package]]
 name = "emath"
-version = "0.27.0"
+version = "0.27.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e87799f56edee11422267e1764dd0bf3fe1734888e8d2d0924a67b85f4998fbe"
+checksum = "e4c3a552cfca14630702449d35f41c84a0d15963273771c6059175a803620f3f"
 dependencies = [
  "bytemuck",
  "serde",
@@ -1043,9 +1043,9 @@ dependencies = [
 
 [[package]]
 name = "epaint"
-version = "0.27.0"
+version = "0.27.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "392eccd6d6b13fadccc268f4f61d9363775ec5711ffdece2a79006d676920bcf"
+checksum = "b381f8b149657a4acf837095351839f32cd5c4aec1817fc4df84e18d76334176"
 dependencies = [
  "ab_glyph",
  "ahash",
@@ -2135,18 +2135,16 @@ dependencies = [
 
 [[package]]
 name = "ratframe"
-version = "1.0.1"
+version = "1.0.2"
 dependencies = [
  "argh",
  "eframe",
  "egui",
  "env_logger",
  "itertools",
- "log",
  "once_cell",
  "rand",
  "ratatui",
- "serde",
  "wasm-bindgen-futures",
  "web-time 1.1.0",
 ]
