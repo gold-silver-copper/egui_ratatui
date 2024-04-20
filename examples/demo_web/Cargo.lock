@@ -2137,6 +2137,7 @@ dependencies = [
  "eframe",
  "egui",
  "env_logger",
+ "log",
  "ratatui",
  "wasm-bindgen-futures",
  "web-time 1.1.0",

@@ -15,3 +15,6 @@ Cargo.lock
 examples/colors_web/Cargo.lock
 examples/demo_web/Cargo.lock
 examples/hello_world_web/Cargo.lock
+examples/hello_world_web/Cargo.lock
+examples/demo_web/Cargo.lock
+examples/colors_web/Cargo.lock
