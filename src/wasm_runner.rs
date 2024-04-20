@@ -29,7 +29,6 @@ pub fn native_setup<T: eframe::App + NewCC + 'static>(eapp: T) -> eframe::Result
 
 /// When compiling for wasm32 this function generates an eframe::WebOptions then
 /// spawns an async wasm bindgen eframe::WebRunner::new() for your eframe::App
-#[cfg_attr(doc, doc(cfg(any(target_arch = "wasm32"))))]
 #[cfg(any(target_arch = "wasm32", doc))]
 pub fn wasm_setup<T: eframe::App + NewCC + 'static>(eapp: T) {
     // Redirect `log` message to `console.log` and friends:
