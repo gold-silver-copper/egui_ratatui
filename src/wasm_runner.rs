@@ -15,6 +15,7 @@ pub fn native_setup<T: eframe::App + NewCC + 'static>(eapp: T) -> eframe::Result
             .with_min_inner_size([300.0, 220.0]),
         ..Default::default()
     };
+
     eframe::run_native(
         "gold silver copper",
         native_options,
