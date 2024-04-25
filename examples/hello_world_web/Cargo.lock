@@ -675,6 +675,7 @@ dependencies = [
  "ratatui",
  "ratframe",
  "wasm-bindgen-futures",
+ "web-time 1.1.0",
 ]
 
 [[package]]
@@ -2095,7 +2096,7 @@ dependencies = [
 
 [[package]]
 name = "ratframe"
-version = "1.0.7"
+version = "1.0.10"
 dependencies = [
  "eframe",
  "egui",
