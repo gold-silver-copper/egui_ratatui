@@ -50,7 +50,7 @@ impl eframe::egui::Widget for &mut RataguiBackend {
         if e_rate % 4 == 0 {
             self.blinking_fast = !self.blinking_fast;
             self.blinking_slow = false;
-        } else if e_rate % 5 == 0 {
+        } else if e_rate % 6 == 0 {
             self.blinking_slow = !self.blinking_slow;
             self.blinking_fast = false;
         }
@@ -166,19 +166,19 @@ impl eframe::egui::Widget for &mut RataguiBackend {
                     //  line_height: Some(char_height - 0.01),
                     ..Default::default()
                 };
-                // let
+
                 job.append(cur_cell.symbol(), 0.0, tf.clone());
 
-                //maybe this is not neccesary, try to remove later
-                //NOTICE
-                //NOTICE
                 if x == (available_chars_width - 1) {
-                    ui.add(Label::new(job.clone()));
+                    let end = ui.add(Label::new(job.clone()));
+                    if y == (available_chars_height - 1) {
+                        return end;
+                    }
                 }
             }
         }
 
-        let emd = Label::new("");
+        let emd = Label::new("IF YOU SEE THIS  THAT IS AN ERROR");
 
         ui.add(emd)
     }
