@@ -1,7 +1,7 @@
 [package]
 name = "colors"
-version = "1.0.0"
-authors = ["meowmeow"]
+version = "1.0.2"
+authors = ["gold-silver-copper"]
 edition = "2021"
 include = ["LICENSE-APACHE", "LICENSE-MIT", "**/*.rs", "Cargo.toml"]
 rust-version = "1.76"
@@ -20,11 +20,8 @@ eframe = { version = "0.27.0", default-features = false, features = [
     "glow",          # Use the glow rendering backend. Alternative: "wgpu".
     "persistence",   # Enable restoring app state when restarting the app.
 ] }
-
 ratframe = { path = "../../" }
-
-itertools = "0.12.1"
-web-time = "1.1.0"
+web-time = "1"
 # native:
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
 env_logger = "0.10"

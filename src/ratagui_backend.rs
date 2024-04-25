@@ -45,38 +45,32 @@ impl eframe::egui::Widget for &mut RataguiBackend {
         ui.spacing_mut().item_spacing.x = 0.0;
         ui.spacing_mut().item_spacing.y = 0.0;
         let elpsd = self.timestamp.elapsed().as_millis();
-        let e_rate = (elpsd / 300);
-        if e_rate == 0 {
-            // self.set_font_size(20);
+        let e_rate = (elpsd / 100);
+
+        if e_rate % 4 == 0 {
+            self.blinking_fast = !self.blinking_fast;
+            self.blinking_slow = false;
+        } else if e_rate % 6 == 0 {
+            self.blinking_slow = !self.blinking_slow;
+            self.blinking_fast = false;
+        }
+
+        if e_rate > 200 {
+            self.timestamp = Instant::now();
             self.blinking_fast = false;
             self.blinking_slow = false;
-        }
-        if e_rate == 1 {
-            //    self.set_font_size(10);
-            self.blinking_fast = true;
-        }
-        if e_rate == 2 {
-            //   self.set_font_size(5);
-            self.blinking_slow = true;
-            self.blinking_fast = false;
-        }
-        if e_rate == 3 {
-            self.timestamp = Instant::now();
         }
 
         let av_size = ui.available_size_before_wrap();
         let av_width = av_size.x;
         let av_height = av_size.y;
-        //
-        // println!("AV WIDTH IS {:#?}", av_width);
-        //  println!("AV height IS {:#?}", av_height);
+
         let char_height = self.get_font_size() as f32;
         let char_width = ui.fonts(|fx| self.get_font_width(fx));
 
+        //magic ;)
         let ratio = 1.26992;
-        //I am not sure why but if i dont subtract by 4 here the rendering breaks lol ,,, fixed?
         let available_chars_width = (av_width / (char_width)) as u16;
-        //I am not sure why but if i dont multiply it by 1.15 here the rendering breaks lol ,,, not fixed...
         let available_chars_height = (av_height / (char_height * ratio)) as u16;
         let cur_size = self.size().expect("COULD NOT GET CURRENT BACKEND SIZE");
 
@@ -172,19 +166,19 @@ impl eframe::egui::Widget for &mut RataguiBackend {
                     //  line_height: Some(char_height - 0.01),
                     ..Default::default()
                 };
-                // let
+
                 job.append(cur_cell.symbol(), 0.0, tf.clone());
 
-                //maybe this is not neccesary, try to remove later
-                //NOTICE
-                //NOTICE
                 if x == (available_chars_width - 1) {
-                    ui.add(Label::new(job.clone()));
+                    let end = ui.add(Label::new(job.clone()));
+                    if y == (available_chars_height - 1) {
+                        return end;
+                    }
                 }
             }
         }
 
-        let emd = Label::new("");
+        let emd = Label::new("IF YOU SEE THIS  THAT IS AN ERROR");
 
         ui.add(emd)
     }
