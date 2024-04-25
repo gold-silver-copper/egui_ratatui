@@ -4,12 +4,7 @@ use ratatui::{
 };
 use ratframe::NewCC;
 use ratframe::RataguiBackend;
-use std::{
-    error::Error,
-    io::{self, Stdout},
-    result,
-    time::Duration,
-};
+use web_time::{Duration, Instant};
 
 use itertools::Itertools;
 use ratatui::{
