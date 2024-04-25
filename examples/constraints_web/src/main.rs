@@ -21,6 +21,7 @@ fn main() {
 fn main() -> eframe::Result<()> {
     native_setup(HelloApp::default())
 }
+
 pub struct HelloApp {
     terminal: Terminal<RataguiBackend>,
     tick_rate: Duration,
