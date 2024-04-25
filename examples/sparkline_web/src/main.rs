@@ -82,6 +82,7 @@ impl eframe::App for HelloApp {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         //call repaint here so that app runs continuously, remove if you dont need that
         ctx.request_repaint();
+        println!("PIXELS PER POINTS IS {:#?}", ctx.zoom_factor());
         self.terminal.draw(|f| ui(f, &self.app)).unwrap();
 
         let timeout = self.tick_rate.saturating_sub(self.last_tick.elapsed());

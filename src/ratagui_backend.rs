@@ -69,17 +69,16 @@ impl eframe::egui::Widget for &mut RataguiBackend {
             self.blinking_slow = false;
         }
 
-        let av_size = ui.available_size_before_wrap();
+        let av_size = ui.available_size();
         let av_width = av_size.x;
         let av_height = av_size.y;
 
-        let char_height = self.get_font_size() as f32;
+        //   let char_height = self.get_font_size() as f32;
+        let char_height = ui.fonts(|fx| fx.row_height(&self.regular_font));
         let char_width = ui.fonts(|fx| self.get_font_width(fx));
 
-        //magic ;)
-        let ratio = 1.26992;
         let available_chars_width = (av_width / (char_width)) as u16;
-        let available_chars_height = (av_height / (char_height * ratio)) as u16;
+        let available_chars_height = (av_height / (char_height)) as u16;
         let cur_size = self.size().expect("COULD NOT GET CURRENT BACKEND SIZE");
 
         if (cur_size.width != available_chars_width) || (cur_size.height != available_chars_height)
@@ -200,12 +199,12 @@ impl RataguiBackend {
             height,
             buffer: Buffer::empty(Rect::new(0, 0, width, height)),
             cursor: false,
-            font_size: 15,
+            font_size: 16,
             pos: (0, 0),
-            regular_font: FontId::new(15.0, FontFamily::Monospace),
-            bold_font: FontId::new(15.0, FontFamily::Monospace),
-            italic_font: FontId::new(15.0, FontFamily::Monospace),
-            bolditalic_font: FontId::new(15.0, FontFamily::Monospace),
+            regular_font: FontId::new(16.0, FontFamily::Monospace),
+            bold_font: FontId::new(16.0, FontFamily::Monospace),
+            italic_font: FontId::new(16.0, FontFamily::Monospace),
+            bolditalic_font: FontId::new(16.0, FontFamily::Monospace),
             timestamp: Instant::now(),
             blinking_slow: false,
             blinking_fast: false,
@@ -224,12 +223,12 @@ impl RataguiBackend {
             height,
             buffer: Buffer::empty(Rect::new(0, 0, width, height)),
             cursor: false,
-            font_size: 15,
+            font_size: 16,
             pos: (0, 0),
-            regular_font: FontId::new(15.0, FontFamily::Name(regular.to_owned().into())),
-            bold_font: FontId::new(15.0, FontFamily::Name(bold.to_owned().into())),
-            italic_font: FontId::new(15.0, FontFamily::Name(italic.to_owned().into())),
-            bolditalic_font: FontId::new(15.0, FontFamily::Name(bolditalic.to_owned().into())),
+            regular_font: FontId::new(16.0, FontFamily::Name(regular.to_owned().into())),
+            bold_font: FontId::new(16.0, FontFamily::Name(bold.to_owned().into())),
+            italic_font: FontId::new(16.0, FontFamily::Name(italic.to_owned().into())),
+            bolditalic_font: FontId::new(16.0, FontFamily::Name(bolditalic.to_owned().into())),
             timestamp: Instant::now(),
             blinking_slow: false,
             blinking_fast: false,
@@ -260,7 +259,7 @@ impl RataguiBackend {
         self.height = height;
     }
     pub fn get_font_width(&self, fontiki: &Fonts) -> f32 {
-        let fid = self.bolditalic_font.clone();
+        let fid = self.regular_font.clone();
         fontiki.glyph_width(&fid, 'A')
     }
 
