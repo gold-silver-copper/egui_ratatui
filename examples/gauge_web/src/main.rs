@@ -235,7 +235,7 @@ fn render_header(area: Rect, buf: &mut Buffer) {
 }
 
 fn render_footer(area: Rect, buf: &mut Buffer) {
-    Paragraph::new("Press ENTER to start")
+    Paragraph::new("Press SPACE to start")
         .alignment(Alignment::Center)
         .fg(CUSTOM_LABEL_COLOR)
         .bold()
