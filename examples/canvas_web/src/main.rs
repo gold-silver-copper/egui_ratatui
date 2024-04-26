@@ -60,7 +60,7 @@ impl NewCC for HelloApp {
             "Oblique".into(),
             "BoldOblique".into(),
         );
-        backend.set_font_size(14);
+
         let mut terminal = Terminal::new(backend).unwrap();
 
         // create app and run it
