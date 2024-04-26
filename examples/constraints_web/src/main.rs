@@ -69,6 +69,9 @@ impl NewCC for HelloApp {
             last_tick,
         }
     }
+    fn canvas_id() -> String {
+        "constraints_web".into()
+    }
 }
 
 impl eframe::App for HelloApp {

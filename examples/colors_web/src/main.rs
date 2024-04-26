@@ -50,6 +50,9 @@ impl NewCC for ColorsApp {
     fn new(cc: &eframe::CreationContext<'_>) -> Self {
         Default::default()
     }
+    fn canvas_id() -> String {
+        "colors".into()
+    }
 }
 
 impl eframe::App for ColorsApp {

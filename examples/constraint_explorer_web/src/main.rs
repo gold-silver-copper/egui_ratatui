@@ -74,6 +74,9 @@ impl NewCC for HelloApp {
             last_tick,
         }
     }
+    fn canvas_id() -> String {
+        "constraint_explorer".into()
+    }
 }
 impl eframe::App for HelloApp {
     /// Called each time the UI needs repainting, which may be many times per second.

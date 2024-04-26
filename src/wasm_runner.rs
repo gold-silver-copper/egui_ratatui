@@ -5,7 +5,10 @@
 /// Otherwise it will use the default egui font which is missing extra unicode characters
 pub trait NewCC {
     fn new(cc: &eframe::CreationContext<'_>) -> Self;
-    fn canvas_id() -> String;
+    ///set this to the same canvas id as in the index.html
+    fn canvas_id() -> String {
+        "the_canvas_id".into()
+    }
 }
 /// When compiling natively this function generates an eframe::NativeOptions then
 /// does eframe::run_native() on your eframe::App .
@@ -38,11 +41,11 @@ pub fn wasm_setup<T: eframe::App + NewCC + 'static>(eapp: T) {
     eframe::WebLogger::init(log::LevelFilter::Debug).ok();
 
     let web_options = eframe::WebOptions::default();
-    let canvas_id = String::from("the_canvas_id").to_owned();
+
     wasm_bindgen_futures::spawn_local(async move {
         eframe::WebRunner::new()
             .start(
-                &canvas_id, // hardcode it
+                &T::canvas_id(), // hardcode it
                 web_options,
                 Box::new(|cc| Box::new(T::new(cc))),
             )
