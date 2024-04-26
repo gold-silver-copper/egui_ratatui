@@ -1,9 +1,9 @@
-use rand::Rng;
 use rand::{
     distributions::{Distribution, Uniform},
     rngs::SmallRng,
+    SeedableRng,
 };
-use rand_chacha::rand_core::SeedableRng;
+
 use ratatui::{buffer::Cell, layout::Flex, prelude::*};
 use unicode_width::UnicodeWidthStr;
 
@@ -41,26 +41,26 @@ pub fn destroy(frame: &mut Frame<'_>) {
 )]
 fn drip(frame_count: usize, area: Rect, buf: &mut Buffer) {
     // a seeded rng as we have to move the same random pixels each frame
-    let mut rng = rand_chacha::ChaCha8Rng::seed_from_u64(10);
+    let mut rng = SmallRng::seed_from_u64(33);
     let ramp_frames = 450;
     let fractional_speed = frame_count as f64 / f64::from(ramp_frames);
     let variable_speed = DRIP_SPEED as f64 * fractional_speed * fractional_speed * fractional_speed;
     let pixel_count = (frame_count as f64 * variable_speed).floor() as usize;
     for _ in 0..pixel_count {
-        let src_x = rng.gen_range(0..area.width);
-        let src_y = rng.gen_range(1..area.height - 2);
+        let src_x = Uniform::new(0, area.width).sample(&mut rng);
+        let src_y = Uniform::new(1, area.height - 2).sample(&mut rng);
         let src = buf.get_mut(src_x, src_y).clone();
         // 1% of the time, move a blank or pixel (10:1) to the top line of the screen
-        if rng.gen_ratio(1, 100) {
-            let dest_x = rng
-                .gen_range(src_x.saturating_sub(5)..src_x.saturating_add(5))
+        if Uniform::new(0, 100).sample(&mut rng) > 10 {
+            let dest_x = Uniform::new(src_x.saturating_sub(5), src_x.saturating_add(5))
+                .sample(&mut rng)
                 .clamp(area.left(), area.right() - 1);
             let dest_y = area.top() + 1;
 
             let dest = buf.get_mut(dest_x, dest_y);
             // copy the cell to the new location about 1/10 of the time blank out the cell the rest
             // of the time. This has the effect of gradually removing the pixels from the screen.
-            if rng.gen_ratio(1, 10) {
+            if Uniform::new(0, 10).sample(&mut rng) > 3 {
                 *dest = src;
             } else {
                 *dest = Cell::default();

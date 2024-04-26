@@ -30,7 +30,7 @@ strum = "0.26.2"
 derive_builder = "0.20.0"
 font8x8 = "0.3.1"
 palette = "0.7.5"
-rand = { version = "0.8.5", default-features = true, features = ["small_rng"] }
+rand = { version = "0.8.5", default-features = false, features = ["small_rng"] }
 unicode-width = "0.1.11"
 rand_chacha = "0.3.1"
 time = { version = "0.3.36", features = ["wasm-bindgen"] }
