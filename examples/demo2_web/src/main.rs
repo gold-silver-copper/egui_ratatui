@@ -48,6 +48,9 @@ pub use theme::*;
 
 pub struct HelloApp {
     terminal: Terminal<RataguiBackend>,
+    tick_rate: Duration,
+    app: App,
+    last_tick: Instant,
 }
 
 //l
@@ -56,7 +59,17 @@ impl Default for HelloApp {
         //Creating the Ratatui backend/ Egui widget here
         let backend = RataguiBackend::new(100, 100);
         let mut terminal = Terminal::new(backend).unwrap();
-        Self { terminal: terminal }
+        let tick_rate = Duration::from_millis(250);
+        let mut app = App::default();
+
+        let mut last_tick = Instant::now();
+
+        Self {
+            terminal,
+            tick_rate,
+            app,
+            last_tick,
+        }
     }
 }
 
@@ -74,7 +87,17 @@ impl NewCC for HelloApp {
             "BoldOblique".into(),
         );
         let mut terminal = Terminal::new(backend).unwrap();
-        Self { terminal: terminal }
+        let tick_rate = Duration::from_millis(250);
+        let mut app = App::default();
+
+        let mut last_tick = Instant::now();
+
+        Self {
+            terminal,
+            tick_rate,
+            app,
+            last_tick,
+        }
     }
 }
 
@@ -83,12 +106,7 @@ impl eframe::App for HelloApp {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         //call repaint here so that app runs continuously, remove if you dont need that
         ctx.request_repaint();
-        self.terminal
-            .draw(|frame| {
-                let area = frame.size();
-                frame.render_widget(Paragraph::new("Hello Rataguiii").white().on_blue(), area);
-            })
-            .expect("epic fail");
+        self.app.draw(&mut self.terminal).unwrap();
 
         egui::CentralPanel::default().show(ctx, |ui| {
             ui.add(self.terminal.backend_mut());

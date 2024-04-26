@@ -5,7 +5,7 @@ use itertools::Itertools;
 use ratatui::{prelude::*, widgets::*};
 use strum::{Display, EnumIter, FromRepr, IntoEnumIterator};
 
-use crate::{destroy, tabs::*, term, THEME};
+use crate::{destroy, tabs::*, THEME};
 
 #[derive(Debug, Default, Clone, Copy, PartialEq, Eq)]
 pub struct App {
@@ -55,7 +55,7 @@ impl App {
     }
 
     /// Draw a single frame of the app.
-    fn draw(&self, terminal: &mut Terminal<impl Backend>) -> Result<()> {
+    pub fn draw(&self, terminal: &mut Terminal<impl Backend>) -> Result<()> {
         terminal
             .draw(|frame| {
                 frame.render_widget(self, frame.size());
