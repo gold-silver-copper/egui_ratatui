@@ -67,6 +67,9 @@ impl NewCC for HelloApp {
             last_tick,
         }
     }
+    fn canvas_id() -> String {
+        "tabs".into()
+    }
 }
 
 impl eframe::App for HelloApp {

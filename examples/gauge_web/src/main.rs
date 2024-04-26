@@ -69,6 +69,9 @@ impl NewCC for HelloApp {
             last_tick,
         }
     }
+    fn canvas_id() -> String {
+        "gauge".into()
+    }
 }
 
 impl eframe::App for HelloApp {

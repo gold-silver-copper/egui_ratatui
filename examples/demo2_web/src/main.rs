@@ -91,6 +91,9 @@ impl NewCC for HelloApp {
             last_tick,
         }
     }
+    fn canvas_id() -> String {
+        "demo2".into()
+    }
 }
 
 impl eframe::App for HelloApp {

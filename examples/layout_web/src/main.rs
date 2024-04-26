@@ -46,6 +46,9 @@ impl NewCC for HelloApp {
         let mut terminal = Terminal::new(backend).unwrap();
         Self { terminal: terminal }
     }
+    fn canvas_id() -> String {
+        "layout".into()
+    }
 }
 
 impl eframe::App for HelloApp {

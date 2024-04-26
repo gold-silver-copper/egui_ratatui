@@ -55,6 +55,9 @@ impl NewCC for DemoApp {
             last_tick: Instant::now(),
         }
     }
+    fn canvas_id() -> String {
+        "demo".into()
+    }
 }
 
 impl Default for DemoApp {

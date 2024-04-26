@@ -70,7 +70,7 @@ impl NewCC for HelloApp {
         }
     }
     fn canvas_id() -> String {
-        "constraints_web".into()
+        "constraints".into()
     }
 }
 

@@ -52,6 +52,10 @@ impl NewCC for HelloApp {
         let mut terminal = Terminal::new(backend).unwrap();
         Self { terminal: terminal }
     }
+    //matches index.html
+    fn canvas_id() -> String {
+        "the_canvas_id".into()
+    }
 }
 
 impl eframe::App for HelloApp {

@@ -3,6 +3,7 @@
 
 /// Implement this trait when you want to setup ratatui to use custom fonts
 /// Otherwise it will use the default egui font which is missing extra unicode characters
+/// .Implement canvas_id() for a custom canvas id
 pub trait NewCC {
     fn new(cc: &eframe::CreationContext<'_>) -> Self;
     ///set this to the same canvas id as in the index.html
