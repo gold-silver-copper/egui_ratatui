@@ -101,53 +101,6 @@ impl eframe::App for HelloApp {
     }
 }
 
-fn setup_custom_fonts(ctx: &egui::Context) {
-    // Start with the default fonts (we will be adding to them rather than replacing them).
-    let mut fonts = egui::FontDefinitions::default();
-
-    // Install my own font (maybe supporting non-latin characters).
-    // .ttf and .otf files supported.
-    fonts.font_data.insert(
-        "Regular".to_owned(),
-        egui::FontData::from_static(include_bytes!("../../../assets/fonts/Iosevka-Regular.ttf")),
-    );
-    fonts.families.insert(
-        egui::FontFamily::Name("Regular".into()),
-        vec!["Regular".to_owned()],
-    );
-    fonts.font_data.insert(
-        "Bold".to_owned(),
-        egui::FontData::from_static(include_bytes!("../../../assets/fonts/Iosevka-Bold.ttf")),
-    );
-    fonts.families.insert(
-        egui::FontFamily::Name("Bold".into()),
-        vec!["Bold".to_owned()],
-    );
-
-    fonts.font_data.insert(
-        "Oblique".to_owned(),
-        egui::FontData::from_static(include_bytes!("../../../assets/fonts/Iosevka-Oblique.ttf")),
-    );
-    fonts.families.insert(
-        egui::FontFamily::Name("Oblique".into()),
-        vec!["Oblique".to_owned()],
-    );
-
-    fonts.font_data.insert(
-        "BoldOblique".to_owned(),
-        egui::FontData::from_static(include_bytes!(
-            "../../../assets/fonts/Iosevka-BoldOblique.ttf"
-        )),
-    );
-    fonts.families.insert(
-        egui::FontFamily::Name("BoldOblique".into()),
-        vec!["BoldOblique".to_owned()],
-    );
-
-    // Tell egui to use these fonts:
-    ctx.set_fonts(fonts);
-}
-
 const PALETTES: [tailwind::Palette; 4] = [
     tailwind::BLUE,
     tailwind::EMERALD,
