@@ -59,7 +59,6 @@ impl NewCC for HelloApp {
     fn new(cc: &eframe::CreationContext<'_>) -> Self {
         //Creating the Ratatui backend/ Egui widget here
         let mut backend = RataguiBackend::new(100, 100);
-        backend.set_font_size(16);
 
         let mut terminal = Terminal::new(backend).unwrap();
 
