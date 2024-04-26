@@ -69,6 +69,10 @@ impl NewCC for HelloApp {
             last_tick,
         }
     }
+
+    fn canvas_id() -> String {
+        "barchart".into()
+    }
 }
 
 impl eframe::App for HelloApp {
