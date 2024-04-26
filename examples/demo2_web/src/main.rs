@@ -114,10 +114,30 @@ impl eframe::App for HelloApp {
             if ui.input(|i| i.key_released(egui::Key::Q)) {
                 panic!("HAVE A NICE WEEK");
             }
-            if ui.input(|i| i.key_released(egui::Key::T)) {
-                ()
+            if ui.input(|i| i.key_released(egui::Key::H)) {
+                self.app.prev_tab();
             }
-            //KeyCode::Char(c) => app.on_key(c),
+            if ui.input(|i| i.key_released(egui::Key::L)) {
+                self.app.next_tab();
+            }
+            if ui.input(|i| i.key_released(egui::Key::K)) {
+                self.app.prev();
+            }
+            if ui.input(|i| i.key_released(egui::Key::J)) {
+                self.app.next();
+            }
+            if ui.input(|i| i.key_released(egui::Key::D)) {
+                self.app.destroy();
+            }
+
+            /*
+            Char('q') | Esc => self.mode = Mode::Quit,
+            Char('h') | Left => self.prev_tab(),
+            Char('l') | Right => self.next_tab(),
+            Char('k') | Up => self.prev(),
+            Char('j') | Down => self.next(),
+            Char('d') | Delete => self.destroy(),
+            */
         });
     }
 }

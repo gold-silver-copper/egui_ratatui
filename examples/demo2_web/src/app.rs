@@ -97,7 +97,7 @@ impl App {
     }
 
     */
-    fn prev(&mut self) {
+    pub fn prev(&mut self) {
         match self.tab {
             Tab::About => self.about_tab.prev_row(),
             Tab::Recipe => self.recipe_tab.prev(),
@@ -107,7 +107,7 @@ impl App {
         }
     }
 
-    fn next(&mut self) {
+    pub fn next(&mut self) {
         match self.tab {
             Tab::About => self.about_tab.next_row(),
             Tab::Recipe => self.recipe_tab.next(),
@@ -117,15 +117,15 @@ impl App {
         }
     }
 
-    fn prev_tab(&mut self) {
+    pub fn prev_tab(&mut self) {
         self.tab = self.tab.prev();
     }
 
-    fn next_tab(&mut self) {
+    pub fn next_tab(&mut self) {
         self.tab = self.tab.next();
     }
 
-    fn destroy(&mut self) {
+    pub fn destroy(&mut self) {
         self.mode = Mode::Destroy;
     }
 }
