@@ -74,6 +74,9 @@ impl NewCC for HelloApp {
             last_tick,
         }
     }
+    fn canvas_id() -> String {
+        "chart".into()
+    }
 }
 
 impl eframe::App for HelloApp {

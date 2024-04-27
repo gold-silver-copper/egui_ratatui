@@ -73,6 +73,9 @@ impl NewCC for HelloApp {
             last_tick,
         }
     }
+    fn canvas_id() -> String {
+        "scrollbar".into()
+    }
 }
 
 impl eframe::App for HelloApp {

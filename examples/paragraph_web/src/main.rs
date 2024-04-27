@@ -76,6 +76,9 @@ impl NewCC for HelloApp {
             last_tick,
         }
     }
+    fn canvas_id() -> String {
+        "paragraph".into()
+    }
 }
 
 impl eframe::App for HelloApp {
