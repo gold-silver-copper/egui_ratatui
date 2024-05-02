@@ -77,7 +77,7 @@ pub fn main() {
     .expect("epic fail");
 }
 ```
-![](https://github.com/Your_Repository_Name/Your_GIF_Name.gif)
+![](https://github.com/gold-silver-copper/ratatui_egui_wasm/blob/main/tyorhun.gif)
 
 REST IS FROM ETEMPLATE DOCS
 
