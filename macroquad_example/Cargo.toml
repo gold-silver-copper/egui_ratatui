@@ -10,3 +10,7 @@ egui = "0.27.2"
 
 macroquad = "0.4.5"
 egui-macroquad = { git = 'https://github.com/gold-silver-copper/egui-macroquad.git', branch="master" }
+
+ratatui = "0.26.2"
+ratframe = {version = "1.0.13", default-features = false}
+#disable defaults features for rat frame if you do not want to import eframe

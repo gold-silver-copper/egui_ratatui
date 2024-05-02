@@ -17,7 +17,7 @@ fn main() {
         .add_systems(Update, ui_example_system)
         .run();
 }
-
+// Render to the terminal and to egui , both are immediate mode
 fn ui_example_system(mut contexts: EguiContexts, mut termres: ResMut<BevyTerminal<RataguiBackend>>) {
     termres
         .terminal
@@ -38,13 +38,13 @@ fn ui_example_system(mut contexts: EguiContexts, mut termres: ResMut<BevyTermina
         ui.add(termres.terminal.backend_mut());
     });
 }
-
+// Create resource to hold the ratatui terminal
 #[derive(Resource)]
 struct BevyTerminal<RataguiBackend: ratatui::backend::Backend> {
     terminal: Terminal<RataguiBackend>,
 }
 
-// custom implementation for unusual values
+// Implement default on the resource to initialize it
 impl Default for BevyTerminal<RataguiBackend> {
     fn default() -> Self {
         let backend = RataguiBackend::new(100, 50);
