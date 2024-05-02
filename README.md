@@ -5,6 +5,9 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bevyengine/bevy/blob/master/LICENSE)
 [![Downloads](https://img.shields.io/crates/d/ratframe.svg)](https://crates.io/crates/ratframe)
 
+
+See bevy and macroquad folders for game engine examples
+
 RataguiBackend is the name of the backend/widget in code
 
 `cargo add ratframe`

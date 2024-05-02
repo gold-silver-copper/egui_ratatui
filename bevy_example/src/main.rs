@@ -18,8 +18,8 @@ fn main() {
         .run();
 }
 
-fn ui_example_system(mut contexts: EguiContexts, mut myterm: ResMut<BevyTerminal<RataguiBackend>>) {
-    myterm
+fn ui_example_system(mut contexts: EguiContexts, mut termres: ResMut<BevyTerminal<RataguiBackend>>) {
+    termres
         .terminal
         .draw(|frame| {
             let area = frame.size();
@@ -35,7 +35,7 @@ fn ui_example_system(mut contexts: EguiContexts, mut myterm: ResMut<BevyTerminal
         .expect("epic fail");
 
     egui::Window::new("Hello").show(contexts.ctx_mut(), |ui| {
-        ui.add(myterm.terminal.backend_mut());
+        ui.add(termres.terminal.backend_mut());
     });
 }
 
