@@ -8,18 +8,24 @@
 
 See bevy and macroquad folders for game engine examples
 
+See also:
+https://ratatui.rs/
+https://github.com/emilk/egui
+
+
 RataguiBackend is the name of the backend/widget in code
 
 `cargo add ratframe`
 
 `git clone https://github.com/gold-silver-copper/ratatui_egui_wasm.git`
+`cd ratatui_egui_wasm`
 
 This repo provides the Ratagui Backend, which is also a Widget for egui. So you can have a whole ratatui terminal inside of egui. Also since egui is so WASM compatible, this means we can use this to compile ratatui to WASM !
 Look at examples, you can run the basic ones by doing
 
 `cargo run --example hello_world_minimum`
 
-To run a web version, enter an example directory such as demo_web or colors_web , then simply execute in the directory
+To run a web version, enter an example directory such as demo_web or colors_web , then simply execute in the directory 'trunk serve'
 
 `cd examples/demo_web`
 
