@@ -71,6 +71,7 @@ pub fn main() {
     .expect("epic fail");
 }
 ```
+![](https://github.com/Your_Repository_Name/Your_GIF_Name.gif)
 
 REST IS FROM ETEMPLATE DOCS
 
