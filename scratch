@@ -6,3 +6,20 @@ Plus performance is like 100x times better :D
 Check out a web demo here: https://gold-silver-copper.github.io/
 (use the h j k l t keys to interact)
 You can find the repository here - https://github.com/gold-silver-copper/ratatui_egui_wasm
+
+
+
+
+Hello everyone ! I present to you version 1.1.1 of my crate - ratatui_egui_wasm.
+
+With this release I have added a good bevy example into the repo, check out the bevy_example folder
+
+It allows you to create Terminal User Interfaces with ratatui inside of EGUI , and is wasm compatible
+Internally the crate has fixed a few minor bugs that showed up during the process of porting all examples
+As well as slight performance improvements
+Good news: there have been ZERO changes to the user facing api, the api is extremely stable and production ready (tm)
+I have added a default features flag, which you can use to avoid importing eframe and web time into your project
+
+Check out an updated web demo here: https://gold-silver-copper.github.io/
+(use the h j k l t keys to interact)
+You can find the repository here - https://github.com/gold-silver-copper/ratatui_egui_wasm
