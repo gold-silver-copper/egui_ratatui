@@ -12,7 +12,6 @@ See also:
 https://ratatui.rs/
 https://github.com/emilk/egui
 
-
 RataguiBackend is the name of the backend/widget in code
 
 `cargo add ratframe`
@@ -34,6 +33,13 @@ To run a web version, enter an example directory such as demo_web or colors_web 
 or to build
 
 `trunk build --release`
+
+
+![](https://github.com/gold-silver-copper/ratatui_egui_wasm/blob/main/tyorhun.gif)
+![](https://github.com/gold-silver-copper/ratatui_egui_wasm/blob/main/screen1.png)
+![](https://github.com/gold-silver-copper/ratatui_egui_wasm/blob/main/screen2.png)
+
+
 
 The goal is for this to be the simplest way to write a TUI app for WASM in Rust. You can compile your app natively or for the web, and share it using Github Pages.
 
@@ -77,7 +83,7 @@ pub fn main() {
     .expect("epic fail");
 }
 ```
-![](https://github.com/gold-silver-copper/ratatui_egui_wasm/blob/main/tyorhun.gif)
+
 
 REST IS FROM ETEMPLATE DOCS
 
