@@ -46,27 +46,21 @@ impl eframe::egui::Widget for &mut RataguiBackend {
         ui.spacing_mut().item_spacing.y = 0.0;
         let elpsd = self.timestamp.elapsed().as_millis();
 
-        if elpsd > 200 {
-            self.blinking_fast = true;
-        }
-        if elpsd > 400 {
-            self.blinking_fast = false;
-        }
-        if elpsd > 600 {
-            self.blinking_fast = true;
-        }
-        if elpsd > 800 {
-            self.blinking_slow = true;
-            self.blinking_fast = false;
-        }
-        if elpsd > 1000 {
-            self.blinking_fast = true;
-        }
-
         if elpsd > 1200 {
             self.timestamp = Instant::now();
             self.blinking_fast = false;
             self.blinking_slow = false;
+        } else if elpsd > 1000 {
+            self.blinking_fast = true;
+        } else if elpsd > 800 {
+            self.blinking_slow = true;
+            self.blinking_fast = false;
+        } else if elpsd > 600 {
+            self.blinking_fast = true;
+        } else if elpsd > 400 {
+            self.blinking_fast = false;
+        } else if elpsd > 200 {
+            self.blinking_fast = true;
         }
 
         let av_size = ui.available_size();
