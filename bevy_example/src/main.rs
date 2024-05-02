@@ -9,27 +9,46 @@ use ratframe::RataguiBackend;
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
+        .init_resource::<BevyTerminal<RataguiBackend>>()
+        //Initialize the ratatui terminal
         .add_plugins(EguiPlugin)
+    
         // Systems that create Egui widgets should be run during the `CoreSet::Update` set,
         // or after the `EguiSet::BeginFrame` system (which belongs to the `CoreSet::PreUpdate` set).
         .add_systems(Update, ui_example_system)
         .run();
 }
 
-fn ui_example_system(mut contexts: EguiContexts) {
+fn ui_example_system(mut contexts: EguiContexts, mut myterm: ResMut<BevyTerminal<RataguiBackend>>,) {
     // Normally you do not want to create a new terminal every frame, but I am doing it here for simplicity
     // I reccomend creating either a resource or an entity to hold the terminal instead in a real program
-    let boop = RataguiBackend::new(100, 50);
-    let mut terminal = Terminal::new(boop).unwrap();
-    terminal
+   
+    myterm.terminal
     .draw(|frame| {
         let area = frame.size();
-        frame.render_widget(Paragraph::new("Hello Rataguiii").white().on_blue(), area);
+        frame.render_widget(Paragraph::new("Hello Rataguiii and hello bevy !! yaaaay").white().on_blue(), area);
     })
     .expect("epic fail");
 
     egui::Window::new("Hello").show(contexts.ctx_mut(), |ui| {
        
-        ui.add(terminal.backend_mut());
+        ui.add(myterm.terminal.backend_mut());
     });
+}
+
+
+
+#[derive(Resource)]
+struct BevyTerminal<RataguiBackend: ratatui::backend::Backend> {
+    terminal: Terminal<RataguiBackend>,
+   
+}
+
+// custom implementation for unusual values
+impl Default for BevyTerminal<RataguiBackend> {
+    fn default() -> Self {
+        let boop = RataguiBackend::new(100, 50);
+    let mut terminal = Terminal::new(boop).unwrap();
+    BevyTerminal{terminal}
+    }
 }

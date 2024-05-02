@@ -28,6 +28,8 @@ or to build
 
 The goal is for this to be the simplest way to write a TUI app for WASM in Rust. You can compile your app natively or for the web, and share it using Github Pages.
 
+You can remove the eframe dependency and use another backend such as bevy or macroquad by setting default-features = false for ratframe
+
 Here is the simplest hello world
 
 ```rust
