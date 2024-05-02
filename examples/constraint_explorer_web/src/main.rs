@@ -86,30 +86,60 @@ impl eframe::App for HelloApp {
         self.app.draw(&mut self.terminal);
 
         egui::CentralPanel::default().show(ctx, |ui| {
-            let boop = ui.input(|i| i.keys_down.to_owned());
+       
 
-            for kd in boop.iter() {
-                match kd {
-                    egui::Key::Q => panic!("HAVE A NICE WEEK"),
-                    egui::Key::Num1 => self.app.swap_constraint(ConstraintName::Min),
-                    egui::Key::Num2 => self.app.swap_constraint(ConstraintName::Max),
-                    egui::Key::Num3 => self.app.swap_constraint(ConstraintName::Length),
-                    egui::Key::Num4 => self.app.swap_constraint(ConstraintName::Percentage),
-                    egui::Key::Num5 => self.app.swap_constraint(ConstraintName::Ratio),
-                    egui::Key::Num6 => self.app.swap_constraint(ConstraintName::Fill),
-                    egui::Key::Plus => self.app.increment_spacing(),
-                    egui::Key::Minus => self.app.decrement_spacing(),
-                    egui::Key::X => self.app.delete_block(),
-                    egui::Key::A => self.app.insert_block(),
-                    egui::Key::K => self.app.increment_value(),
-                    egui::Key::J => self.app.decrement_value(),
-                    egui::Key::H => self.app.prev_block(),
-                    egui::Key::L => self.app.next_block(),
-                    _ => (),
-                }
-            }
+         
+
+           
 
             ui.add(self.terminal.backend_mut());
+            if ui.input(|i| i.key_released(egui::Key::Q)) {
+                panic!("HAVE A NICE WEEK");
+            }
+            if ui.input(|i| i.key_released(egui::Key::Num1)) {
+                self.app.swap_constraint(ConstraintName::Min);
+            }
+            if ui.input(|i| i.key_released(egui::Key::Num2)) {
+                self.app.swap_constraint(ConstraintName::Max);
+            }
+            if ui.input(|i| i.key_released(egui::Key::Num3)) {
+                self.app.swap_constraint(ConstraintName::Length);
+            }
+            if ui.input(|i| i.key_released(egui::Key::Num4)) {
+                self.app.swap_constraint(ConstraintName::Percentage);
+            }
+            if ui.input(|i| i.key_released(egui::Key::Num5)) {
+                self.app.swap_constraint(ConstraintName::Ratio);
+            }
+            if ui.input(|i| i.key_released(egui::Key::Num6)) {
+                self.app.swap_constraint(ConstraintName::Fill);
+            }
+            
+            if ui.input(|i| i.key_released(egui::Key::Equals)) {
+                self.app.increment_spacing();
+            }
+            if ui.input(|i| i.key_released(egui::Key::Minus)) {
+                self.app.decrement_spacing();
+            }
+            if ui.input(|i| i.key_released(egui::Key::X)) {
+                self.app.delete_block();
+            }
+            if ui.input(|i| i.key_released(egui::Key::A)) {
+                self.app.insert_block();
+            }
+            if ui.input(|i| i.key_released(egui::Key::K))  || ui.input(|i| i.key_released(egui::Key::ArrowUp)) {
+                self.app.increment_value();
+            }
+            if ui.input(|i| i.key_released(egui::Key::J))  || ui.input(|i| i.key_released(egui::Key::ArrowDown)) {
+                self.app.decrement_value();
+            }
+            if ui.input(|i| i.key_released(egui::Key::H)) || ui.input(|i| i.key_released(egui::Key::ArrowLeft)) {
+                self.app.prev_block();
+            }
+            if ui.input(|i| i.key_released(egui::Key::L)) || ui.input(|i| i.key_released(egui::Key::ArrowRight)) {
+                self.app.next_block();
+            }
+       
         });
     }
 }

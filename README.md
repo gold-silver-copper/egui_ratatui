@@ -5,9 +5,13 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bevyengine/bevy/blob/master/LICENSE)
 [![Downloads](https://img.shields.io/crates/d/ratframe.svg)](https://crates.io/crates/ratframe)
 
+
+See bevy and macroquad folders for game engine examples
+
 See also:
 https://ratatui.rs/
 https://github.com/emilk/egui
+
 
 RataguiBackend is the name of the backend/widget in code
 
@@ -32,6 +36,8 @@ or to build
 `trunk build --release`
 
 The goal is for this to be the simplest way to write a TUI app for WASM in Rust. You can compile your app natively or for the web, and share it using Github Pages.
+
+You can remove the eframe dependency and use another backend such as bevy or macroquad by setting default-features = false for ratframe
 
 Here is the simplest hello world
 
@@ -71,6 +77,7 @@ pub fn main() {
     .expect("epic fail");
 }
 ```
+![](https://github.com/Your_Repository_Name/Your_GIF_Name.gif)
 
 REST IS FROM ETEMPLATE DOCS
 
