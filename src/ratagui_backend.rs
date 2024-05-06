@@ -1,12 +1,13 @@
 //! This module provides the `RataguiBackend` implementation for the [`Backend`] trait.
 //! It is used in the integration tests to verify the correctness of the library.
 
-use eframe::egui::text::TextWrapping;
-use eframe::egui::{Label, Response, Stroke, Ui};
-use eframe::epaint::{
+use egui::text::TextWrapping;
+use egui::{Label, Response, Stroke, Ui};
+use egui::epaint::{
     text::{LayoutJob, TextFormat},
     Color32, FontFamily, FontId, Fonts,
 };
+
 
 use ratatui::style::{Color, Modifier};
 use std::f32::INFINITY;
@@ -40,7 +41,7 @@ pub struct RataguiBackend {
     blinking_slow: bool,
     blinking_fast: bool,
 }
-impl eframe::egui::Widget for &mut RataguiBackend {
+impl egui::Widget for &mut RataguiBackend {
     fn ui(self, ui: &mut Ui) -> Response {
         ui.spacing_mut().item_spacing.x = 0.0;
         ui.spacing_mut().item_spacing.y = 0.0;
