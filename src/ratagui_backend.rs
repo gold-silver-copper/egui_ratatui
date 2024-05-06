@@ -41,7 +41,7 @@ pub struct RataguiBackend {
     blinking_slow: bool,
     blinking_fast: bool,
 }
-impl eframe::egui::Widget for &mut RataguiBackend {
+impl egui::Widget for &mut RataguiBackend {
     fn ui(self, ui: &mut Ui) -> Response {
         ui.spacing_mut().item_spacing.x = 0.0;
         ui.spacing_mut().item_spacing.y = 0.0;
