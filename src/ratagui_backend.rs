@@ -1,9 +1,9 @@
 //! This module provides the `RataguiBackend` implementation for the [`Backend`] trait.
 //! It is used in the integration tests to verify the correctness of the library.
 
-use eframe::egui::text::TextWrapping;
-use eframe::egui::{Label, Response, Stroke, Ui};
-use eframe::epaint::{
+use egui::text::TextWrapping;
+use egui::{Label, Response, Stroke, Ui};
+use egui::epaint::{
     text::{LayoutJob, TextFormat},
     Color32, FontFamily, FontId, Fonts,
 };
