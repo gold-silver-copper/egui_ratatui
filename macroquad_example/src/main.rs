@@ -3,7 +3,7 @@ use ratatui::{
     prelude::{Stylize, Terminal},
     widgets::{Paragraph,Wrap},
 };
-use ratframe::RataguiBackend;
+use egui_ratatui::RataguiBackend;
 
 #[macroquad::main("egui with macroquad")]
 async fn main() {

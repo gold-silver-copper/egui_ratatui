@@ -4,7 +4,7 @@ use ratatui::{
     prelude::{Stylize, Terminal},
     widgets::{Block, Borders, Paragraph, Wrap},
 };
-use ratframe::RataguiBackend;
+use egui_ratatui::RataguiBackend;
 
 fn main() {
     App::new()
