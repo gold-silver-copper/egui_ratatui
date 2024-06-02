@@ -1,16 +1,16 @@
-Hello everyone ! I present to you my newest crate - ratatui_egui_wasm .
+Hello everyone ! I present to you my newest crate - egui_ratatui .
 It allows you to create Terminal User Interfaces with ratatui inside of EGUI , and is wasm compatible
 Previously I had made bevy_ratatui , but it was not very good , now I created a new backend for ratatui which uses egui.
-Thus this new crate supercedes my old bevy_ratatui crate , since now you can use bevy_egui + ratatui_egui_wasm to get a much better experience
+Thus this new crate supercedes my old bevy_ratatui crate , since now you can use bevy_egui + egui_ratatui to get a much better experience
 Plus performance is like 100x times better :D
 Check out a web demo here: https://gold-silver-copper.github.io/
 (use the h j k l t keys to interact)
-You can find the repository here - https://github.com/gold-silver-copper/ratatui_egui_wasm
+You can find the repository here - https://github.com/gold-silver-copper/egui_ratatui
 
 
 
 
-Hello everyone ! I present to you version 1.1.1 of my crate - ratatui_egui_wasm.
+Hello everyone ! I present to you version 1.1.1 of my crate - egui_ratatui.
 
 With this release I have added a good bevy example into the repo, check out the bevy_example folder
 
@@ -22,4 +22,4 @@ I have added a default features flag, which you can use to avoid importing efram
 
 Check out an updated web demo here: https://gold-silver-copper.github.io/
 (use the h j k l t keys to interact)
-You can find the repository here - https://github.com/gold-silver-copper/ratatui_egui_wasm
+You can find the repository here - https://github.com/gold-silver-copper/egui_ratatui

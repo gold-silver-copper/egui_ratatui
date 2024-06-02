@@ -7,7 +7,7 @@ include = ["LICENSE-APACHE", "LICENSE-MIT", "**/*.rs", "Cargo.toml"]
 rust-version = "1.76"
 description = "WASM ratatui with egui works with bevy and macroquad and eframe"
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/gold-silver-copper/ratatui_egui_wasm"
+repository = "https://github.com/gold-silver-copper/egui_ratatui"
 
 
 [dev-dependencies]
