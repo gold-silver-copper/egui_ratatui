@@ -2,8 +2,8 @@ var cacheName = "egui-template-pwa";
 var filesToCache = [
   "./",
   "./index.html",
-  "./ratframe.js",
-  "./ratframe_bg.wasm",
+  "./egui_ratatui.js",
+  "./egui_ratatui_bg.wasm",
 ];
 
 /* Start the service worker and cache all of the app's content */

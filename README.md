@@ -1,9 +1,9 @@
-# ratframe : egui widget + ratatui backend (WASM)
+# egui_ratatui : egui widget + ratatui backend (WASM)
 
-[![Crates.io](https://img.shields.io/crates/v/ratframe.svg)](https://crates.io/crates/ratframe)
-[![Documentation](https://docs.rs/ratframe/badge.svg)](https://docs.rs/ratframe/latest/ratframe/)
+[![Crates.io](https://img.shields.io/crates/v/egui_ratatui.svg)](https://crates.io/crates/egui_ratatui)
+[![Documentation](https://docs.rs/egui_ratatui/badge.svg)](https://docs.rs/egui_ratatui/latest/egui_ratatui/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bevyengine/bevy/blob/master/LICENSE)
-[![Downloads](https://img.shields.io/crates/d/ratframe.svg)](https://crates.io/crates/ratframe)
+[![Downloads](https://img.shields.io/crates/d/egui_ratatui.svg)](https://crates.io/crates/egui_ratatui)
 
 
 See bevy and macroquad folders for game engine examples
@@ -14,7 +14,7 @@ https://github.com/emilk/egui
 
 RataguiBackend is the name of the backend/widget in code
 
-`cargo add ratframe`
+`cargo add egui_ratatui`
 
 `git clone https://github.com/gold-silver-copper/ratatui_egui_wasm.git`
 `cd ratatui_egui_wasm`
@@ -43,7 +43,7 @@ or to build
 
 The goal is for this to be the simplest way to write a TUI app for WASM in Rust. You can compile your app natively or for the web, and share it using Github Pages.
 
-You can remove the eframe dependency and use another backend such as bevy or macroquad by setting default-features = false for ratframe
+You can remove the eframe dependency and use another backend such as bevy or macroquad by setting default-features = false for egui_ratatui
 
 Here is the simplest hello world
 
@@ -54,7 +54,7 @@ use ratatui::{
     prelude::{Stylize, Terminal},
     widgets::Paragraph,
 };
-use ratframe::RataguiBackend;
+use egui_ratatui::RataguiBackend;
 
 pub fn main() {
     let options = eframe::NativeOptions {
