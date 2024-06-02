@@ -22,15 +22,11 @@ RataguiBackend is the name of the backend/widget in code
 
 `cargo add egui_ratatui`
 
-
 `git clone https://github.com/gold-silver-copper/egui_ratatui.git`
-
 
 `cd egui_ratatui`
 
-
 `cd bevy_example`
-
 
 `cargo run`
 
