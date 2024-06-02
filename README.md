@@ -7,6 +7,8 @@
 
 
 See Bevy and Macroquad folders for game engine examples
+
+
 Web Demo : https://gold-silver-copper.github.io/ (works best on firefox)
 
 
@@ -22,8 +24,14 @@ RataguiBackend is the name of the backend/widget in code
 
 
 `git clone https://github.com/gold-silver-copper/egui_ratatui.git`
+
+
 `cd egui_ratatui`
+
+
 `cd bevy_example`
+
+
 `cargo run`
 
 
@@ -34,7 +42,9 @@ This repo provides the Ratagui Backend, which is also a Widget for egui. So you 
 If you would like more information about compiling to WASM please consult the relevant EGUI backend documentation:
 
 Bevy: https://bevy-cheatbook.github.io/platforms/wasm.html 
+
 Macroquad: https://macroquad.rs/articles/wasm/ 
+
 eframe: https://github.com/emilk/eframe_template 
 
 
