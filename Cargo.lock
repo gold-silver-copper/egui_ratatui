@@ -981,6 +981,23 @@ dependencies = [
 ]
 
 [[package]]
+name = "egui_ratatui"
+version = "0.0.1"
+dependencies = [
+ "argh",
+ "eframe",
+ "egui",
+ "env_logger",
+ "itertools",
+ "log",
+ "once_cell",
+ "rand",
+ "ratatui",
+ "wasm-bindgen-futures",
+ "web-time 1.1.0",
+]
+
+[[package]]
 name = "either"
 version = "1.11.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2131,23 +2148,6 @@ dependencies = [
  "strum",
  "unicode-segmentation",
  "unicode-width",
-]
-
-[[package]]
-name = "ratframe"
-version = "1.1.5"
-dependencies = [
- "argh",
- "eframe",
- "egui",
- "env_logger",
- "itertools",
- "log",
- "once_cell",
- "rand",
- "ratatui",
- "wasm-bindgen-futures",
- "web-time 1.1.0",
 ]
 
 [[package]]
