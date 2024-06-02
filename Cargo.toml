@@ -1,13 +1,13 @@
 [package]
 name = "ratframe"
-version = "1.1.5"
+version = "2.0.0"
 authors = ["gold-silver-copper"]
 edition = "2021"
 include = ["LICENSE-APACHE", "LICENSE-MIT", "**/*.rs", "Cargo.toml"]
 rust-version = "1.76"
-description = "WASM ratatui with egui"
+description = "DEPRECATED GO TO 'egui_ratatui"
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/gold-silver-copper/ratatui_egui_wasm"
+repository = "https://github.com/gold-silver-copper/egui_ratatui"
 
 [package.metadata.docs.rs]
 all-features = true
