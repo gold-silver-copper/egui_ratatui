@@ -23,3 +23,14 @@ I have added a default features flag, which you can use to avoid importing efram
 Check out an updated web demo here: https://gold-silver-copper.github.io/
 (use the h j k l t keys to interact)
 You can find the repository here - https://github.com/gold-silver-copper/egui_ratatui
+
+
+Hello everyone ! I have renamed the crate 'ratframe' to 'egui_ratatui' for clarity and discoverability.
+I removed unneccesary code and dependencies, there are no API changes, simply rename ratframe to egui_ratatui in all cases.
+The old version can be found in the PRE-RENAME branch, it contains the eframe examples which I have cut from this release.
+This release only contains bevy and macroquad examples. Absolutely feel free to contact me with any questions.
+Find the new version here:
+
+https://github.com/gold-silver-copper/egui_ratatui
+
+https://crates.io/crates/egui_ratatui
