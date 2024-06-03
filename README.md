@@ -5,6 +5,8 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bevyengine/bevy/blob/master/LICENSE)
 [![Downloads](https://img.shields.io/crates/d/egui_ratatui.svg)](https://crates.io/crates/egui_ratatui) + [![Downloads](https://img.shields.io/crates/d/ratframe.svg)](https://crates.io/crates/ratframe)
 
+Discord: https://discord.gg/FGUu4g4sMz https://discord.gg/FGUu4g4sMz 
+
 
 See Bevy and Macroquad folders for game engine examples
 
