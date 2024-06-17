@@ -65,8 +65,8 @@ impl egui::Widget for &mut RataguiBackend {
         }
 
         let av_size = ui.available_size();
-        let av_width = av_size.x;
-        let av_height = av_size.y;
+        let av_width = (av_size.x).clamp(1.0, 2500.0);
+        let av_height = (av_size.y).clamp(1.0, 2500.0);
 
         //   let char_height = self.get_font_size() as f32;
         let char_height = ui.fonts(|fx| fx.row_height(&self.regular_font));
