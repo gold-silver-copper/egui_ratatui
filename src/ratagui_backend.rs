@@ -64,15 +64,22 @@ impl egui::Widget for &mut RataguiBackend {
             self.blinking_fast = true;
         }
 
-        let av_size = ui.available_size();
-        let av_width = (av_size.x).clamp(1.0, 2500.0);
-        let av_height = (av_size.y).clamp(1.0, 2500.0);
-
         //   let char_height = self.get_font_size() as f32;
         let char_height = ui.fonts(|fx| fx.row_height(&self.regular_font));
         let char_width = ui.fonts(|fx| self.get_font_width(fx));
+        println!("{char_width}");
+        let max_width = char_width * 240.0;
+        let max_height = char_height * 240.0;
 
-        let available_chars_width = (av_width / (char_width)) as u16;
+
+        let av_size = ui.available_size();
+        let av_width = (av_size.x).clamp(1.0, max_width);
+        let av_height = (av_size.y).clamp(1.0, max_height);
+
+        
+
+
+        let available_chars_width = ((av_width  / (char_width )) as u16);
         let available_chars_height = (av_height / (char_height)) as u16;
         let cur_size = self.size().expect("COULD NOT GET CURRENT BACKEND SIZE");
 
@@ -83,7 +90,7 @@ impl egui::Widget for &mut RataguiBackend {
         let cur_buf = self.buffer();
 
         let singular_wrapping = TextWrapping {
-            max_width: INFINITY,
+            max_width: max_width,
             max_rows: 1,
             break_anywhere: true,
             overflow_character: None,
@@ -255,7 +262,7 @@ impl RataguiBackend {
     }
     pub fn get_font_width(&self, fontiki: &Fonts) -> f32 {
         let fid = self.regular_font.clone();
-        fontiki.glyph_width(&fid, 'A')
+        fontiki.glyph_width(&fid, '█')
     }
 
     pub fn rat_to_egui_color(rat_col: &ratatui::style::Color, is_a_fg: bool) -> Color32 {
