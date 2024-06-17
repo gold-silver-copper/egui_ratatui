@@ -52,3 +52,6 @@ eframe: https://github.com/emilk/eframe_template
 
 
 Previously this repo was called 'ratatatui_egui_wasm' and the crate was called 'ratframe' , I decided to rename it to egui_ratatui for clarity and discoverability , please see the PRE-RENAME branch for the last version of ratframe.
+
+
+Warning: seems theres currently a weird bug with high DPI displays that can break the render a bit. This bug is also pushing me to remove the internal use of the Label widget for wrapping the text layout. Will do that soon enough.
