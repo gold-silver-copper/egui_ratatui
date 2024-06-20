@@ -1,6 +1,6 @@
 [package]
 name = "egui_ratatui"
-version = "0.0.5"
+version = "0.0.8"
 authors = ["gold-silver-copper"]
 edition = "2021"
 include = ["LICENSE-APACHE", "LICENSE-MIT", "**/*.rs", "Cargo.toml"]
@@ -10,19 +10,12 @@ license = "MIT OR Apache-2.0"
 repository = "https://github.com/gold-silver-copper/egui_ratatui"
 
 
-[dev-dependencies]
-once_cell = { version = "1.19.0" }
-rand = { version = "0.8.5", default-features = false, features = ["small_rng"] }
-argh = "0.1.12"
-itertools = "0.12.1"
-
-
 [lib]
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-ratatui = { version = "0.26.2", default-features = false }
-egui = "0.27.2"
+ratatui = { version = ">=0.26", default-features = false }
+egui = { version = ">=0.27", default-features = false }
 
 web-time = {version = "1" }
 
