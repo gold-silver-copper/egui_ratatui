@@ -107,22 +107,8 @@ impl TerminalLine {
             }
         });
 
-        if selectable {
-            // On touch screens (e.g. mobile in `eframe` web), should
-            // dragging select text, or scroll the enclosing [`ScrollArea`] (if any)?
-            // Since currently copying selected text in not supported on `eframe` web,
-            // we prioritize touch-scrolling:
-            let allow_drag_to_select = ui.input(|i| !i.has_touch_screen());
-
-            let mut select_sense = if allow_drag_to_select {
-                Sense::click_and_drag()
-            } else {
-                Sense::click()
-            };
-            select_sense.focusable = false; // Don't move focus to labels with TAB key.
-
-            sense = sense.union(select_sense);
-        }
+        
+      
 
         if let WidgetText::Galley(galley) = self.text {
             // If the user said "use this specific galley", then just use it:
@@ -144,38 +130,7 @@ impl TerminalLine {
         let wrap = !truncate && self.wrap.unwrap_or_else(|| ui.wrap_text());
         let available_width = ui.available_width();
 
-        if wrap
-            && ui.layout().main_dir() == Direction::LeftToRight
-            && ui.layout().main_wrap()
-            && available_width.is_finite()
         {
-            // On a wrapping horizontal layout we want text to start after the previous widget,
-            // then continue on the line below! This will take some extra work:
-
-            let cursor = ui.cursor();
-            let first_row_indentation = available_width - ui.available_size_before_wrap().x;
-            egui_assert!(first_row_indentation.is_finite());
-
-            layout_job.wrap.max_width = available_width;
-            layout_job.first_row_min_height = cursor.height();
-            layout_job.halign = Align::Min;
-            layout_job.justify = false;
-            if let Some(first_section) = layout_job.sections.first_mut() {
-                first_section.leading_space = first_row_indentation;
-            }
-            let galley = ui.fonts(|fonts| fonts.layout_job(layout_job));
-
-            let pos = pos2(ui.max_rect().left(), ui.cursor().top());
-            assert!(!galley.rows.is_empty(), "Galleys are never empty");
-            // collect a response from many rows:
-            let rect = galley.rows[0].rect.translate(vec2(pos.x, pos.y));
-            let mut response = ui.allocate_rect(rect, sense);
-            for row in galley.rows.iter().skip(1) {
-                let rect = row.rect.translate(vec2(pos.x, pos.y));
-                response |= ui.allocate_rect(rect, sense);
-            }
-            (pos, galley, response)
-        } else {
             if truncate {
                 layout_job.wrap.max_width = available_width;
                 layout_job.wrap.max_rows = 1;
@@ -193,11 +148,10 @@ impl TerminalLine {
 
             let galley = ui.fonts(|fonts| fonts.layout_job(layout_job));
             let (rect, response) = ui.allocate_exact_size(galley.size(), sense);
-            let galley_pos = match galley.job.halign {
-                Align::LEFT => rect.left_top(),
-                Align::Center => rect.center_top(),
-                Align::RIGHT => rect.right_top(),
-            };
+            let galley_pos = 
+                rect.left_top();
+               
+         
             (galley_pos, galley, response)
         }
     }
@@ -213,7 +167,7 @@ impl Widget for TerminalLine {
         let selectable = self.selectable;
 
         let (galley_pos, galley, mut response) = self.layout_in_ui(ui);
-        response.widget_info(|| WidgetInfo::labeled(WidgetType::Label, galley.text()));
+       // response.widget_info(|| WidgetInfo::labeled(WidgetType::Label, galley.text()));
 
         if ui.is_rect_visible(response.rect) {
            
