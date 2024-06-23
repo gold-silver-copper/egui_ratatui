@@ -20,6 +20,8 @@ use ratatui::{
     layout::{Rect, Size},
 };
 
+use crate::TerminalLine;
+
 ///The RataguiBackend is the widget+backend itself , from which you can make a ratatui terminal ,
 /// then you can do ui.add(terminal.backend_mut()) inside an egui context    .
 /// Spawn with RataguiBackend::new() or RataguiBackend::new_with_fonts()   .
@@ -180,7 +182,7 @@ impl egui::Widget for &mut RataguiBackend {
                 job.append(cur_cell.symbol(), 0.0, tf.clone());
 
                 if x == (available_chars_width - 1) {
-                    let end = ui.add(Label::new(job.clone()));
+                    let end = ui.add(TerminalLine::new(job.clone()));
                     if y == (available_chars_height - 1) {
                         return end;
                     }

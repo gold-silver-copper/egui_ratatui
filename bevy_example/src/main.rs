@@ -35,6 +35,7 @@ fn ui_example_system(mut contexts: EguiContexts, mut termres: ResMut<BevyTermina
         .expect("epic fail");
 
     egui::Window::new("Hello").show(contexts.ctx_mut(), |ui| {
+     //   ui.set_opacity(0.5);
         ui.add(termres.terminal.backend_mut());
     });
 }
