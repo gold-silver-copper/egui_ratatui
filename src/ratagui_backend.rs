@@ -71,8 +71,8 @@ impl egui::Widget for &mut RataguiBackend {
       
       // it is limited to this because the ratatui buffer is u8
       // edit: its no longer limited to u8, its u16 now, capping it to 1000 just in case
-        let max_width = char_width * 1000.0;
-        let max_height = char_height * 1000.0;
+        let max_width = char_width * 250.0;
+        let max_height = char_height * 250.0;
 
 
         let av_size = ui.available_size();
