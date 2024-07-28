@@ -84,7 +84,7 @@ impl egui::Widget for &mut RataguiBackend {
 
         // there are weird issues with high dpi displays relating to native pixels per point and zoom factor 
         let  available_chars_width = ((av_width  / (char_width )) as u16);
-        println!("av chars width: {:#?}",available_chars_width);
+        //println!("av chars width: {:#?}",available_chars_width);
             
    
         let available_chars_height = (av_height / (char_height)) as u16;
