@@ -40,7 +40,7 @@ impl TerminalLine {
     /// You can also use [`crate::Style::wrap`].
     #[inline]
     pub fn wrap(mut self, wrap: bool) -> Self {
-        self.wrap = Some(wrap);
+        self.wrap = Some(false);
         self.truncate = false;
         self
     }
@@ -56,8 +56,8 @@ impl TerminalLine {
     /// Calling `truncate` will override [`Self::wrap`].
     #[inline]
     pub fn truncate(mut self, truncate: bool) -> Self {
-        self.wrap = None;
-        self.truncate = truncate;
+        self.wrap = Some(false);
+        self.truncate = false;
         self
     }
 
@@ -66,7 +66,7 @@ impl TerminalLine {
     /// Overrides [`crate::style::Interaction::selectable_labels`].
     #[inline]
     pub fn selectable(mut self, selectable: bool) -> Self {
-        self.selectable = Some(selectable);
+        self.selectable = Some(false);
         self
     }
 
@@ -114,9 +114,8 @@ impl TerminalLine {
             // If the user said "use this specific galley", then just use it:
             let (rect, response) = ui.allocate_exact_size(galley.size(), sense);
             let pos = match galley.job.halign {
-                Align::LEFT => rect.left_top(),
-                Align::Center => rect.center_top(),
-                Align::RIGHT => rect.right_top(),
+                _ => rect.left_top(),
+               
             };
             return (pos, galley, response);
         }
@@ -131,15 +130,11 @@ impl TerminalLine {
         let available_width = ui.available_width();
 
         {
-            if truncate {
+           
                 layout_job.wrap.max_width = available_width;
                 layout_job.wrap.max_rows = 1;
                 layout_job.wrap.break_anywhere = true;
-            } else if wrap {
-                layout_job.wrap.max_width = available_width;
-            } else {
-                layout_job.wrap.max_width = f32::INFINITY;
-            };
+            
 
             
                 layout_job.halign = ui.layout().horizontal_placement();
