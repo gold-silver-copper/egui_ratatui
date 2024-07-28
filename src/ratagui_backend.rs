@@ -84,7 +84,7 @@ impl egui::Widget for &mut RataguiBackend {
 
         // there are weird issues with high dpi displays relating to native pixels per point and zoom factor 
         let mut available_chars_width = ((av_width  / (char_width )) as u16);
-        if available_chars_width > 20 {available_chars_width=available_chars_width-5;}
+        if available_chars_width > 20 {available_chars_width=available_chars_width;}
         let available_chars_height = (av_height / (char_height)) as u16;
         let cur_size = self.size().expect("COULD NOT GET CURRENT BACKEND SIZE");
 
