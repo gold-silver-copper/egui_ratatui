@@ -4,7 +4,9 @@ use ratatui::{
     widgets::{Paragraph,Wrap},
 };
 use egui_ratatui::RataguiBackend;
+use ratatui::widgets::Block;
 
+use ratatui::widgets::Borders;
 #[macroquad::main("egui with macroquad")]
 async fn main() {
     let boop = RataguiBackend::new(100, 50);
@@ -17,7 +19,7 @@ async fn main() {
         terminal
         .draw(|frame| {
             let area = frame.size();
-            frame.render_widget(Paragraph::new("Hello Rataguiii and hello macroquad yayyyy weeee ").white().on_blue().wrap(Wrap { trim: false }), area);
+            frame.render_widget(Paragraph::new("Hello Rataguiii and hello macroquad yayyyy weeee ").block(Block::new().title("LOL").borders(Borders::ALL)).white().on_blue().wrap(Wrap { trim: false }), area);
         })
         .expect("epic fail");
     

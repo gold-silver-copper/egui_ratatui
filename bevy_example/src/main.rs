@@ -25,7 +25,7 @@ fn ui_example_system(mut contexts: EguiContexts, mut termres: ResMut<BevyTermina
             let area = frame.size();
             let textik = format!("Hello bevy ! the window area is {}", area);
             frame.render_widget(
-                Paragraph::new(textik)
+                Paragraph::new(textik).block(Block::new().title("LOL").borders(Borders::ALL))
                     .white()
                     .on_blue()
                     .wrap(Wrap { trim: false }),

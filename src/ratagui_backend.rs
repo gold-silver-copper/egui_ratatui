@@ -70,8 +70,9 @@ impl egui::Widget for &mut RataguiBackend {
         let char_width = ui.fonts(|fx| self.get_font_width(fx));
       
       // it is limited to this because the ratatui buffer is u8
-        let max_width = char_width * 250.0;
-        let max_height = char_height * 250.0;
+      // edit: its no longer limited to u8, its u16 now, capping it to 1000 just in case
+        let max_width = char_width * 1000.0;
+        let max_height = char_height * 1000.0;
 
 
         let av_size = ui.available_size();
@@ -82,9 +83,12 @@ impl egui::Widget for &mut RataguiBackend {
 
 
         // there are weird issues with high dpi displays relating to native pixels per point and zoom factor 
-        let available_chars_width = ((av_width  / (char_width )) as u16);
+        let mut available_chars_width = ((av_width  / (char_width )) as u16);
+        if available_chars_width > 20 {available_chars_width=available_chars_width-5;}
         let available_chars_height = (av_height / (char_height)) as u16;
         let cur_size = self.size().expect("COULD NOT GET CURRENT BACKEND SIZE");
+
+       // println!("av chars width: {:#?}",available_chars_width);
 
         if (cur_size.width != available_chars_width) || (cur_size.height != available_chars_height)
         {
@@ -265,7 +269,9 @@ impl RataguiBackend {
     }
     pub fn get_font_width(&self, fontiki: &Fonts) -> f32 {
         let fid = self.regular_font.clone();
-        fontiki.glyph_width(&fid, '█')
+       let widik =  fontiki.glyph_width(&fid, '█');
+      // println!("widik is {:#?}",widik);
+       widik
     }
 
     pub fn rat_to_egui_color(rat_col: &ratatui::style::Color, is_a_fg: bool) -> Color32 {
