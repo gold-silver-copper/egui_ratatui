@@ -70,8 +70,8 @@ impl egui::Widget for &mut RataguiBackend {
 
         //magic values lol i dont care anymore :D
 
-        let char_height = ui.fonts(|fx| fx.row_height(&self.regular_font)) *1.005;
-        let char_width = ui.fonts(|fx| self.get_font_width(fx)) * 1.015;
+        let char_height = ui.fonts(|fx| fx.row_height(&self.regular_font)) *1.005 ;
+        let char_width = ui.fonts(|fx| self.get_font_width(fx)) *1.01;
       
       // it is limited to this because the ratatui buffer is u8
    
@@ -80,6 +80,12 @@ impl egui::Widget for &mut RataguiBackend {
 
 
         let av_size = ui.available_size();
+
+        println!("av size {:#?}",av_size);
+
+
+        let boop = ui.painter().round_vec_to_pixels(av_size);
+        println!("boop {:#?}",boop);
         let av_width = (av_size.x).clamp(1.0, max_width);
         let av_height = (av_size.y).clamp(1.0, max_height);
 
@@ -87,11 +93,11 @@ impl egui::Widget for &mut RataguiBackend {
 
 
         // there are weird issues with high dpi displays relating to native pixels per point and zoom factor 
-        let  available_chars_width = ((av_width  / (char_width )) as u16);
+        let  available_chars_width = ((av_width  / (char_width )) as u16) -1;
         //println!("av chars width: {:#?}",available_chars_width);
             
    
-        let available_chars_height = (av_height / (char_height)) as u16;
+        let available_chars_height = (av_height / (char_height)) as u16 ;
         let cur_size = self.size().expect("COULD NOT GET CURRENT BACKEND SIZE");
 
        
