@@ -66,11 +66,15 @@ impl egui::Widget for &mut RataguiBackend {
             self.blinking_fast = true;
         }
 
-        let char_height = ui.fonts(|fx| fx.row_height(&self.regular_font)) *1.001;
-        let char_width = ui.fonts(|fx| self.get_font_width(fx)) * 1.018;
+
+
+        //magic values lol i dont care anymore :D
+
+        let char_height = ui.fonts(|fx| fx.row_height(&self.regular_font)) *1.005;
+        let char_width = ui.fonts(|fx| self.get_font_width(fx)) * 1.015;
       
       // it is limited to this because the ratatui buffer is u8
-      // edit: its no longer limited to u8, its u16 now, capping it to 1000 just in case
+   
         let max_width = char_width * 250.0;
         let max_height = char_height * 250.0;
 
