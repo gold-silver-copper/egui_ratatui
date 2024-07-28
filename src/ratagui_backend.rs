@@ -66,16 +66,22 @@ impl egui::Widget for &mut RataguiBackend {
             self.blinking_fast = true;
         }
 
-        let char_height = ui.fonts(|fx| fx.row_height(&self.regular_font));
-        let char_width = ui.fonts(|fx| self.get_font_width(fx));
+
+
+        //magic values lol i dont care anymore :D
+
+        let char_height = ui.fonts(|fx| fx.row_height(&self.regular_font)) *1.008 ;
+        let char_width = ui.fonts(|fx| self.get_font_width(fx)) *1.018;
       
       // it is limited to this because the ratatui buffer is u8
-      // edit: its no longer limited to u8, its u16 now, capping it to 1000 just in case
-        let max_width = char_width * 1000.0;
-        let max_height = char_height * 1000.0;
+   
+        let max_width = char_width * 250.0;
+        let max_height = char_height * 250.0;
 
 
         let av_size = ui.available_size();
+
+      
         let av_width = (av_size.x).clamp(1.0, max_width);
         let av_height = (av_size.y).clamp(1.0, max_height);
 
@@ -83,12 +89,14 @@ impl egui::Widget for &mut RataguiBackend {
 
 
         // there are weird issues with high dpi displays relating to native pixels per point and zoom factor 
-        let mut available_chars_width = ((av_width  / (char_width )) as u16);
-        if available_chars_width > 20 {available_chars_width=available_chars_width-5;}
-        let available_chars_height = (av_height / (char_height)) as u16;
+        let  available_chars_width = ((av_width  / (char_width )) as u16) ;
+        //println!("av chars width: {:#?}",available_chars_width);
+            
+   
+        let available_chars_height = (av_height / (char_height)) as u16 ;
         let cur_size = self.size().expect("COULD NOT GET CURRENT BACKEND SIZE");
 
-       // println!("av chars width: {:#?}",available_chars_width);
+       
 
         if (cur_size.width != available_chars_width) || (cur_size.height != available_chars_height)
         {
@@ -269,7 +277,7 @@ impl RataguiBackend {
     }
     pub fn get_font_width(&self, fontiki: &Fonts) -> f32 {
         let fid = self.regular_font.clone();
-       let widik =  fontiki.glyph_width(&fid, '█');
+       let widik =  fontiki.glyph_width(&fid, ' ');
       // println!("widik is {:#?}",widik);
        widik
     }
