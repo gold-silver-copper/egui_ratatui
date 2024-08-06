@@ -19,18 +19,16 @@ impl TerminalLine {
     }
 }
 
-
 impl Widget for TerminalLine {
     fn ui(self, ui: &mut Ui) -> Response {
         let mut layout_job =
-        self.text
-            .into_layout_job(ui.style(), FontSelection::Default, egui::Align::Min); //FontSelection::Style(egui::TextStyle::Monospace)
+            self.text
+                .into_layout_job(ui.style(), FontSelection::Default, egui::Align::Min); //FontSelection::Style(egui::TextStyle::Monospace)
 
-    let galley = ui.fonts(|fonts| fonts.layout_job(layout_job));
-    let (rect, mut response) = ui.allocate_exact_size(galley.size(), Sense::hover());
-    let galley_pos = match galley.job.halign {
-        _ => rect.left_top(),
-    };
+        let galley = ui.fonts(|fonts| fonts.layout_job(layout_job));
+        let (rect, mut response) = ui.allocate_exact_size(galley.size(), Sense::hover());
+        let galley_pos =  rect.left_top();
+       
 
         if ui.is_rect_visible(response.rect) {
             if galley.elided {
