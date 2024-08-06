@@ -114,7 +114,7 @@ impl egui::Widget for &mut RataguiBackend {
         let cur_buf = self.buffer();
 
         let singular_wrapping = TextWrapping {
-            max_width: av_width,
+            max_width: f32::INFINITY,
             max_rows: 1,
             break_anywhere: true,
             overflow_character: None,
