@@ -1,13 +1,12 @@
 //! This module provides the `RataguiBackend` implementation for the [`Backend`] trait.
 //! It is used in the integration tests to verify the correctness of the library.
 
-use egui::text::TextWrapping;
-use egui::{Label, Response, Stroke, Ui};
 use egui::epaint::{
     text::{LayoutJob, TextFormat},
     Color32, FontFamily, FontId, Fonts,
 };
-
+use egui::text::TextWrapping;
+use egui::{Label, Response, Stroke, Ui};
 
 use ratatui::style::{Color, Modifier};
 use std::f32::INFINITY;
@@ -46,8 +45,29 @@ pub struct RataguiBackend {
 }
 impl egui::Widget for &mut RataguiBackend {
     fn ui(self, ui: &mut Ui) -> Response {
-        ui.spacing_mut().item_spacing.x = 0.0;
-        ui.spacing_mut().item_spacing.y = 0.0;
+        let spacik = egui::style::Spacing     {
+            item_spacing: egui::vec2(0.0, 0.0),
+            window_margin: egui::Margin::same(0.0),
+            menu_margin: egui::Margin::same(0.0),
+            button_padding: egui::vec2(0.0, 0.0),
+            indent: 0.0, // match checkbox/radio-button with `button_padding.x + icon_width + icon_spacing`
+            interact_size: egui::vec2(0.0, 0.0),
+            slider_width: 0.0,
+            slider_rail_height: 0.0,
+            combo_width: 0.0,
+            text_edit_width: 0.0,
+            icon_width: 0.0,
+            icon_width_inner: 0.0,
+            icon_spacing: 0.0,
+            default_area_size: egui::vec2(600.0, 400.0),
+            tooltip_width: 0.0,
+            menu_width: 0.0,
+            menu_spacing: 0.0,
+            combo_height: 0.0,
+            scroll: Default::default(),
+            indent_ends_with_horizontal_line: false,
+        };
+        *ui.spacing_mut() = spacik;
         let elpsd = self.timestamp.elapsed().as_millis();
 
         if elpsd > 1200 {
@@ -67,36 +87,26 @@ impl egui::Widget for &mut RataguiBackend {
             self.blinking_fast = true;
         }
 
+        let char_height = ui.fonts(|fx| fx.row_height(&self.regular_font));
+        let char_width = ui.fonts(|fx| self.get_font_width(fx));
 
+        // it is limited to this because the ratatui buffer is cast to u8 somewhere
 
-
-        let char_height = ui.fonts(|fx| fx.row_height(&self.regular_font)) ;
-        let char_width = ui.fonts(|fx| self.get_font_width(fx)) ;
-      
-      // it is limited to this because the ratatui buffer is u8
-   
         let max_width = char_width * 250.0;
         let max_height = char_height * 250.0;
 
-
         let av_size = ui.available_size();
 
-      
+
         let av_width = (av_size.x).clamp(1.0, max_width);
         let av_height = (av_size.y).clamp(1.0, max_height);
 
-        
-
-
-        // there are weird issues with high dpi displays relating to native pixels per point and zoom factor 
-        let  available_chars_width = ((av_width  / (char_width )) as u16) ;
+        // there are weird issues with high dpi displays relating to native pixels per point and zoom factor
+        let available_chars_width = ((av_width / (char_width)) as u16);
         //println!("av chars width: {:#?}",available_chars_width);
-            
-   
-        let available_chars_height = (av_height / (char_height)) as u16 ;
-        let cur_size = self.size().expect("COULD NOT GET CURRENT BACKEND SIZE");
 
-       
+        let available_chars_height = (av_height / (char_height)) as u16;
+        let cur_size = self.size().expect("COULD NOT GET CURRENT BACKEND SIZE");
 
         if (cur_size.width != available_chars_width) || (cur_size.height != available_chars_height)
         {
@@ -105,7 +115,7 @@ impl egui::Widget for &mut RataguiBackend {
         let cur_buf = self.buffer();
 
         let singular_wrapping = TextWrapping {
-            max_width: max_width,
+            max_width: av_width,
             max_rows: 1,
             break_anywhere: true,
             overflow_character: None,
@@ -113,9 +123,14 @@ impl egui::Widget for &mut RataguiBackend {
 
         for y in 0..available_chars_height {
             let mut job = LayoutJob {
-                wrap: singular_wrapping.to_owned(),
-                //       halign: egui::Align::Min,
-                ..Default::default()
+                text: Default::default(),
+                sections: Default::default(),
+                wrap: singular_wrapping.clone(),
+                first_row_min_height: 0.0,
+                break_on_newline: false,
+                halign: egui::Align::LEFT,
+                justify: false,
+                round_output_size_to_nearest_ui_point: true,
             };
             for x in 0..available_chars_width {
                 let cur_cell = cur_buf.get(x, y);
@@ -277,9 +292,9 @@ impl RataguiBackend {
     }
     pub fn get_font_width(&self, fontiki: &Fonts) -> f32 {
         let fid = self.regular_font.clone();
-       let widik =  fontiki.glyph_width(&fid, ' ');
-      // println!("widik is {:#?}",widik);
-       widik
+        let widik = fontiki.glyph_width(&fid, ' ');
+        // println!("widik is {:#?}",widik);
+        widik
     }
 
     pub fn rat_to_egui_color(rat_col: &ratatui::style::Color, is_a_fg: bool) -> Color32 {
