@@ -26,22 +26,27 @@ impl Widget for TerminalLine {
                 .into_layout_job(ui.style(), FontSelection::Default, egui::Align::Min); //FontSelection::Style(egui::TextStyle::Monospace)
 
         let galley = ui.fonts(|fonts| fonts.layout_job(layout_job));
-        let (rect, mut response) = ui.allocate_exact_size(galley.size(), Sense::hover());
-        let galley_pos =  rect.left_top();
-       
+        let (rect, _) = ui.allocate_exact_size(galley.size(), Sense::click_and_drag());
+
+ //  let rect = ui.cursor();
+
+        let boop = ui.allocate_ui(galley.size(), |ui|  ui.painter().add(epaint::TextShape::new(
+            rect.left_top(),
+            galley.clone(),
+            ui.style().visuals.text_color(),
+        )));
+        let response = boop.response;
+
+
 
         if ui.is_rect_visible(response.rect) {
             if galley.elided {
                 // Show the full (non-elided) text on hover:
-                response = response.on_hover_text(galley.text());
+            //    response = response.on_hover_text(galley.text());
                 println!("WTF");
             }
 
-            ui.painter().add(epaint::TextShape::new(
-                galley_pos,
-                galley.clone(),
-                ui.style().visuals.text_color(),
-            ));
+         
         }
 
         response
