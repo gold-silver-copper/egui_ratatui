@@ -68,10 +68,9 @@ impl egui::Widget for &mut RataguiBackend {
 
 
 
-        //magic values lol i dont care anymore :D
 
-        let char_height = ui.fonts(|fx| fx.row_height(&self.regular_font)) *1.008 ;
-        let char_width = ui.fonts(|fx| self.get_font_width(fx)) *1.018;
+        let char_height = ui.fonts(|fx| fx.row_height(&self.regular_font)) ;
+        let char_width = ui.fonts(|fx| self.get_font_width(fx)) ;
       
       // it is limited to this because the ratatui buffer is u8
    
