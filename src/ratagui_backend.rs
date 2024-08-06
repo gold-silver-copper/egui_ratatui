@@ -45,7 +45,7 @@ pub struct RataguiBackend {
 }
 impl egui::Widget for &mut RataguiBackend {
     fn ui(self, ui: &mut Ui) -> Response {
-        let spacik = egui::style::Spacing     {
+        let spacik = egui::style::Spacing {
             item_spacing: egui::vec2(0.0, 0.0),
             window_margin: egui::Margin::same(0.0),
             menu_margin: egui::Margin::same(0.0),
@@ -96,7 +96,6 @@ impl egui::Widget for &mut RataguiBackend {
         let max_height = char_height * 250.0;
 
         let av_size = ui.available_size();
-
 
         let av_width = (av_size.x).clamp(1.0, max_width);
         let av_height = (av_size.y).clamp(1.0, max_height);
