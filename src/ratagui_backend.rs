@@ -47,25 +47,7 @@ impl egui::Widget for &mut RataguiBackend {
     fn ui(self, ui: &mut Ui) -> Response {
         let spacik = egui::style::Spacing {
             item_spacing: egui::vec2(0.0, 0.0),
-            window_margin: egui::Margin::same(0.0),
-            menu_margin: egui::Margin::same(0.0),
-            button_padding: egui::vec2(0.0, 0.0),
-            indent: 0.0, // match checkbox/radio-button with `button_padding.x + icon_width + icon_spacing`
-            interact_size: egui::vec2(0.0, 0.0),
-            slider_width: 0.0,
-            slider_rail_height: 0.0,
-            combo_width: 0.0,
-            text_edit_width: 0.0,
-            icon_width: 0.0,
-            icon_width_inner: 0.0,
-            icon_spacing: 0.0,
-            default_area_size: egui::vec2(600.0, 400.0),
-            tooltip_width: 0.0,
-            menu_width: 0.0,
-            menu_spacing: 0.0,
-            combo_height: 0.0,
-            scroll: Default::default(),
-            indent_ends_with_horizontal_line: false,
+           ..Default::default()
         };
         *ui.spacing_mut() = spacik;
         let elpsd = self.timestamp.elapsed().as_millis();
@@ -102,9 +84,17 @@ impl egui::Widget for &mut RataguiBackend {
 
         // there are weird issues with high dpi displays relating to native pixels per point and zoom factor
         let available_chars_width = ((av_width / (char_width)) as u16);
-        //println!("av chars width: {:#?}",available_chars_width);
+        
 
         let available_chars_height = (av_height / (char_height)) as u16;
+//println!("av chars width: {:#?}",available_chars_width);
+        /*
+        if available_chars_width >55 {available_chars_width-=available_chars_width/60;}
+        if available_chars_height >40 {available_chars_height-=available_chars_height/60;}
+        
+         */
+
+        
         let cur_size = self.size().expect("COULD NOT GET CURRENT BACKEND SIZE");
 
         if (cur_size.width != available_chars_width) || (cur_size.height != available_chars_height)
@@ -116,7 +106,7 @@ impl egui::Widget for &mut RataguiBackend {
         let singular_wrapping = TextWrapping {
             max_width: f32::INFINITY,
             max_rows: 1,
-            break_anywhere: true,
+            break_anywhere: false,
             overflow_character: None,
         };
 
@@ -129,7 +119,7 @@ impl egui::Widget for &mut RataguiBackend {
                 break_on_newline: false,
                 halign: egui::Align::LEFT,
                 justify: false,
-                round_output_size_to_nearest_ui_point: true,
+                round_output_size_to_nearest_ui_point: false,
             };
             for x in 0..available_chars_width {
                 let cur_cell = cur_buf.get(x, y);

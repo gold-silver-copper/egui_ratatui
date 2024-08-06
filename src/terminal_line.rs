@@ -2,30 +2,40 @@ use std::sync::Arc;
 
 use egui::*;
 
+use egui::text::LayoutJob;
 use egui::text_selection::LabelSelectionState;
 
 #[must_use = "You should put this widget in an ui with `ui.add(widget);`"]
 pub struct TerminalLine {
-    text: WidgetText,
+    job: LayoutJob,
 }
 
 impl TerminalLine {
-    pub fn new(text: impl Into<WidgetText>) -> Self {
-        Self { text: text.into() }
+    pub fn new(job: LayoutJob) -> Self {
+        Self { job}
     }
 
-    pub fn text(&self) -> &str {
-        self.text.text()
+    pub fn job(self) -> LayoutJob {
+        self.job
     }
 }
 
 impl Widget for TerminalLine {
     fn ui(self, ui: &mut Ui) -> Response {
-        let mut layout_job =
-            self.text
-                .into_layout_job(ui.style(), FontSelection::Default, egui::Align::Min); //FontSelection::Style(egui::TextStyle::Monospace)
 
-        let galley = ui.fonts(|fonts| fonts.layout_job(layout_job));
+        
+    
+
+        let galley = ui.fonts(|fonts| fonts.layout_job(self.job()));
+
+       /* let boop = ui.allocate_ui(galley.size(), |ui| {  ui.painter().add(
+            epaint::TextShape::new(galley.rect.left_top(), galley.clone(), ui.style().visuals.text_color())
+              
+        );});
+ */
+
+// let bigger = galley.size() + vec2(300.0, -1.0);
+      
 
 
         let (response, painter) = ui.allocate_painter(galley.size(),Sense::hover() );
@@ -36,6 +46,7 @@ impl Widget for TerminalLine {
             ui.style().visuals.text_color(),
         );
       
+       
 
         
         response
