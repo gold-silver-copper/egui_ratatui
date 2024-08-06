@@ -21,6 +21,7 @@ use ratatui::{
 };
 
 use crate::TerminalLine;
+//use egui::Label as TerminalLine;
 
 ///The RataguiBackend is the widget+backend itself , from which you can make a ratatui terminal ,
 /// then you can do ui.add(terminal.backend_mut()) inside an egui context    .
