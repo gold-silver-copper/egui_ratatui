@@ -47,7 +47,7 @@ impl egui::Widget for &mut RataguiBackend {
     fn ui(self, ui: &mut Ui) -> Response {
         let spacik = egui::style::Spacing {
             item_spacing: egui::vec2(0.0, 0.0),
-           ..Default::default()
+            ..Default::default()
         };
         *ui.spacing_mut() = spacik;
         let elpsd = self.timestamp.elapsed().as_millis();
@@ -84,17 +84,15 @@ impl egui::Widget for &mut RataguiBackend {
 
         // there are weird issues with high dpi displays relating to native pixels per point and zoom factor
         let available_chars_width = ((av_width / (char_width)) as u16);
-        
 
         let available_chars_height = (av_height / (char_height)) as u16;
-//println!("av chars width: {:#?}",available_chars_width);
+        //println!("av chars width: {:#?}",available_chars_width);
         /*
         if available_chars_width >55 {available_chars_width-=available_chars_width/60;}
         if available_chars_height >40 {available_chars_height-=available_chars_height/60;}
-        
+
          */
 
-        
         let cur_size = self.size().expect("COULD NOT GET CURRENT BACKEND SIZE");
 
         if (cur_size.width != available_chars_width) || (cur_size.height != available_chars_height)

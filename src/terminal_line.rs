@@ -12,7 +12,7 @@ pub struct TerminalLine {
 
 impl TerminalLine {
     pub fn new(job: LayoutJob) -> Self {
-        Self { job}
+        Self { job }
     }
 
     pub fn job(self) -> LayoutJob {
@@ -22,33 +22,24 @@ impl TerminalLine {
 
 impl Widget for TerminalLine {
     fn ui(self, ui: &mut Ui) -> Response {
-
-        
-    
-
         let galley = ui.fonts(|fonts| fonts.layout_job(self.job()));
 
-       /* let boop = ui.allocate_ui(galley.size(), |ui| {  ui.painter().add(
-            epaint::TextShape::new(galley.rect.left_top(), galley.clone(), ui.style().visuals.text_color())
-              
-        );});
- */
+        /* let boop = ui.allocate_ui(galley.size(), |ui| {  ui.painter().add(
+                   epaint::TextShape::new(galley.rect.left_top(), galley.clone(), ui.style().visuals.text_color())
 
-// let bigger = galley.size() + vec2(300.0, -1.0);
-      
+               );});
+        */
 
+        // let bigger = galley.size() + vec2(300.0, -1.0);
 
-        let (response, painter) = ui.allocate_painter(galley.size(),Sense::hover() );
+        let (response, painter) = ui.allocate_painter(galley.size(), Sense::hover());
 
         painter.galley(
             response.rect.left_top(),
             galley.clone(),
             ui.style().visuals.text_color(),
         );
-      
-       
 
-        
         response
     }
 }
