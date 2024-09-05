@@ -8,7 +8,7 @@ use egui::epaint::{
 use egui::text::TextWrapping;
 use egui::{Label, Response, Stroke, Ui};
 
-use ratatui::style::{Color, Modifier};
+use ratatui::{layout::Position, style::{Color, Modifier}};
 use std::f32::INFINITY;
 use std::io;
 use web_time::Instant;
@@ -34,7 +34,7 @@ pub struct RataguiBackend {
     height: u16,
     cursor: bool,
     font_size: u16,
-    pos: (u16, u16),
+    pos: Position,
     regular_font: FontId,
     bold_font: FontId,
     italic_font: FontId,
@@ -83,7 +83,7 @@ impl egui::Widget for &mut RataguiBackend {
         let av_height = (av_size.y).clamp(1.0, max_height);
 
         // there are weird issues with high dpi displays relating to native pixels per point and zoom factor
-        let available_chars_width = ((av_width / (char_width)) as u16);
+        let available_chars_width = (av_width / (char_width)) as u16;
 
         let available_chars_height = (av_height / (char_height)) as u16;
         //println!("av chars width: {:#?}",available_chars_width);
@@ -219,7 +219,7 @@ impl RataguiBackend {
             buffer: Buffer::empty(Rect::new(0, 0, width, height)),
             cursor: false,
             font_size: 16,
-            pos: (0, 0),
+            pos: (0, 0).into(),
             regular_font: FontId::new(16.0, FontFamily::Monospace),
             bold_font: FontId::new(16.0, FontFamily::Monospace),
             italic_font: FontId::new(16.0, FontFamily::Monospace),
@@ -243,7 +243,7 @@ impl RataguiBackend {
             buffer: Buffer::empty(Rect::new(0, 0, width, height)),
             cursor: false,
             font_size: 16,
-            pos: (0, 0),
+            pos: (0, 0).into(),
             regular_font: FontId::new(16.0, FontFamily::Name(regular.to_owned().into())),
             bold_font: FontId::new(16.0, FontFamily::Name(bold.to_owned().into())),
             italic_font: FontId::new(16.0, FontFamily::Name(italic.to_owned().into())),
@@ -341,12 +341,12 @@ impl Backend for RataguiBackend {
         Ok(())
     }
 
-    fn get_cursor(&mut self) -> io::Result<(u16, u16)> {
-        Ok(self.pos)
+    fn get_cursor_position(&mut self) -> io::Result<Position> {
+        Ok(self.pos.into())
     }
 
-    fn set_cursor(&mut self, x: u16, y: u16) -> io::Result<()> {
-        self.pos = (x, y);
+    fn set_cursor_position<P: Into<Position>>(&mut self, position: P) -> io::Result<()> {
+        self.pos = position.into();
         Ok(())
     }
 
@@ -359,21 +359,21 @@ impl Backend for RataguiBackend {
         match clear_type {
             ClearType::All => self.clear()?,
             ClearType::AfterCursor => {
-                let index = self.buffer.index_of(self.pos.0, self.pos.1) + 1;
+                let index = self.buffer.index_of(self.pos.x, self.pos.y) + 1;
                 self.buffer.content[index..].fill(Cell::default());
             }
             ClearType::BeforeCursor => {
-                let index = self.buffer.index_of(self.pos.0, self.pos.1);
+                let index = self.buffer.index_of(self.pos.x, self.pos.y);
                 self.buffer.content[..index].fill(Cell::default());
             }
             ClearType::CurrentLine => {
-                let line_start_index = self.buffer.index_of(0, self.pos.1);
-                let line_end_index = self.buffer.index_of(self.width - 1, self.pos.1);
+                let line_start_index = self.buffer.index_of(0, self.pos.y);
+                let line_end_index = self.buffer.index_of(self.width - 1, self.pos.y);
                 self.buffer.content[line_start_index..=line_end_index].fill(Cell::default());
             }
             ClearType::UntilNewLine => {
-                let index = self.buffer.index_of(self.pos.0, self.pos.1);
-                let line_end_index = self.buffer.index_of(self.width - 1, self.pos.1);
+                let index = self.buffer.index_of(self.pos.x, self.pos.y);
+                let line_end_index = self.buffer.index_of(self.width - 1, self.pos.y);
                 self.buffer.content[index..=line_end_index].fill(Cell::default());
             }
         }
@@ -381,7 +381,7 @@ impl Backend for RataguiBackend {
     }
 
     fn append_lines(&mut self, n: u16) -> io::Result<()> {
-        let (cur_x, cur_y) = self.get_cursor()?;
+        let (cur_x, cur_y) = self.get_cursor_position()?.into();
 
         // the next column ensuring that we don't go past the last column
         let new_cursor_x = cur_x.saturating_add(1).min(self.width.saturating_sub(1));
@@ -395,7 +395,7 @@ impl Backend for RataguiBackend {
                 self.clear()?;
             }
 
-            self.set_cursor(0, rotate_by)?;
+            self.set_cursor_position((0, rotate_by))?;
             self.clear_region(ClearType::BeforeCursor)?;
             self.buffer
                 .content
@@ -403,13 +403,13 @@ impl Backend for RataguiBackend {
         }
 
         let new_cursor_y = cur_y.saturating_add(n).min(max_y);
-        self.set_cursor(new_cursor_x, new_cursor_y)?;
+        self.set_cursor_position((new_cursor_x, new_cursor_y))?;
 
         Ok(())
     }
 
-    fn size(&self) -> io::Result<Rect> {
-        Ok(Rect::new(0, 0, self.width, self.height))
+    fn size(&self) -> io::Result<Size> {
+        Ok(Size::new(self.width, self.height))
     }
 
     fn window_size(&mut self) -> io::Result<WindowSize> {
