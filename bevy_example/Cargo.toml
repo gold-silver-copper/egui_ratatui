@@ -8,6 +8,6 @@ edition = "2021"
 [dependencies]
 bevy = "0.14.1"
 bevy_egui = "0.28.0"
-ratatui = { version = "0.27", default-features = false }
+ratatui = { version = ">=0.28", default-features = false }
 egui_ratatui = { path = "../" }
 #disable defaults features for rat frame if you do not want to import eframe
