@@ -1,9 +1,6 @@
-use std::sync::Arc;
-
 use egui::*;
 
 use egui::text::LayoutJob;
-use egui::text_selection::LabelSelectionState;
 
 #[must_use = "You should put this widget in an ui with `ui.add(widget);`"]
 pub struct TerminalLine {

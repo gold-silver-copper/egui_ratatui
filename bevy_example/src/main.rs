@@ -1,10 +1,10 @@
 use bevy::prelude::*;
 use bevy_egui::{egui, EguiContexts, EguiPlugin};
+use egui_ratatui::RataguiBackend;
 use ratatui::{
     prelude::{Stylize, Terminal},
     widgets::{Block, Borders, Paragraph, Wrap},
 };
-use egui_ratatui::RataguiBackend;
 
 fn main() {
     App::new()
@@ -18,14 +18,18 @@ fn main() {
         .run();
 }
 // Render to the terminal and to egui , both are immediate mode
-fn ui_example_system(mut contexts: EguiContexts, mut termres: ResMut<BevyTerminal<RataguiBackend>>) {
+fn ui_example_system(
+    mut contexts: EguiContexts,
+    mut termres: ResMut<BevyTerminal<RataguiBackend>>,
+) {
     termres
         .terminal
         .draw(|frame| {
-            let area = frame.size();
+            let area = frame.area();
             let textik = format!("Hello bevy ! the window area is {}", area);
             frame.render_widget(
-                Paragraph::new(textik).block(Block::new().title("LOL").borders(Borders::ALL))
+                Paragraph::new(textik)
+                    .block(Block::new().title("LOL").borders(Borders::ALL))
                     .white()
                     .on_blue()
                     .wrap(Wrap { trim: false }),
@@ -34,10 +38,10 @@ fn ui_example_system(mut contexts: EguiContexts, mut termres: ResMut<BevyTermina
         })
         .expect("epic fail");
 
-
     egui::Window::new("Hello").show(contexts.ctx_mut(), |ui| {
-      //  ui.set_opacity(0.5);
-        ui.add(termres.terminal.backend_mut());
+        //  ui.set_opacity(0.5);
+        let huh = termres.terminal.backend_mut();
+        ui.add(huh);
     });
 }
 // Create resource to hold the ratatui terminal
@@ -50,7 +54,7 @@ struct BevyTerminal<RataguiBackend: ratatui::backend::Backend> {
 impl Default for BevyTerminal<RataguiBackend> {
     fn default() -> Self {
         let backend = RataguiBackend::new(100, 50);
-        let mut terminal = Terminal::new(backend).unwrap();
+        let terminal = Terminal::new(backend).unwrap();
         BevyTerminal { terminal }
     }
 }

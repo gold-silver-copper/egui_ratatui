@@ -8,8 +8,11 @@ use egui::epaint::{
 use egui::text::TextWrapping;
 use egui::{Label, Response, Stroke, Ui};
 
-use ratatui::{layout::Position, style::{Color, Modifier}};
-use std::f32::INFINITY;
+use ratatui::{
+    layout::Position,
+    style::{Color, Modifier},
+};
+
 use std::io;
 use web_time::Instant;
 
@@ -120,85 +123,85 @@ impl egui::Widget for &mut RataguiBackend {
                 round_output_size_to_nearest_ui_point: false,
             };
             for x in 0..available_chars_width {
-                let cur_cell = cur_buf.get(x, y);
+                if let Some(cur_cell) = cur_buf.cell(Position { x, y }) {
+                    let is_bold = cur_cell.modifier.contains(Modifier::BOLD);
+                    let is_italic = cur_cell.modifier.contains(Modifier::ITALIC);
+                    let is_underlined = cur_cell.modifier.contains(Modifier::UNDERLINED);
+                    let is_slowblink = cur_cell.modifier.contains(Modifier::SLOW_BLINK);
+                    let is_rapidblink = cur_cell.modifier.contains(Modifier::RAPID_BLINK);
+                    let is_reversed = cur_cell.modifier.contains(Modifier::REVERSED);
+                    let is_dim = cur_cell.modifier.contains(Modifier::DIM);
+                    let is_hidden = cur_cell.modifier.contains(Modifier::HIDDEN);
+                    let is_crossed_out = cur_cell.modifier.contains(Modifier::CROSSED_OUT);
 
-                let is_bold = cur_cell.modifier.contains(Modifier::BOLD);
-                let is_italic = cur_cell.modifier.contains(Modifier::ITALIC);
-                let is_underlined = cur_cell.modifier.contains(Modifier::UNDERLINED);
-                let is_slowblink = cur_cell.modifier.contains(Modifier::SLOW_BLINK);
-                let is_rapidblink = cur_cell.modifier.contains(Modifier::RAPID_BLINK);
-                let is_reversed = cur_cell.modifier.contains(Modifier::REVERSED);
-                let is_dim = cur_cell.modifier.contains(Modifier::DIM);
-                let is_hidden = cur_cell.modifier.contains(Modifier::HIDDEN);
-                let is_crossed_out = cur_cell.modifier.contains(Modifier::CROSSED_OUT);
+                    let tf_font = if is_bold && is_italic {
+                        self.bolditalic_font.to_owned()
+                    } else if is_bold {
+                        self.bold_font.to_owned()
+                    } else if is_italic {
+                        self.italic_font.to_owned()
+                    } else {
+                        self.regular_font.to_owned()
+                    };
 
-                let tf_font = if is_bold && is_italic {
-                    self.bolditalic_font.to_owned()
-                } else if is_bold {
-                    self.bold_font.to_owned()
-                } else if is_italic {
-                    self.italic_font.to_owned()
-                } else {
-                    self.regular_font.to_owned()
-                };
+                    let mut tf_fg_color = RataguiBackend::rat_to_egui_color(&cur_cell.fg, true);
+                    let mut tf_bg_color = RataguiBackend::rat_to_egui_color(&cur_cell.bg, false);
 
-                let mut tf_fg_color = RataguiBackend::rat_to_egui_color(&cur_cell.fg, true);
-                let mut tf_bg_color = RataguiBackend::rat_to_egui_color(&cur_cell.bg, false);
+                    if is_slowblink {
+                        if self.blinking_slow {
+                            tf_fg_color = tf_bg_color.clone();
+                        }
+                    }
+                    if is_rapidblink {
+                        if self.blinking_fast {
+                            tf_fg_color = tf_bg_color.clone();
+                        }
+                    }
 
-                if is_slowblink {
-                    if self.blinking_slow {
+                    if is_dim {
+                        tf_fg_color = tf_fg_color.gamma_multiply(0.7);
+                        tf_bg_color = tf_bg_color.gamma_multiply(0.7);
+                    }
+
+                    if is_reversed {
+                        let holder = tf_bg_color;
+                        tf_bg_color = tf_fg_color;
+                        tf_fg_color = holder;
+                    }
+                    if is_hidden {
                         tf_fg_color = tf_bg_color.clone();
                     }
-                }
-                if is_rapidblink {
-                    if self.blinking_fast {
-                        tf_fg_color = tf_bg_color.clone();
-                    }
-                }
 
-                if is_dim {
-                    tf_fg_color = tf_fg_color.gamma_multiply(0.7);
-                    tf_bg_color = tf_bg_color.gamma_multiply(0.7);
-                }
+                    let tf_stroke = if is_crossed_out {
+                        Stroke::new(char_height / 8.0, tf_fg_color)
+                    } else {
+                        Stroke::NONE
+                    };
 
-                if is_reversed {
-                    let holder = tf_bg_color;
-                    tf_bg_color = tf_fg_color;
-                    tf_fg_color = holder;
-                }
-                if is_hidden {
-                    tf_fg_color = tf_bg_color.clone();
-                }
+                    let tf_underline = if is_underlined {
+                        Stroke::new(char_height / 3.0, tf_fg_color)
+                    } else {
+                        Stroke::NONE
+                    };
 
-                let tf_stroke = if is_crossed_out {
-                    Stroke::new(char_height / 8.0, tf_fg_color)
-                } else {
-                    Stroke::NONE
-                };
+                    let tf = TextFormat {
+                        font_id: tf_font,
+                        color: tf_fg_color,
+                        background: tf_bg_color,
+                        strikethrough: tf_stroke,
+                        underline: tf_underline,
+                        //     valign: egui::Align::Min,
+                        //  line_height: Some(char_height - 0.01),
+                        ..Default::default()
+                    };
 
-                let tf_underline = if is_underlined {
-                    Stroke::new(char_height / 3.0, tf_fg_color)
-                } else {
-                    Stroke::NONE
-                };
+                    job.append(cur_cell.symbol(), 0.0, tf.clone());
 
-                let tf = TextFormat {
-                    font_id: tf_font,
-                    color: tf_fg_color,
-                    background: tf_bg_color,
-                    strikethrough: tf_stroke,
-                    underline: tf_underline,
-                    //     valign: egui::Align::Min,
-                    //  line_height: Some(char_height - 0.01),
-                    ..Default::default()
-                };
-
-                job.append(cur_cell.symbol(), 0.0, tf.clone());
-
-                if x == (available_chars_width - 1) {
-                    let end = ui.add(TerminalLine::new(job.clone()));
-                    if y == (available_chars_height - 1) {
-                        return end;
+                    if x == (available_chars_width - 1) {
+                        let end = ui.add(TerminalLine::new(job.clone()));
+                        if y == (available_chars_height - 1) {
+                            return end;
+                        }
                     }
                 }
             }
@@ -325,8 +328,9 @@ impl Backend for RataguiBackend {
         I: Iterator<Item = (u16, u16, &'a Cell)>,
     {
         for (x, y, c) in content {
-            let cell = self.buffer.get_mut(x, y);
-            *cell = c.clone();
+            if let Some(cell) = self.buffer.cell_mut(Position { x, y }) {
+                *cell = c.clone();
+            }
         }
         Ok(())
     }
