@@ -14,8 +14,8 @@ repository = "https://github.com/gold-silver-copper/egui_ratatui"
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-ratatui = { version = ">=0.28", default-features = false }
-egui = { version = "0.28", default-features = false }
+ratatui = { version = "0.29", default-features = false }
+egui = { version = "0.29", default-features = false }
 
 web-time = { version = "1" }
 
