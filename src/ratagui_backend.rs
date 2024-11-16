@@ -25,10 +25,10 @@ use ratatui::{
 use crate::TerminalLine;
 //use egui::Label as TerminalLine;
 
-///The RataguiBackend is the widget+backend itself , from which you can make a ratatui terminal ,
-/// then you can do ui.add(terminal.backend_mut()) inside an egui context    .
-/// Spawn with RataguiBackend::new() or RataguiBackend::new_with_fonts()   .
-/// See the hello_world_web example for custom font usage
+/// The RataguiBackend is the widget+backend itself, from which you can make a ratatui terminal,
+/// then you can do ui.add(terminal.backend_mut()) inside an egui context.
+/// Spawn with RataguiBackend::new() or RataguiBackend::new_with_fonts().
+/// See the hello_world_web example for custom font usage.
 #[derive(Debug, Clone, PartialEq, Hash)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct RataguiBackend {
