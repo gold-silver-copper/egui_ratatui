@@ -1,11 +1,15 @@
 //! This module provides the `RataguiBackend` implementation for the [`Backend`] trait.
 //! It is used in the integration tests to verify the correctness of the library.
 
-use egui::epaint::{
-    text::{LayoutJob, TextFormat},
-    Color32, FontFamily, FontId, Fonts,
-};
+use egui::style::ScrollStyle;
 use egui::text::TextWrapping;
+use egui::{
+    epaint::{
+        text::{LayoutJob, TextFormat},
+        Color32, FontFamily, FontId, Fonts,
+    },
+    Margin,
+};
 use egui::{Label, Response, Stroke, Ui};
 
 use ratatui::{
@@ -50,6 +54,8 @@ impl egui::Widget for &mut RataguiBackend {
     fn ui(self, ui: &mut Ui) -> Response {
         let spacik = egui::style::Spacing {
             item_spacing: egui::vec2(0.0, 0.0),
+            window_margin: Margin::ZERO,
+            scroll: ScrollStyle::solid(),
             ..Default::default()
         };
         *ui.spacing_mut() = spacik;
@@ -82,19 +88,14 @@ impl egui::Widget for &mut RataguiBackend {
 
         let av_size = ui.available_size();
 
-        let av_width = (av_size.x).clamp(1.0, max_width);
-        let av_height = (av_size.y).clamp(1.0, max_height);
+        let av_width = (av_size.x).clamp(1.0, max_width); //- 2.0 * char_width
+        let av_height = (av_size.y).clamp(1.0, max_height); //- 2.0 * char_height
 
         // there are weird issues with high dpi displays relating to native pixels per point and zoom factor
         let available_chars_width = (av_width / (char_width)) as u16;
 
         let available_chars_height = (av_height / (char_height)) as u16;
         //println!("av chars width: {:#?}",available_chars_width);
-        /*
-        if available_chars_width >55 {available_chars_width-=available_chars_width/60;}
-        if available_chars_height >40 {available_chars_height-=available_chars_height/60;}
-
-         */
 
         let cur_size = self.size().expect("COULD NOT GET CURRENT BACKEND SIZE");
 
@@ -120,7 +121,7 @@ impl egui::Widget for &mut RataguiBackend {
                 break_on_newline: false,
                 halign: egui::Align::LEFT,
                 justify: false,
-                round_output_size_to_nearest_ui_point: false,
+                round_output_to_gui: false,
             };
             for x in 0..available_chars_width {
                 if let Some(cur_cell) = cur_buf.cell(Position { x, y }) {
@@ -207,31 +208,34 @@ impl egui::Widget for &mut RataguiBackend {
             }
         }
 
-        let emd = Label::new("IF YOU SEE THIS  THAT IS AN ERROR");
+        let emd = Label::new("NOT ENOUGH SPACE TO RENDER RATATUI");
 
         ui.add(emd)
     }
 }
 
 impl RataguiBackend {
-    /// Creates a new `RataguiBackend` with the specified width and height.
+    /// Creates a new `RataguiBackend` with the specified width and height, and default font.
     pub fn new(width: u16, height: u16) -> Self {
+        let font_size = 16;
         Self {
             width,
             height,
             buffer: Buffer::empty(Rect::new(0, 0, width, height)),
             cursor: false,
-            font_size: 16,
+            font_size: font_size,
             pos: (0, 0).into(),
-            regular_font: FontId::new(16.0, FontFamily::Monospace),
-            bold_font: FontId::new(16.0, FontFamily::Monospace),
-            italic_font: FontId::new(16.0, FontFamily::Monospace),
-            bolditalic_font: FontId::new(16.0, FontFamily::Monospace),
+            regular_font: FontId::new(font_size as f32, FontFamily::Monospace),
+            bold_font: FontId::new(font_size as f32, FontFamily::Monospace),
+            italic_font: FontId::new(font_size as f32, FontFamily::Monospace),
+            bolditalic_font: FontId::new(font_size as f32, FontFamily::Monospace),
             timestamp: Instant::now(),
             blinking_slow: false,
             blinking_fast: false,
         }
     }
+
+    /// Creates a new Ratagui backend with the provided fonts. Fonts are provided as string paths.
     pub fn new_with_fonts(
         width: u16,
         height: u16,
@@ -257,9 +261,11 @@ impl RataguiBackend {
         }
     }
 
+    /// Returns the current size of the font
     pub fn get_font_size(&self) -> u16 {
         self.font_size.clone()
     }
+    /// Sets the font size
     pub fn set_font_size(&mut self, desired: u16) {
         self.font_size = desired;
 
@@ -280,6 +286,7 @@ impl RataguiBackend {
         self.width = width;
         self.height = height;
     }
+    /// Get the width of the font in pixels
     pub fn get_font_width(&self, fontiki: &Fonts) -> f32 {
         let fid = self.regular_font.clone();
         let widik = fontiki.glyph_width(&fid, ' ');
@@ -287,6 +294,7 @@ impl RataguiBackend {
         widik
     }
 
+    /// Convert a ratatui color to an egui color
     pub fn rat_to_egui_color(rat_col: &ratatui::style::Color, is_a_fg: bool) -> Color32 {
         match rat_col {
             Color::Reset => {
