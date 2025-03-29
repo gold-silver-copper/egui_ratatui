@@ -6,8 +6,8 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-bevy = "0.14.1"
-bevy_egui = "0.30.0"
+bevy = "0.15"
+bevy_egui = "0.33.0"
 ratatui = { version = "0.29", default-features = false }
 egui_ratatui = { path = "../" }
 #disable defaults features for rat frame if you do not want to import eframe

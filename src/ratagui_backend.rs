@@ -120,7 +120,7 @@ impl egui::Widget for &mut RataguiBackend {
                 break_on_newline: false,
                 halign: egui::Align::LEFT,
                 justify: false,
-                round_output_size_to_nearest_ui_point: false,
+                round_output_to_gui: false,
             };
             for x in 0..available_chars_width {
                 if let Some(cur_cell) = cur_buf.cell(Position { x, y }) {

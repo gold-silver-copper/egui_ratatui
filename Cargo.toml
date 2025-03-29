@@ -1,6 +1,6 @@
 [package]
 name = "egui_ratatui"
-version = "0.0.29"
+version = "0.0.31"
 authors = ["gold-silver-copper"]
 edition = "2021"
 include = ["LICENSE-APACHE", "LICENSE-MIT", "**/*.rs", "Cargo.toml"]
@@ -15,7 +15,7 @@ crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 ratatui = { version = "0.29", default-features = false }
-egui = { version = "0.29", default-features = false }
+egui = { version = "0.31", default-features = false }
 
 web-time = { version = "1" }
 
