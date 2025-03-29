@@ -26,10 +26,10 @@ fn ui_example_system(
         .terminal
         .draw(|frame| {
             let area = frame.area();
-            let textik = format!("Hello bevy ! the window area is {}", area);
+            let textik = format!("Hello bevy! The window area is {}", area);
             frame.render_widget(
                 Paragraph::new(textik)
-                    .block(Block::new().title("LOL").borders(Borders::ALL))
+                    .block(Block::new().title("Ratatui").borders(Borders::ALL))
                     .white()
                     .on_blue()
                     .wrap(Wrap { trim: false }),
@@ -39,9 +39,7 @@ fn ui_example_system(
         .expect("epic fail");
 
     egui::Window::new("Hello").show(contexts.ctx_mut(), |ui| {
-        //  ui.set_opacity(0.5);
-        let huh = termres.terminal.backend_mut();
-        ui.add(huh);
+        ui.add(termres.terminal.backend_mut());
     });
 }
 // Create resource to hold the ratatui terminal
