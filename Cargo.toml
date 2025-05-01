@@ -18,6 +18,7 @@ ratatui = { version = "0.29", default-features = false }
 egui = { version = "0.31", default-features = false }
 
 web-time = { version = "1" }
+soft_ratatui = "0.0.1"
 
 
 [profile.release]
