@@ -22,6 +22,7 @@ fn ui_example_system(
     mut contexts: EguiContexts,
     mut termres: ResMut<BevyTerminal<RataguiBackend>>,
 ) {
+    egui_extras::install_image_loaders(contexts.ctx_mut());
     termres
         .terminal
         .draw(|frame| {

@@ -12,6 +12,7 @@ use egui::{
 };
 use egui::{ImageSource, Label, Response, Stroke, Ui};
 
+use image::{ImageBuffer, Rgb};
 use ratatui::{
     layout::Position,
     style::{Color, Modifier},
@@ -19,6 +20,7 @@ use ratatui::{
 use soft_ratatui::SoftBackend;
 
 use std::io;
+use std::path::Path;
 use web_time::Instant;
 
 use ratatui::{
@@ -53,7 +55,21 @@ impl egui::Widget for &mut RataguiBackend {
             colorik.clone(),  // your ColorImage
             Default::default(),
         );
+        println!("HI");
+        let image: ImageBuffer<Rgb<u8>, _> = ImageBuffer::from_raw(
+            self.soft_backend.get_pixmap_width() as u32,
+            self.soft_backend.get_pixmap_height() as u32,
+            self.soft_backend.get_pixmap_data(),
+        )
+        .expect("Buffer size does not match width * height * 4");
+
+        // Save the image as a PNG
+        image
+            .save(Path::new("my_imagik.png"))
+            .expect("Failed to save image");
         ui.image((texture.id(), texture.size_vec2()))
+        /*  ui.image(egui::include_image!("../assets/icon-1024.png"))
+        .on_hover_text_at_pointer("WebP") */
     }
 }
 
@@ -78,6 +94,7 @@ impl Backend for RataguiBackend {
         I: Iterator<Item = (u16, u16, &'a Cell)>,
     {
         self.soft_backend.draw(content)?;
+        println!("DRAWWW");
 
         Ok(())
     }
