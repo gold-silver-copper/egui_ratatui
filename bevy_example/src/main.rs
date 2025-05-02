@@ -22,7 +22,6 @@ fn ui_example_system(
     mut contexts: EguiContexts,
     mut termres: ResMut<BevyTerminal<RataguiBackend>>,
 ) {
-    egui_extras::install_image_loaders(contexts.ctx_mut());
     termres
         .terminal
         .draw(|frame| {
@@ -55,7 +54,7 @@ struct BevyTerminal<RataguiBackend: ratatui::backend::Backend> {
 // Implement default on the resource to initialize it
 impl Default for BevyTerminal<RataguiBackend> {
     fn default() -> Self {
-        let backend = RataguiBackend::new(20, 20);
+        let backend = RataguiBackend::new(10, 10);
         let terminal = Terminal::new(backend).unwrap();
         BevyTerminal { terminal }
     }

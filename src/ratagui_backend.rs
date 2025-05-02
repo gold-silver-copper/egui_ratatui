@@ -12,7 +12,6 @@ use egui::{
 };
 use egui::{ColorImage, ImageSource, Label, Response, Stroke, TextureHandle, TextureOptions, Ui};
 
-use image::{ImageBuffer, Rgb};
 use ratatui::{
     layout::Position,
     style::{Color, Modifier},
@@ -51,12 +50,34 @@ image
 
 pub struct RataguiBackend {
     soft_backend: SoftBackend,
-    width: u16,
-    height: u16,
+
     text_handle: Option<TextureHandle>,
 }
 impl egui::Widget for &mut RataguiBackend {
     fn ui(self, ui: &mut Ui) -> Response {
+        /*      let max_width = self.soft_backend.char_width * 250;
+        let max_height = self.soft_backend.char_height * 250;
+
+        let av_size = ui.available_size();
+
+        let av_width = (av_size.x).clamp(1.0, max_width as f32); //- 2.0 * char_width
+        let av_height = (av_size.y).clamp(1.0, max_height as f32); //- 2.0 * char_height
+        let available_chars_width = (av_width / (self.soft_backend.char_width as f32)) as u16;
+
+        let available_chars_height = (av_height / (self.soft_backend.char_height as f32)) as u16;
+        let cur_size = self.size().expect("COULD NOT GET CURRENT BACKEND SIZE");
+        if (cur_size.width != available_chars_width) || (cur_size.height != available_chars_height)
+        {
+            self.resize(available_chars_width, available_chars_height);
+        } */
+
+        let cur_w = self.soft_backend.buffer.area().width + 1;
+        let cur_h = self.soft_backend.buffer.area().height + 1;
+
+        if cur_w < 30 {
+            self.resize(cur_w, cur_h);
+        }
+
         let texture = ui.ctx().load_texture(
             "arrr", // texture ID (can be anything)
             self.to_egui(),
@@ -84,10 +105,13 @@ impl RataguiBackend {
 
         Self {
             soft_backend: backend,
-            width,
-            height,
+
             text_handle: None,
         }
+    }
+    /// Resizes the `RataguiBackend` to the specified width and height.
+    pub fn resize(&mut self, width: u16, height: u16) {
+        self.soft_backend.resize(width, height);
     }
 
     pub fn to_egui(&self) -> ColorImage {
@@ -112,7 +136,6 @@ impl Backend for RataguiBackend {
         I: Iterator<Item = (u16, u16, &'a Cell)>,
     {
         self.soft_backend.draw(content)?;
-        println!("DRAWWW");
 
         Ok(())
     }
@@ -143,8 +166,8 @@ impl Backend for RataguiBackend {
 
     fn size(&self) -> io::Result<Size> {
         Ok(Size {
-            width: self.width,
-            height: self.height,
+            width: self.soft_backend.buffer.area().width,
+            height: self.soft_backend.buffer.area().height,
         })
     }
 
