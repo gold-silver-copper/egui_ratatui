@@ -55,7 +55,7 @@ pub struct RataguiBackend {
 }
 impl egui::Widget for &mut RataguiBackend {
     fn ui(self, ui: &mut Ui) -> Response {
-        /*      let max_width = self.soft_backend.char_width * 250;
+        let max_width = self.soft_backend.char_width * 250;
         let max_height = self.soft_backend.char_height * 250;
 
         let av_size = ui.available_size();
@@ -69,14 +69,14 @@ impl egui::Widget for &mut RataguiBackend {
         if (cur_size.width != available_chars_width) || (cur_size.height != available_chars_height)
         {
             self.resize(available_chars_width, available_chars_height);
-        } */
+        }
 
-        let cur_w = self.soft_backend.buffer.area().width + 1;
+        /*  let cur_w = self.soft_backend.buffer.area().width + 1;
         let cur_h = self.soft_backend.buffer.area().height + 1;
 
         if cur_w < 30 {
             self.resize(cur_w, cur_h);
-        }
+        } */
 
         let texture = ui.ctx().load_texture(
             "arrr", // texture ID (can be anything)
