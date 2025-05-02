@@ -10,7 +10,7 @@ use egui::{
     },
     Margin,
 };
-use egui::{ImageSource, Label, Response, Stroke, Ui};
+use egui::{ColorImage, ImageSource, Label, Response, Stroke, Ui};
 
 use image::{ImageBuffer, Rgb};
 use ratatui::{
@@ -35,34 +35,29 @@ use ratatui::{
 /// then you can do ui.add(terminal.backend_mut()) inside an egui context    .
 /// Spawn with RataguiBackend::new() or RataguiBackend::new_with_fonts()   .
 /// See the hello_world_web example for custom font usage
-#[derive(Debug)]
+
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct RataguiBackend {
     soft_backend: SoftBackend,
+    width: u16,
+    height: u16,
 }
 impl egui::Widget for &mut RataguiBackend {
     fn ui(self, ui: &mut Ui) -> Response {
-        let colorik = egui::ColorImage::from_rgb(
-            [
-                self.soft_backend.get_pixmap_width(),
-                self.soft_backend.get_pixmap_height(),
-            ],
-            self.soft_backend.get_pixmap_data(),
-        );
-
         let texture = ui.ctx().load_texture(
             "my-color-image", // texture ID (can be anything)
-            colorik.clone(),  // your ColorImage
+            self.to_egui(),   // your ColorImage
             Default::default(),
         );
+
         println!("HI");
         let image: ImageBuffer<Rgb<u8>, _> = ImageBuffer::from_raw(
             self.soft_backend.get_pixmap_width() as u32,
             self.soft_backend.get_pixmap_height() as u32,
             self.soft_backend.get_pixmap_data(),
         )
-        .expect("Buffer size does not match width * height * 4");
-
+        .expect("Buffer size does not match width * height * 3");
+        println!("text size is {}", texture.size_vec2());
         // Save the image as a PNG
         image
             .save(Path::new("my_imagik.png"))
@@ -77,9 +72,22 @@ impl RataguiBackend {
     /// Creates a new `RataguiBackend` with the specified width and height, and default font.
     pub fn new(width: u16, height: u16) -> Self {
         let font_size = 16;
+        let backend = SoftBackend::new(100, 50, "../assets/fonts/Iosevka-Bold.ttf");
         Self {
-            soft_backend: SoftBackend::new(100, 50, "../assets/fonts/Iosevka-Bold.ttf"),
+            soft_backend: backend,
+            width,
+            height,
         }
+    }
+
+    pub fn to_egui(&self) -> ColorImage {
+        egui::ColorImage::from_rgb(
+            [
+                self.soft_backend.get_pixmap_width(),
+                self.soft_backend.get_pixmap_height(),
+            ],
+            self.soft_backend.get_pixmap_data(),
+        )
     }
 
     /// Returns a reference to the internal buffer of the `RataguiBackend`.
@@ -125,8 +133,8 @@ impl Backend for RataguiBackend {
 
     fn size(&self) -> io::Result<Size> {
         Ok(Size {
-            width: 10,
-            height: 10,
+            width: self.width,
+            height: self.height,
         })
     }
 
