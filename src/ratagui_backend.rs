@@ -10,7 +10,7 @@ use egui::{
     },
     Margin,
 };
-use egui::{ColorImage, ImageSource, Label, Response, Stroke, Ui};
+use egui::{ColorImage, ImageSource, Label, Response, Stroke, TextureHandle, TextureOptions, Ui};
 
 use image::{ImageBuffer, Rgb};
 use ratatui::{
@@ -36,33 +36,41 @@ use ratatui::{
 /// Spawn with RataguiBackend::new() or RataguiBackend::new_with_fonts()   .
 /// See the hello_world_web example for custom font usage
 
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+/*    let image: ImageBuffer<Rgb<u8>, _> = ImageBuffer::from_raw(
+    self.soft_backend.get_pixmap_width() as u32,
+    self.soft_backend.get_pixmap_height() as u32,
+    self.soft_backend.get_pixmap_data(),
+)
+.expect("Buffer size does not match width * height * 3");
+println!("text size is {}", texture.size_vec2());
+// Save the image as a PNG
+image
+    .save(Path::new("my_imagik.png"))
+    .expect("Failed to save image");
+ */
+
 pub struct RataguiBackend {
     soft_backend: SoftBackend,
     width: u16,
     height: u16,
+    text_handle: Option<TextureHandle>,
 }
 impl egui::Widget for &mut RataguiBackend {
     fn ui(self, ui: &mut Ui) -> Response {
         let texture = ui.ctx().load_texture(
-            "my-color-image", // texture ID (can be anything)
-            self.to_egui(),   // your ColorImage
-            Default::default(),
+            "arrr", // texture ID (can be anything)
+            self.to_egui(),
+            //  self.to_egui(),   // your ColorImage
+            TextureOptions::LINEAR,
         );
+        self.text_handle = Some(texture.clone());
 
         println!("HI");
-        let image: ImageBuffer<Rgb<u8>, _> = ImageBuffer::from_raw(
-            self.soft_backend.get_pixmap_width() as u32,
-            self.soft_backend.get_pixmap_height() as u32,
-            self.soft_backend.get_pixmap_data(),
-        )
-        .expect("Buffer size does not match width * height * 3");
-        println!("text size is {}", texture.size_vec2());
-        // Save the image as a PNG
-        image
-            .save(Path::new("my_imagik.png"))
-            .expect("Failed to save image");
+
+        //  let sizeik = texture.size_vec2();
+        // ui.ctx().texture_ui(ui);
         ui.image((texture.id(), texture.size_vec2()))
+
         /*  ui.image(egui::include_image!("../assets/icon-1024.png"))
         .on_hover_text_at_pointer("WebP") */
     }
@@ -72,11 +80,13 @@ impl RataguiBackend {
     /// Creates a new `RataguiBackend` with the specified width and height, and default font.
     pub fn new(width: u16, height: u16) -> Self {
         let font_size = 16;
-        let backend = SoftBackend::new(100, 50, "../assets/fonts/Iosevka-Bold.ttf");
+        let backend = SoftBackend::new(width, height, "../assets/fonts/Iosevka-Bold.ttf");
+
         Self {
             soft_backend: backend,
             width,
             height,
+            text_handle: None,
         }
     }
 

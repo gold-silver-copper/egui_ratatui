@@ -43,6 +43,9 @@ fn ui_example_system(
         ui.add(termres.terminal.backend_mut());
     });
 }
+
+fn setup_rat() {}
+
 // Create resource to hold the ratatui terminal
 #[derive(Resource)]
 struct BevyTerminal<RataguiBackend: ratatui::backend::Backend> {
@@ -52,7 +55,7 @@ struct BevyTerminal<RataguiBackend: ratatui::backend::Backend> {
 // Implement default on the resource to initialize it
 impl Default for BevyTerminal<RataguiBackend> {
     fn default() -> Self {
-        let backend = RataguiBackend::new(100, 50);
+        let backend = RataguiBackend::new(20, 20);
         let terminal = Terminal::new(backend).unwrap();
         BevyTerminal { terminal }
     }
