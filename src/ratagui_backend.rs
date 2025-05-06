@@ -10,7 +10,9 @@ use egui::{
     },
     Margin,
 };
-use egui::{ColorImage, ImageSource, Label, Response, Stroke, TextureHandle, TextureOptions, Ui};
+use egui::{
+    ColorImage, ImageSource, Label, Response, Stroke, TextureHandle, TextureOptions, Ui, Vec2,
+};
 
 use ratatui::{
     layout::Position,
@@ -50,33 +52,34 @@ image
 
 pub struct RataguiBackend {
     soft_backend: SoftBackend,
+    cur_size: Vec2,
+    font_size: u16,
 
     text_handle: Option<TextureHandle>,
 }
 impl egui::Widget for &mut RataguiBackend {
     fn ui(self, ui: &mut Ui) -> Response {
-        let max_width = self.soft_backend.char_width * 250;
-        let max_height = self.soft_backend.char_height * 250;
-
         let av_size = ui.available_size();
 
-        let av_width = (av_size.x).clamp(1.0, max_width as f32); //- 2.0 * char_width
-        let av_height = (av_size.y).clamp(1.0, max_height as f32); //- 2.0 * char_height
-        let available_chars_width = (av_width / (self.soft_backend.char_width as f32)) as u16;
+        if self.cur_size != av_size {
+            self.cur_size = av_size;
 
-        let available_chars_height = (av_height / (self.soft_backend.char_height as f32)) as u16;
-        let cur_size = self.size().expect("COULD NOT GET CURRENT BACKEND SIZE");
-        if (cur_size.width != available_chars_width) || (cur_size.height != available_chars_height)
-        {
-            self.resize(available_chars_width, available_chars_height);
+            let max_width = self.soft_backend.char_width * 250;
+            let max_height = self.soft_backend.char_height * 250;
+
+            let av_width = (av_size.x).clamp(1.0, max_width as f32); //- 2.0 * char_width
+            let av_height = (av_size.y).clamp(1.0, max_height as f32); //- 2.0 * char_height
+            let available_chars_width = (av_width / (self.soft_backend.char_width as f32)) as u16;
+
+            let available_chars_height =
+                (av_height / (self.soft_backend.char_height as f32)) as u16;
+            let cur_size = self.size().expect("COULD NOT GET CURRENT BACKEND SIZE");
+            if (cur_size.width != available_chars_width)
+                || (cur_size.height != available_chars_height)
+            {
+                self.resize(available_chars_width, available_chars_height);
+            }
         }
-
-        /*  let cur_w = self.soft_backend.buffer.area().width + 1;
-        let cur_h = self.soft_backend.buffer.area().height + 1;
-
-        if cur_w < 30 {
-            self.resize(cur_w, cur_h);
-        } */
 
         let texture = ui.ctx().load_texture(
             "arrr", // texture ID (can be anything)
@@ -85,8 +88,6 @@ impl egui::Widget for &mut RataguiBackend {
             TextureOptions::LINEAR,
         );
         self.text_handle = Some(texture.clone());
-
-        println!("HI");
 
         //  let sizeik = texture.size_vec2();
         // ui.ctx().texture_ui(ui);
@@ -99,12 +100,13 @@ impl egui::Widget for &mut RataguiBackend {
 
 impl RataguiBackend {
     /// Creates a new `RataguiBackend` with the specified width and height, and default font.
-    pub fn new(width: u16, height: u16) -> Self {
-        let font_size = 16;
-        let backend = SoftBackend::new(width, height, "../assets/fonts/Iosevka-Bold.ttf");
+    pub fn new(width: u16, height: u16, font_size: u16) -> Self {
+        let backend = SoftBackend::new(width, height, font_size as i32);
 
         Self {
             soft_backend: backend,
+            cur_size: Vec2::new(1.0, 1.0),
+            font_size,
 
             text_handle: None,
         }
