@@ -1,8 +1,6 @@
 //! This module provides the `RataguiBackend` implementation for the [`Backend`] trait.
 //! It is used in the integration tests to verify the correctness of the library.
 
-use egui::style::ScrollStyle;
-use egui::text::TextWrapping;
 use egui::{
     epaint::{
         text::{LayoutJob, TextFormat},
@@ -21,8 +19,6 @@ use ratatui::{
 use soft_ratatui::SoftBackend;
 
 use std::io;
-use std::path::Path;
-use web_time::Instant;
 
 use ratatui::{
     backend::{Backend, ClearType, WindowSize},

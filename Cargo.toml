@@ -18,13 +18,7 @@ ratatui = { version = "0.29", default-features = false }
 egui = { version = "0.31", default-features = false }
 
 
-web-time = { version = "1" }
-
 soft_ratatui = { path = "../../soft_ratatui" }
 
 [profile.release]
-opt-level = 2 # fast and small wasm
-
-# Optimize all dependencies even in debug builds:
-[profile.dev.package."*"]
-opt-level = 2
+#opt-level = 2 # fast and small wasm
