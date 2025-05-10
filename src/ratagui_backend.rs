@@ -24,6 +24,7 @@ use ratatui::{
 pub struct RataguiBackend {
     soft_backend: SoftBackend,
     cur_size: Vec2,
+    name: String,
 
     text_handle: Option<TextureHandle>,
 }
@@ -34,11 +35,8 @@ impl egui::Widget for &mut RataguiBackend {
         if self.cur_size != av_size {
             self.cur_size = av_size;
 
-            let max_width = self.soft_backend.char_width * 250;
-            let max_height = self.soft_backend.char_height * 250;
-
-            let av_width = (av_size.x).clamp(1.0, max_width as f32);
-            let av_height = (av_size.y).clamp(1.0, max_height as f32);
+            let av_width = (av_size.x).clamp(1.0, 10000.0);
+            let av_height = (av_size.y).clamp(1.0, 10000.0);
             let available_chars_width = (av_width / (self.soft_backend.char_width as f32)) as u16;
 
             let available_chars_height =
@@ -54,7 +52,7 @@ impl egui::Widget for &mut RataguiBackend {
 
         let texture =
             ui.ctx()
-                .load_texture("soft_ratatui", self.to_egui_image(), TextureOptions::LINEAR);
+                .load_texture(&self.name, self.to_egui_image(), TextureOptions::NEAREST);
         self.text_handle = Some(texture.clone());
 
         ui.image((texture.id(), texture.size_vec2()))
@@ -62,13 +60,27 @@ impl egui::Widget for &mut RataguiBackend {
 }
 
 impl RataguiBackend {
-    /// Creates a new `RataguiBackend` with the specified width and height, and default font.
-    pub fn new(width: u16, height: u16, font_size: u16, font_data: &[u8]) -> Self {
-        let backend = SoftBackend::new_with_font(width, height, font_size as i32, font_data);
+    /// Creates a new `RataguiBackend` with the specified name,font size and font data. WASM compatible.
+    pub fn new(name: &str, font_size: u16, font_data: &[u8]) -> Self {
+        let backend = SoftBackend::new_with_font(10, 10, font_size as i32, font_data);
+        let name = name.to_string();
 
         Self {
             soft_backend: backend,
             cur_size: Vec2::new(1.0, 1.0),
+            name,
+
+            text_handle: None,
+        }
+    }
+    /// Creates a new `RataguiBackend` with the specified name, font size and using system fonts, this is not Web WASM compatible.
+    pub fn new_with_system_fonts(name: &str, font_size: u16) -> Self {
+        let backend = SoftBackend::new_with_system_fonts(10, 10, font_size as i32);
+        let name = name.to_string();
+        Self {
+            soft_backend: backend,
+            cur_size: Vec2::new(1.0, 1.0),
+            name,
 
             text_handle: None,
         }

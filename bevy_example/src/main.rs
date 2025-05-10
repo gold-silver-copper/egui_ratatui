@@ -27,7 +27,8 @@ fn ui_example_system(mut contexts: EguiContexts, mut termres: ResMut<EguiTermina
                 Paragraph::new(textik)
                     .block(Block::new().title("Ratatui").borders(Borders::ALL))
                     .white()
-                    .on_blue(),
+                    .on_blue()
+                    .wrap(Wrap { trim: false }),
                 area,
             );
         })
@@ -43,7 +44,7 @@ struct EguiTerminal(Terminal<RataguiBackend>);
 
 impl Default for EguiTerminal {
     fn default() -> Self {
-        let backend = RataguiBackend::new(10, 10, 16, FONT_DATA);
+        let backend = RataguiBackend::new("soft_rat", 16, FONT_DATA);
         //backend.set_font_size(12);
         Self(Terminal::new(backend).unwrap())
     }
