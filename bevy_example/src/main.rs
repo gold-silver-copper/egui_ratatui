@@ -1,29 +1,25 @@
 use bevy::prelude::*;
-use bevy_egui::{egui, EguiContexts, EguiPlugin};
+use bevy_egui::{egui, EguiContextPass, EguiContexts, EguiPlugin};
 use egui_ratatui::RataguiBackend;
 use ratatui::{
     prelude::{Stylize, Terminal},
     widgets::{Block, Borders, Paragraph, Wrap},
 };
 
+static FONT_DATA: &[u8] = include_bytes!("../../assets/iosevka.ttf");
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
-        .init_resource::<BevyTerminal<RataguiBackend>>()
-        //Initialize the ratatui terminal
-        .add_plugins(EguiPlugin)
-        // Systems that create Egui widgets should be run during the `CoreSet::Update` set,
-        // or after the `EguiSet::BeginFrame` system (which belongs to the `CoreSet::PreUpdate` set).
-        .add_systems(Update, ui_example_system)
+        .init_resource::<EguiTerminal>()
+        .add_plugins(EguiPlugin {
+            enable_multipass_for_primary_context: true,
+        })
+        .add_systems(EguiContextPass, ui_example_system)
         .run();
 }
 // Render to the terminal and to egui , both are immediate mode
-fn ui_example_system(
-    mut contexts: EguiContexts,
-    mut termres: ResMut<BevyTerminal<RataguiBackend>>,
-) {
+fn ui_example_system(mut contexts: EguiContexts, mut termres: ResMut<EguiTerminal>) {
     termres
-        .terminal
         .draw(|frame| {
             let area = frame.area();
             let textik = format!("Hello bevy! The window area is {}", area);
@@ -39,20 +35,17 @@ fn ui_example_system(
         .expect("epic fail");
 
     egui::Window::new("Hello").show(contexts.ctx_mut(), |ui| {
-        ui.add(termres.terminal.backend_mut());
+        ui.add(termres.backend_mut());
     });
 }
-// Create resource to hold the ratatui terminal
-#[derive(Resource)]
-struct BevyTerminal<RataguiBackend: ratatui::backend::Backend> {
-    terminal: Terminal<RataguiBackend>,
-}
 
-// Implement default on the resource to initialize it
-impl Default for BevyTerminal<RataguiBackend> {
+#[derive(Resource, Deref, DerefMut)]
+struct EguiTerminal(Terminal<RataguiBackend>);
+
+impl Default for EguiTerminal {
     fn default() -> Self {
-        let backend = RataguiBackend::new(100, 50);
-        let terminal = Terminal::new(backend).unwrap();
-        BevyTerminal { terminal }
+        let backend = RataguiBackend::new("soft_rat", 16, FONT_DATA);
+        //backend.set_font_size(12);
+        Self(Terminal::new(backend).unwrap())
     }
 }
