@@ -17,15 +17,18 @@ use ratatui::{
 //use egui::Label as TerminalLine;
 
 ///The RataguiBackend is the widget+backend itself , from which you can make a ratatui terminal ,
-/// then you can do ui.add(terminal.backend_mut()) inside an egui context    .
-/// Spawn with RataguiBackend::new() or RataguiBackend::new_with_fonts()   .
-/// See the hello_world_web example for custom font usage
+/// then you can do ui.add(terminal.backend_mut()) inside an egui context
+/// Spawn with RataguiBackend::new() or RataguiBackend::new_with_system_fonts()
+///
+/// For more documentation see the soft_ratatui crate
+/// https://github.com/gold-silver-copper/soft_ratatui
+/// https://docs.rs/soft_ratatui/latest/soft_ratatui/
+///
 
 pub struct RataguiBackend {
     soft_backend: SoftBackend,
     cur_size: Vec2,
     name: String,
-
     text_handle: Option<TextureHandle>,
 }
 impl egui::Widget for &mut RataguiBackend {
@@ -86,6 +89,7 @@ impl RataguiBackend {
         }
     }
 
+    ///Creates an Egui ColorImage from the terminal buffer.
     pub fn to_egui_image(&self) -> ColorImage {
         egui::ColorImage::from_rgb(
             [
