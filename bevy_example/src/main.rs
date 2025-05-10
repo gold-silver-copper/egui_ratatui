@@ -6,6 +6,7 @@ use ratatui::{
     widgets::{Block, Borders, Paragraph, Wrap},
 };
 
+static FONT_DATA: &[u8] = include_bytes!("../../assets/fonts/Iosevka-Bold.ttf");
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -54,7 +55,7 @@ struct BevyTerminal<RataguiBackend: ratatui::backend::Backend> {
 // Implement default on the resource to initialize it
 impl Default for BevyTerminal<RataguiBackend> {
     fn default() -> Self {
-        let backend = RataguiBackend::new(10, 10);
+        let backend = RataguiBackend::new(10, 10, 16, FONT_DATA);
         let terminal = Terminal::new(backend).unwrap();
         BevyTerminal { terminal }
     }

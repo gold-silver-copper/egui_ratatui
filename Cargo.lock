@@ -524,7 +524,7 @@ checksum = "dd538fb6910ac1099850255cf94a94df6551fbdd602454387d0adb2d1ca6dead"
 
 [[package]]
 name = "soft_ratatui"
-version = "0.0.1"
+version = "0.0.4"
 dependencies = [
  "cosmic-text",
  "ratatui",

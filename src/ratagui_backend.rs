@@ -1,21 +1,9 @@
 //! This module provides the `RataguiBackend` implementation for the [`Backend`] trait.
 //! It is used in the integration tests to verify the correctness of the library.
 
-use egui::{
-    epaint::{
-        text::{LayoutJob, TextFormat},
-        Color32, FontFamily, FontId, Fonts,
-    },
-    Margin,
-};
-use egui::{
-    ColorImage, ImageSource, Label, Response, Stroke, TextureHandle, TextureOptions, Ui, Vec2,
-};
+use egui::{ColorImage, Response, Stroke, TextureHandle, TextureOptions, Ui, Vec2};
 
-use ratatui::{
-    layout::Position,
-    style::{Color, Modifier},
-};
+use ratatui::layout::Position;
 use soft_ratatui::SoftBackend;
 
 use std::io;
@@ -33,23 +21,9 @@ use ratatui::{
 /// Spawn with RataguiBackend::new() or RataguiBackend::new_with_fonts()   .
 /// See the hello_world_web example for custom font usage
 
-/*    let image: ImageBuffer<Rgb<u8>, _> = ImageBuffer::from_raw(
-    self.soft_backend.get_pixmap_width() as u32,
-    self.soft_backend.get_pixmap_height() as u32,
-    self.soft_backend.get_pixmap_data(),
-)
-.expect("Buffer size does not match width * height * 3");
-println!("text size is {}", texture.size_vec2());
-// Save the image as a PNG
-image
-    .save(Path::new("my_imagik.png"))
-    .expect("Failed to save image");
- */
-
 pub struct RataguiBackend {
     soft_backend: SoftBackend,
     cur_size: Vec2,
-    font_size: u16,
 
     text_handle: Option<TextureHandle>,
 }
@@ -63,8 +37,8 @@ impl egui::Widget for &mut RataguiBackend {
             let max_width = self.soft_backend.char_width * 250;
             let max_height = self.soft_backend.char_height * 250;
 
-            let av_width = (av_size.x).clamp(1.0, max_width as f32); //- 2.0 * char_width
-            let av_height = (av_size.y).clamp(1.0, max_height as f32); //- 2.0 * char_height
+            let av_width = (av_size.x).clamp(1.0, max_width as f32);
+            let av_height = (av_size.y).clamp(1.0, max_height as f32);
             let available_chars_width = (av_width / (self.soft_backend.char_width as f32)) as u16;
 
             let available_chars_height =
@@ -77,32 +51,23 @@ impl egui::Widget for &mut RataguiBackend {
             }
         }
 
-        let texture = ui.ctx().load_texture(
-            "arrr", // texture ID (can be anything)
-            self.to_egui(),
-            //  self.to_egui(),   // your ColorImage
-            TextureOptions::LINEAR,
-        );
+        let texture =
+            ui.ctx()
+                .load_texture("soft_ratatui", self.to_egui_image(), TextureOptions::LINEAR);
         self.text_handle = Some(texture.clone());
 
-        //  let sizeik = texture.size_vec2();
-        // ui.ctx().texture_ui(ui);
         ui.image((texture.id(), texture.size_vec2()))
-
-        /*  ui.image(egui::include_image!("../assets/icon-1024.png"))
-        .on_hover_text_at_pointer("WebP") */
     }
 }
 
 impl RataguiBackend {
     /// Creates a new `RataguiBackend` with the specified width and height, and default font.
-    pub fn new(width: u16, height: u16, font_size: u16) -> Self {
-        let backend = SoftBackend::new(width, height, font_size as i32);
+    pub fn new(width: u16, height: u16, font_size: u16, font_data: &[u8]) -> Self {
+        let backend = SoftBackend::new_with_font(width, height, font_size as i32, font_data);
 
         Self {
             soft_backend: backend,
             cur_size: Vec2::new(1.0, 1.0),
-            font_size,
 
             text_handle: None,
         }
@@ -112,7 +77,7 @@ impl RataguiBackend {
         self.soft_backend.resize(width, height);
     }
 
-    pub fn to_egui(&self) -> ColorImage {
+    pub fn to_egui_image(&self) -> ColorImage {
         egui::ColorImage::from_rgb(
             [
                 self.soft_backend.get_pixmap_width(),
