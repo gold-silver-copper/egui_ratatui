@@ -1,7 +1,7 @@
 //! This module provides the `RataguiBackend` implementation for the [`Backend`] trait.
 //! It is used in the integration tests to verify the correctness of the library.
 
-use egui::{ColorImage, Response, Stroke, TextureHandle, TextureOptions, Ui, Vec2};
+use egui::{ColorImage, Response, TextureHandle, TextureOptions, Ui, Vec2};
 
 use ratatui::layout::Position;
 use soft_ratatui::SoftBackend;
@@ -9,9 +9,9 @@ use soft_ratatui::SoftBackend;
 use std::io;
 
 use ratatui::{
-    backend::{Backend, ClearType, WindowSize},
-    buffer::{Buffer, Cell},
-    layout::{Rect, Size},
+    backend::{Backend, WindowSize},
+    buffer::Cell,
+    layout::Size,
 };
 
 //use egui::Label as TerminalLine;
@@ -47,7 +47,8 @@ impl egui::Widget for &mut RataguiBackend {
             if (cur_size.width != available_chars_width)
                 || (cur_size.height != available_chars_height)
             {
-                self.resize(available_chars_width, available_chars_height);
+                self.soft_backend
+                    .resize(available_chars_width, available_chars_height);
             }
         }
 
@@ -72,10 +73,6 @@ impl RataguiBackend {
             text_handle: None,
         }
     }
-    /// Resizes the `RataguiBackend` to the specified width and height.
-    pub fn resize(&mut self, width: u16, height: u16) {
-        self.soft_backend.resize(width, height);
-    }
 
     pub fn to_egui_image(&self) -> ColorImage {
         egui::ColorImage::from_rgb(
@@ -86,11 +83,6 @@ impl RataguiBackend {
             self.soft_backend.get_pixmap_data(),
         )
     }
-
-    /// Returns a reference to the internal buffer of the `RataguiBackend`.
-    pub const fn buffer(&self) -> &Buffer {
-        &self.soft_backend.buffer()
-    }
 }
 
 impl Backend for RataguiBackend {
@@ -98,47 +90,38 @@ impl Backend for RataguiBackend {
     where
         I: Iterator<Item = (u16, u16, &'a Cell)>,
     {
-        self.soft_backend.draw(content)?;
-
-        Ok(())
+        self.soft_backend.draw(content)
     }
 
     fn hide_cursor(&mut self) -> io::Result<()> {
-        //  todo!();
-        Ok(())
+        self.soft_backend.hide_cursor()
     }
 
     fn show_cursor(&mut self) -> io::Result<()> {
-        //  todo!();
-        Ok(())
+        self.soft_backend.show_cursor()
     }
 
     fn get_cursor_position(&mut self) -> io::Result<Position> {
-        todo!();
+        self.soft_backend.get_cursor_position()
     }
 
     fn set_cursor_position<P: Into<Position>>(&mut self, position: P) -> io::Result<()> {
-        todo!();
-        Ok(())
+        self.soft_backend.set_cursor_position(position)
     }
 
     fn clear(&mut self) -> io::Result<()> {
-        self.soft_backend.clear()?;
-        Ok(())
+        self.soft_backend.clear()
     }
 
     fn size(&self) -> io::Result<Size> {
-        Ok(Size {
-            width: self.soft_backend.buffer.area().width,
-            height: self.soft_backend.buffer.area().height,
-        })
+        self.soft_backend.size()
     }
 
     fn window_size(&mut self) -> io::Result<WindowSize> {
-        todo!();
+        self.soft_backend.window_size()
     }
 
     fn flush(&mut self) -> io::Result<()> {
-        Ok(())
+        self.soft_backend.flush()
     }
 }
