@@ -1,6 +1,6 @@
 [package]
 name = "egui_ratatui"
-version = "0.0.31"
+version = "1.31.0"
 authors = ["gold-silver-copper"]
 edition = "2024"
 include = ["LICENSE-APACHE", "LICENSE-MIT", "**/*.rs", "Cargo.toml"]
