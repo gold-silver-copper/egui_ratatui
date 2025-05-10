@@ -45,4 +45,4 @@ eframe: https://github.com/emilk/eframe_template
 
 
 ![](https://github.com/gold-silver-copper/egui_ratatui/blob/main/tyorhun.gif)
-![](https://github.com/gold-silver-copper/egui_ratatui/blob/main/screen1.png)
+![](https://github.com/gold-silver-copper/egui_ratatui/blob/main/screen3.png)
