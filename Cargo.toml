@@ -1,10 +1,10 @@
 [package]
 name = "egui_ratatui"
-version = "1.31.0"
+version = "1.31.1"
 authors = ["gold-silver-copper"]
 edition = "2024"
 include = ["LICENSE-APACHE", "LICENSE-MIT", "**/*.rs", "Cargo.toml"]
-description = "WASM ratatui with egui works with bevy and macroquad and eframe"
+description = "Ratati Backend that is also an EGUI widget! WASM BEVY MACROQUAD EFRAME"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/gold-silver-copper/egui_ratatui"
 
@@ -14,5 +14,5 @@ crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 ratatui = { version = "0.29", default-features = false }
-egui = { version = "0.31", default-features = false }
+egui = { version = "0.31.1", default-features = false }
 soft_ratatui = "0.0.4"

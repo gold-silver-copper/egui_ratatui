@@ -1,6 +1,3 @@
-//! This module provides the `RataguiBackend` implementation for the [`Backend`] trait.
-//! It is used in the integration tests to verify the correctness of the library.
-
 use egui::{ColorImage, Response, TextureHandle, TextureOptions, Ui, Vec2};
 
 use ratatui::layout::Position;
@@ -14,16 +11,19 @@ use ratatui::{
     layout::Size,
 };
 
-//use egui::Label as TerminalLine;
-
-///The RataguiBackend is the widget+backend itself , from which you can make a ratatui terminal ,
-/// then you can do ui.add(terminal.backend_mut()) inside an egui context
-/// Spawn with RataguiBackend::new() or RataguiBackend::new_with_system_fonts()
+/// The `RataguiBackend` is the combined widget and backend used to render a `ratatui` terminal
+/// within an `egui` context.
 ///
-/// For more documentation see the soft_ratatui crate
-/// https://github.com/gold-silver-copper/soft_ratatui
-/// https://docs.rs/soft_ratatui/latest/soft_ratatui/
+/// After creating a terminal, you can integrate it like this:
+/// `ui.add(terminal.backend_mut())`
 ///
+/// Spawn it using either:
+/// * `RataguiBackend::new()`
+/// * `RataguiBackend::new_with_system_fonts()`
+///
+/// For more information, see the `soft_ratatui` crate:
+/// 📦 [GitHub](https://github.com/gold-silver-copper/soft_ratatui)
+/// 📚 [Docs.rs](https://docs.rs/soft_ratatui/latest/soft_ratatui/)
 
 pub struct RataguiBackend {
     soft_backend: SoftBackend,
@@ -33,6 +33,11 @@ pub struct RataguiBackend {
 }
 impl egui::Widget for &mut RataguiBackend {
     fn ui(self, ui: &mut Ui) -> Response {
+        let spacik = egui::style::Spacing {
+            item_spacing: egui::vec2(0.0, 0.0),
+            ..Default::default()
+        };
+        *ui.spacing_mut() = spacik;
         let av_size = ui.available_size();
 
         if self.cur_size != av_size {
@@ -63,7 +68,20 @@ impl egui::Widget for &mut RataguiBackend {
 }
 
 impl RataguiBackend {
-    /// Creates a new `RataguiBackend` with the specified name,font size and font data. WASM compatible.
+    /// Creates a new `RataguiBackend` with the specified name, font size, and font data.
+    ///
+    /// * name      : &str   - Name used to identify the terminal window or context
+    /// * font-size : u16    - Size of the font in pixels
+    /// * font-data : &[u8]  - Font bytes (e.g., from `include_bytes!`)
+    ///
+    /// ✅ This method is compatible with WASM/Web targets.
+    ///
+    /// # Examples
+    /// ```rust
+    /// static FONT_DATA: &[u8] = include_bytes!("../../assets/tc.ttf");
+    /// let backend = RataguiBackend::new("My Terminal", 16, FONT_DATA);
+    /// ```
+
     pub fn new(name: &str, font_size: u16, font_data: &[u8]) -> Self {
         let backend = SoftBackend::new_with_font(10, 10, font_size as i32, font_data);
         let name = name.to_string();
@@ -76,7 +94,18 @@ impl RataguiBackend {
             text_handle: None,
         }
     }
-    /// Creates a new `RataguiBackend` with the specified name, font size and using system fonts, this is not Web WASM compatible.
+    /// Creates a new `RataguiBackend` with the specified name and font size using system fonts.
+    ///
+    /// * name      : &str  - Name used to identify the terminal window or context
+    /// * font-size : u16   - Size of the font in pixels
+    ///
+    /// ⚠️ Not compatible with WASM/Web targets.
+    ///
+    /// # Examples
+    /// ```rust
+    /// let backend = RataguiBackend::new_with_system_fonts("My Terminal", 16);
+    /// ```
+
     pub fn new_with_system_fonts(name: &str, font_size: u16) -> Self {
         let backend = SoftBackend::new_with_system_fonts(10, 10, font_size as i32);
         let name = name.to_string();
@@ -89,7 +118,7 @@ impl RataguiBackend {
         }
     }
 
-    ///Creates an Egui ColorImage from the terminal buffer.
+    ///Creates an Egui ColorImage from the terminal backend.
     pub fn to_egui_image(&self) -> ColorImage {
         egui::ColorImage::from_rgb(
             [

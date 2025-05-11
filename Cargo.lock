@@ -151,7 +151,7 @@ dependencies = [
 
 [[package]]
 name = "egui_ratatui"
-version = "1.31.0"
+version = "1.31.1"
 dependencies = [
  "egui",
  "ratatui",
