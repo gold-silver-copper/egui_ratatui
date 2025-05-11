@@ -151,7 +151,7 @@ dependencies = [
 
 [[package]]
 name = "egui_ratatui"
-version = "1.31.1"
+version = "1.31.2"
 dependencies = [
  "egui",
  "ratatui",
@@ -524,9 +524,9 @@ checksum = "dd538fb6910ac1099850255cf94a94df6551fbdd602454387d0adb2d1ca6dead"
 
 [[package]]
 name = "soft_ratatui"
-version = "0.0.4"
+version = "0.0.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "10021eb9e8c38ba31cd8279e6fbf89153275b29d8e867fe5aa53392a183dce2f"
+checksum = "4eb9c9bd84e08377b8ca75ebea4d1ab94b88e14db990a30fdf2ca78897e1ab7f"
 dependencies = [
  "cosmic-text",
  "ratatui",
