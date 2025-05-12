@@ -43,6 +43,8 @@ Macroquad: https://macroquad.rs/articles/wasm/
 
 eframe: https://github.com/emilk/eframe_template
 
+#NOTE: While this library does provide a bevy example, bevy_egui has a slow path which prevent egui_ratatui from achieving maximum performance. This is not an issue when using eframe. For bevy, prefer to use  [`soft_ratatui`](https://github.com/gold-silver-copper/soft_ratatui) directly.
+
 
 ![](https://github.com/gold-silver-copper/egui_ratatui/blob/main/tyorhun.gif)
 ![](https://github.com/gold-silver-copper/egui_ratatui/blob/main/screen3.png)
