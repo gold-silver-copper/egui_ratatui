@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use bevy_egui::{EguiContextPass, EguiContexts, EguiPlugin, egui};
+use bevy_egui::{EguiContexts, EguiPlugin, EguiPrimaryContextPass, egui};
 use egui_ratatui::RataguiBackend;
 use ratatui::{
     prelude::{Stylize, Terminal},
@@ -9,15 +9,14 @@ use soft_ratatui::embedded_graphics_unicodefonts::{
     mono_8x13_atlas, mono_8x13_bold_atlas, mono_8x13_italic_atlas,
 };
 use soft_ratatui::{EmbeddedGraphics, SoftBackend};
-static FONT_DATA: &[u8] = include_bytes!("../../assets/iosevka.ttf");
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
         .init_resource::<EguiTerminal>()
-        .add_plugins(EguiPlugin {
-            enable_multipass_for_primary_context: true,
-        })
-        .add_systems(EguiContextPass, ui_example_system)
+        .add_systems(Startup, setup_camera_system)
+        .add_plugins(EguiPlugin::default())
+        .add_systems(EguiPrimaryContextPass, ui_example_system)
         .run();
 }
 // Render to the terminal and to egui , both are immediate mode
@@ -37,13 +36,13 @@ fn ui_example_system(mut contexts: EguiContexts, mut termres: ResMut<EguiTermina
         })
         .expect("epic fail");
 
-    egui::Window::new("Hello").show(contexts.ctx_mut(), |ui| {
+    egui::Window::new("Hello").show(contexts.ctx_mut().unwrap(), |ui| {
         ui.add(termres.backend_mut());
     });
 }
 
 #[derive(Resource, Deref, DerefMut)]
-struct EguiTerminal(Terminal<RataguiBackend>);
+struct EguiTerminal(Terminal<RataguiBackend<EmbeddedGraphics>>);
 
 impl Default for EguiTerminal {
     fn default() -> Self {
@@ -61,4 +60,7 @@ impl Default for EguiTerminal {
         //backend.set_font_size(12);
         Self(Terminal::new(backend).unwrap())
     }
+}
+fn setup_camera_system(mut commands: Commands) {
+    commands.spawn(Camera2d);
 }

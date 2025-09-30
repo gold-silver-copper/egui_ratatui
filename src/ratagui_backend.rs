@@ -63,7 +63,7 @@ impl<R: RasterBackend> egui::Widget for &mut RataguiBackend<R> {
 }
 
 impl<R: RasterBackend> RataguiBackend<R> {
-    /// Creates a new `RataguiBackend` with the specified name,font size and font data. WASM compatible.
+    /// Creates a new `RataguiBackend` with the given soft_ratatui backend, see [`soft_ratatui`](https://github.com/gold-silver-copper/soft_ratatui) documentation for more information. WASM compatible.
     pub fn new(name: &str, soft_backend: SoftBackend<R>) -> Self {
         let name = name.to_string();
 
