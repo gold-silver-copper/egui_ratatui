@@ -5,15 +5,6 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bevyengine/bevy/blob/master/LICENSE)
 [![Downloads](https://img.shields.io/crates/d/egui_ratatui.svg)](https://crates.io/crates/egui_ratatui)
 
-Discord: [https://discord.gg/tDBPkdgApN](https://discord.gg/tDBPkdgApN)
-
-Web demo: [https://gold-silver-copper.github.io/](https://gold-silver-copper.github.io/) (works best on Firefox)
-
-See also:
-
-* [https://ratatui.rs/](https://ratatui.rs/)
-* [https://github.com/emilk/egui](https://github.com/emilk/egui)
-
 ---
 
 `RataguiBackend` is a combined **ratatui Backend** and **egui Widget** that lets you render a full Ratatui terminal inside an egui UI. Because egui is WASM-friendly, this makes it easy to run terminal-style TUI apps in desktop GUIs or in the browser.
@@ -68,56 +59,57 @@ cargo run --release
 ### Minimal `ratatui` example (terminal style)
 
 ```rust
+use eframe::egui;
 use egui_ratatui::RataguiBackend;
 use ratatui::Terminal;
+use ratatui::prelude::Stylize;
 use ratatui::widgets::{Block, Borders, Paragraph, Wrap};
+use soft_ratatui::embedded_graphics_unicodefonts::{
+    mono_8x13_atlas, mono_8x13_bold_atlas, mono_8x13_italic_atlas,
+};
+use soft_ratatui::{EmbeddedGraphics, SoftBackend};
 
-// include a font (BDF, TTF atlas, or whichever backend you enable)
-let font_bytes: &[u8] = include_bytes!("../assets/mono_8x13.bdf");
+fn main() -> eframe::Result {
+    let options = eframe::NativeOptions {
+        viewport: egui::ViewportBuilder::default().with_inner_size([320.0, 240.0]),
+        ..Default::default()
+    };
 
-// annotate the concrete backend type if necessary:
-let mut backend: RataguiBackend<soft_ratatui::EmbeddedGraphics> =
-    RataguiBackend::new("my_ratatui", 16, font_bytes);
-
-// Use it as any ratatui Backend:
-let mut terminal = Terminal::new(&mut backend).unwrap();
-terminal.clear().unwrap();
-
-terminal.draw(|frame| {
-    let area = frame.area();
-    frame.render_widget(
-        Paragraph::new("Hello egui_ratatui!")
-            .block(Block::new().title("Ratatui").borders(Borders::ALL))
-            .wrap(Wrap { trim: false }),
-        area,
+    let font_regular = mono_8x13_atlas();
+    let font_italic = mono_8x13_italic_atlas();
+    let font_bold = mono_8x13_bold_atlas();
+    let soft_backend = SoftBackend::<EmbeddedGraphics>::new(
+        100,
+        50,
+        font_regular,
+        Some(font_bold),
+        Some(font_italic),
     );
-}).unwrap();
-```
+    let mut backend = RataguiBackend::new("soft_rat", soft_backend);
+    //backend.set_font_size(12);
+    let mut terminal = Terminal::new(backend).unwrap();
 
-### Embedding inside an `egui` UI
-
-`RataguiBackend` implements `egui::Widget` for `&mut RataguiBackend<R>`, so you can insert it into any egui layout:
-
-```rust
-use egui::{CentralPanel, Context};
-use egui_ratatui::RataguiBackend;
-
-// create RataguiBackend as above
-let font_bytes: &[u8] = include_bytes!("../assets/mono_8x13.bdf");
-let mut rat_backend: RataguiBackend<soft_ratatui::EmbeddedGraphics> =
-    RataguiBackend::new("my_ratatui", 16, font_bytes);
-
-// inside your egui frame code:
-fn ui_example(ctx: &egui::Context, rat_backend: &mut RataguiBackend<soft_ratatui::EmbeddedGraphics>) {
-    CentralPanel::default().show(ctx, |ui| {
-        // add the ratatui widget; it will render the backend's current pixmap as an egui image
-        ui.add(rat_backend);
-    });
+    eframe::run_simple_native("My egui App", options, move |ctx, _frame| {
+        terminal
+            .draw(|frame| {
+                let area = frame.area();
+                let textik = format!("Hello eframe! The window area is {}", area);
+                frame.render_widget(
+                    Paragraph::new(textik)
+                        .block(Block::new().title("Ratatui").borders(Borders::ALL))
+                        .white()
+                        .on_blue()
+                        .wrap(Wrap { trim: false }),
+                    area,
+                );
+            })
+            .expect("epic fail");
+        egui::CentralPanel::default().show(ctx, |ui| {
+            ui.add(terminal.backend_mut());
+        });
+    })
 }
 ```
-
-When the panel changes size, `RataguiBackend` will resize its internal SoftBackend to match the available characters (based on `char_width` / `char_height`). The backend exposes functions to fetch the generated pixmap if you want to use it directly.
-
 ---
 
 ## Feature Flags (inherited from `soft_ratatui`)
@@ -159,10 +151,10 @@ When the panel changes size, `RataguiBackend` will resize its internal SoftBacke
 * [`ratatui`]: [https://github.com/ratatui/ratatui](https://github.com/ratatui/ratatui) — terminal UI crate.
 * [`egui`]: [https://github.com/emilk/egui](https://github.com/emilk/egui) — immediate mode GUI used to embed the widget.
 * [`bevy_ratatui`]: [https://github.com/cxreiff/bevy_ratatui](https://github.com/cxreiff/bevy_ratatui) — Bevy integration for Ratatui.
-* [`mousefood`]: https://github.com/j-g00da/mousefood
-* [`ratzilla`]: https://github.com/orhun/ratzilla
-* [`ratatui-wgpu`]: https://github.com/Jesterhearts/ratatui-wgpu
-* [`bevy_ratatui_camera`]: https://github.com/cxreiff/bevy_ratatui_camera
+* [`mousefood`]: (https://github.com/j-g00da/mousefood)
+* [`ratzilla`]: (https://github.com/orhun/ratzilla)
+* [`ratatui-wgpu`]: (https://github.com/Jesterhearts/ratatui-wgpu)
+* [`bevy_ratatui_camera`]: (https://github.com/cxreiff/bevy_ratatui_camera)
 
 WASM & platform guides:
 
@@ -172,11 +164,11 @@ WASM & platform guides:
 
 Font and text engine links:
 
-* [`embedded-graphics`]: https://github.com/embedded-graphics/embedded-graphics
-* [`embedded_graphics_unicodefonts`]: https://github.com/j-g00da/embedded-graphics-unicodefonts
-* [`bdf-parser`]: https://github.com/embedded-graphics/bdf
-* [`embedded-ttf`]: https://github.com/peckpeck/embedded-ttf
-* [`cosmic-text`]: https://github.com/pop-os/cosmic-text
+* [`embedded-graphics`](https://github.com/embedded-graphics/embedded-graphics)
+* [`embedded_graphics_unicodefonts`](https://github.com/j-g00da/embedded-graphics-unicodefonts)
+* [`bdf-parser`](https://github.com/embedded-graphics/bdf)
+* [`embedded-ttf`](https://github.com/peckpeck/embedded-ttf)
+* [`cosmic-text`](https://github.com/pop-os/cosmic-text)
 
 ---
 
