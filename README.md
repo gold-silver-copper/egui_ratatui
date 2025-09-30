@@ -48,7 +48,7 @@ cargo run --release
 
 ## Quick usage
 
-### Minimal `ratatui` example (terminal style)
+### Minimal example
 
 ```rust
 use eframe::egui;
@@ -129,7 +129,6 @@ fn main() -> eframe::Result {
 
 * The crate is designed so `RataguiBackend<R>` is generic over any `R: RasterBackend`. That means you can use the same `RataguiBackend` code with `SoftBackend<EmbeddedGraphics>`, `SoftBackend<EmbeddedTTF>`, `SoftBackend<Bdf>`, or whichever backend you enable.
 * `RataguiBackend` implements Ratatui's `Backend` trait, so it can be used anywhere a `ratatui::Terminal` is expected.
-* When used as an egui widget, textures are loaded with `TextureOptions::NEAREST` and cached; `RataguiBackend` stores the `TextureHandle` so subsequent frames reuse the texture unless the content changed.
 * For web/WASM deployment, remember to enable the appropriate features and follow the host GUI / wasm backend guide (see links below).
 
 
