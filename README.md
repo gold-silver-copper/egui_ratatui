@@ -15,7 +15,6 @@
 * **Multiple font backends**: `embedded-graphics`, `embedded-ttf`, `bdf-parser`, `cosmic-text`.
 * **High performance**: optimized for real-time UIs (hundreds of FPS on normal workloads).
 * **WASM compatible**: run your ratatui apps in the browser via egui.
-* **Full Ratatui `Backend` trait implementation** — works with `ratatui::Terminal`.
 * **Bevy & GUI friendly** — bevy and eframe examples included.
 
 ---
@@ -134,8 +133,8 @@ fn main() -> eframe::Result {
 
 ## Examples
 
-* `bevy_example/` — embedding Ratagui inside Bevy (with egui).
-* `wasm_example/` — run the widget in the browser via egui/eframe.
+* `bevy_example/` — embedding Ratagui inside Bevy (with bevy_egui).
+* `eframe_example/` — minimal eframe example.
 * See the `soft_ratatui` repo for font/backend-specific examples (BDF, TTF, CosmicText, embedded-graphics).
 
 
