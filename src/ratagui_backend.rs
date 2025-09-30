@@ -16,20 +16,21 @@ use ratatui::{
 
 //use egui::Label as TerminalLine;
 
-///The RataguiBackend is the widget+backend itself , from which you can make a ratatui terminal ,
-/// then you can do ui.add(terminal.backend_mut()) inside an egui context
-/// Spawn with RataguiBackend::new() or RataguiBackend::new_with_system_fonts()
+/// RataguiBackend is an egui widget and a ratatui backend, see examples and [`soft_ratatui`](https://github.com/gold-silver-copper/soft_ratatui) documentation for more information
+///```rust
+/// let soft_backend = SoftBackend::<EmbeddedGraphics>::new(100,50,font_regular,Some(font_bold),Some(font_italic),);
+/// let mut backend = RataguiBackend::new("soft_rat", soft_backend);
+/// let mut terminal = Terminal::new(backend).unwrap();
+/// ui.add(terminal.backend_mut())
+/// ```
 ///
-/// For more documentation see the soft_ratatui crate
-/// https://github.com/gold-silver-copper/soft_ratatui
-/// https://docs.rs/soft_ratatui/latest/soft_ratatui/
 ///
 
 pub struct RataguiBackend<R: RasterBackend> {
-    soft_backend: SoftBackend<R>,
-    cur_size: Vec2,
-    name: String,
-    text_handle: Option<TextureHandle>,
+    pub soft_backend: SoftBackend<R>,
+    pub cur_size: Vec2,
+    pub name: String,
+    pub text_handle: Option<TextureHandle>,
 }
 impl<R: RasterBackend> egui::Widget for &mut RataguiBackend<R> {
     fn ui(self, ui: &mut Ui) -> Response {
