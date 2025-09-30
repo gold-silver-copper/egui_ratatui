@@ -1,9 +1,12 @@
 use eframe::egui;
 use egui_ratatui::RataguiBackend;
-use ratatui::{
-    prelude::{Stylize, Terminal},
-    widgets::{Block, Borders, Paragraph, Wrap},
+use ratatui::Terminal;
+use ratatui::prelude::Stylize;
+use ratatui::widgets::{Block, Borders, Paragraph, Wrap};
+use soft_ratatui::embedded_graphics_unicodefonts::{
+    mono_8x13_atlas, mono_8x13_bold_atlas, mono_8x13_italic_atlas,
 };
+use soft_ratatui::{EmbeddedGraphics, SoftBackend};
 
 static FONT_DATA: &[u8] = include_bytes!("../../assets/iosevka.ttf");
 
@@ -16,8 +19,17 @@ fn main() -> eframe::Result {
     // Our application state:
     let mut name = "Arthur".to_owned();
     let mut age = 42;
-
-    let backend = RataguiBackend::new("soft_rat", 16, FONT_DATA);
+    let font_regular = mono_8x13_atlas();
+    let font_italic = mono_8x13_italic_atlas();
+    let font_bold = mono_8x13_bold_atlas();
+    let soft_backend = SoftBackend::<EmbeddedGraphics>::new(
+        100,
+        50,
+        font_regular,
+        Some(font_bold),
+        Some(font_italic),
+    );
+    let mut backend = RataguiBackend::new("soft_rat", soft_backend);
     //backend.set_font_size(12);
     let mut terminal = Terminal::new(backend).unwrap();
 

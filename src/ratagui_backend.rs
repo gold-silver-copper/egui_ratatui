@@ -4,7 +4,7 @@
 use egui::{ColorImage, Response, TextureHandle, TextureOptions, Ui, Vec2};
 
 use ratatui::layout::Position;
-use soft_ratatui::SoftBackend;
+use soft_ratatui::{RasterBackend, SoftBackend};
 
 use std::io;
 
@@ -25,13 +25,13 @@ use ratatui::{
 /// https://docs.rs/soft_ratatui/latest/soft_ratatui/
 ///
 
-pub struct RataguiBackend {
-    soft_backend: SoftBackend,
+pub struct RataguiBackend<R: RasterBackend> {
+    soft_backend: SoftBackend<R>,
     cur_size: Vec2,
     name: String,
     text_handle: Option<TextureHandle>,
 }
-impl egui::Widget for &mut RataguiBackend {
+impl<R: RasterBackend> egui::Widget for &mut RataguiBackend<R> {
     fn ui(self, ui: &mut Ui) -> Response {
         let av_size = ui.available_size();
 
@@ -62,26 +62,13 @@ impl egui::Widget for &mut RataguiBackend {
     }
 }
 
-impl RataguiBackend {
+impl<R: RasterBackend> RataguiBackend<R> {
     /// Creates a new `RataguiBackend` with the specified name,font size and font data. WASM compatible.
-    pub fn new(name: &str, font_size: u16, font_data: &[u8]) -> Self {
-        let backend = SoftBackend::new_with_font(10, 10, font_size as i32, font_data);
+    pub fn new(name: &str, soft_backend: SoftBackend<R>) -> Self {
         let name = name.to_string();
 
         Self {
-            soft_backend: backend,
-            cur_size: Vec2::new(1.0, 1.0),
-            name,
-
-            text_handle: None,
-        }
-    }
-    /// Creates a new `RataguiBackend` with the specified name, font size and using system fonts, this is not Web WASM compatible.
-    pub fn new_with_system_fonts(name: &str, font_size: u16) -> Self {
-        let backend = SoftBackend::new_with_system_fonts(10, 10, font_size as i32);
-        let name = name.to_string();
-        Self {
-            soft_backend: backend,
+            soft_backend,
             cur_size: Vec2::new(1.0, 1.0),
             name,
 
@@ -101,7 +88,7 @@ impl RataguiBackend {
     }
 }
 
-impl Backend for RataguiBackend {
+impl<R: RasterBackend> Backend for RataguiBackend<R> {
     fn draw<'a, I>(&mut self, content: I) -> io::Result<()>
     where
         I: Iterator<Item = (u16, u16, &'a Cell)>,
