@@ -1,4 +1,4 @@
-# egui_ratatui : egui widget + ratatui backend (WASM)
+# egui_ratatui : egui widget + ratatui backend
 
 [![Crates.io](https://img.shields.io/crates/v/egui_ratatui.svg)](https://crates.io/crates/egui_ratatui)
 [![Documentation](https://docs.rs/egui_ratatui/badge.svg)](https://docs.rs/egui_ratatui/latest/egui_ratatui/)
@@ -111,7 +111,7 @@ fn main() -> eframe::Result {
 
 ## Feature Flags (inherited from `soft_ratatui`)
 
-`soft_ratatui` (and therefore `egui_ratatui`) is modular. Enable only the backends you need to reduce binary size and dependencies.
+`soft_ratatui` (and therefore `egui_ratatui`) is modular. Enable only the backends you need to reduce binary size and dependencies. (Note: these features flags must be set on the soft_ratatui dependency, I am only mentioning them here for visibility)
 
 | Feature             | Enables                            | Description                                                                                                  |
 | ------------------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------ |
