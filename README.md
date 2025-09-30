@@ -147,14 +147,14 @@ fn main() -> eframe::Result {
 
 ## Useful links
 
-* [`soft_ratatui`]: [https://github.com/gold-silver-copper/soft_ratatui](https://github.com/gold-silver-copper/soft_ratatui) — software rendering backends used by egui_ratatui.
-* [`ratatui`]: [https://github.com/ratatui/ratatui](https://github.com/ratatui/ratatui) — terminal UI crate.
-* [`egui`]: [https://github.com/emilk/egui](https://github.com/emilk/egui) — immediate mode GUI used to embed the widget.
-* [`bevy_ratatui`]: [https://github.com/cxreiff/bevy_ratatui](https://github.com/cxreiff/bevy_ratatui) — Bevy integration for Ratatui.
-* [`mousefood`]: (https://github.com/j-g00da/mousefood)
-* [`ratzilla`]: (https://github.com/orhun/ratzilla)
-* [`ratatui-wgpu`]: (https://github.com/Jesterhearts/ratatui-wgpu)
-* [`bevy_ratatui_camera`]: (https://github.com/cxreiff/bevy_ratatui_camera)
+* [`soft_ratatui`](https://github.com/gold-silver-copper/soft_ratatui) — software rendering backends used by egui_ratatui.
+* [`ratatui`](https://github.com/ratatui/ratatui) — terminal UI crate.
+* [`egui`](https://github.com/emilk/egui) — immediate mode GUI used to embed the widget.
+* [`bevy_ratatui`](https://github.com/cxreiff/bevy_ratatui) — Bevy integration for Ratatui.
+* [`mousefood`](https://github.com/j-g00da/mousefood) - a no-std embedded-graphics backend for Ratatui!
+* [`ratzilla`](https://github.com/orhun/ratzilla) - Build terminal-themed web applications with Rust and WebAssembly.
+* [`ratatui-wgpu`](https://github.com/Jesterhearts/ratatui-wgpu) - A wgpu based rendering backend for ratatui.
+* [`bevy_ratatui_camera`](https://github.com/cxreiff/bevy_ratatui_camera) - A bevy plugin for rendering your bevy app to the terminal using ratatui.
 
 WASM & platform guides:
 
@@ -181,27 +181,4 @@ Font and text engine links:
 
 ## License
 
-Dual-licensed under **MIT** or **Apache 2.0**. Choose the license that suits you.
-
----
-
-## Status & Contribution
-
-Active development — issues, pull requests, and suggestions are very welcome. If you have a favorite font or backend you'd like supported, open an issue or a PR. Join the discussion on the project Discord: [https://discord.gg/tDBPkdgApN](https://discord.gg/tDBPkdgApN)
-
----
-
-### Short FAQ
-
-**Q:** Can I use `RataguiBackend` with multiple different raster backends in the same binary?
-**A:** Yes — `RataguiBackend<R>` is generic over `R: RasterBackend`. Build and type-annotate the specific backend you want (e.g. `RataguiBackend<soft_ratatui::EmbeddedGraphics>`).
-
-**Q:** Is this suitable for games?
-**A:** Yes — the software backend produces RGB/RGBA pixmaps that you can upload as textures in game engines (Bevy examples provided).
-
-**Q:** How do I deploy to the web?
-**A:** Use egui/eframe or your engine's WASM tooling and enable the appropriate `soft_ratatui` features. See the WASM links above for platform-specific details.
-
----
-
-If anything in this README is out-of-date with your current code, open a PR or an issue and I’ll help update it.
+Dual-licensed under **MIT** or **Apache 2.0**.
