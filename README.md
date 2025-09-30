@@ -8,11 +8,6 @@
 
 `RataguiBackend` is a combined **ratatui Backend** and **egui Widget** that lets you render a full Ratatui terminal inside an egui UI. Because egui is WASM-friendly, this makes it easy to run terminal-style TUI apps in desktop GUIs or in the browser.
 
----
-![](https://github.com/gold-silver-copper/egui_ratatui/blob/main/tyorhun.gif)
-![](https://github.com/gold-silver-copper/egui_ratatui/blob/main/screen3.png)
-
-
 ## Highlights
 
 `egui_ratatui` builds on top of the [`soft_ratatui`] library and inherits its features:
@@ -107,6 +102,12 @@ fn main() -> eframe::Result {
     })
 }
 ```
+
+![](https://github.com/gold-silver-copper/egui_ratatui/blob/main/new.avif)
+![](https://github.com/gold-silver-copper/egui_ratatui/blob/main/tyorhun.gif)
+![](https://github.com/gold-silver-copper/egui_ratatui/blob/main/screenshot.png)
+
+
 ---
 
 ## Feature Flags (set these on `soft_ratatui` dependency)
