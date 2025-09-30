@@ -109,7 +109,7 @@ fn main() -> eframe::Result {
 ```
 ---
 
-## Feature Flags (inherited from `soft_ratatui`)
+## Feature Flags (set these on `soft_ratatui` dependency)
 
 `soft_ratatui` (and therefore `egui_ratatui`) is modular. Enable only the backends you need to reduce binary size and dependencies. (Note: these features flags must be set on the soft_ratatui dependency, I am only mentioning them here for visibility)
 
