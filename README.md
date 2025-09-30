@@ -5,26 +5,23 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bevyengine/bevy/blob/master/LICENSE)
 [![Downloads](https://img.shields.io/crates/d/egui_ratatui.svg)](https://crates.io/crates/egui_ratatui)
 
----
 
 `RataguiBackend` is a combined **ratatui Backend** and **egui Widget** that lets you render a full Ratatui terminal inside an egui UI. Because egui is WASM-friendly, this makes it easy to run terminal-style TUI apps in desktop GUIs or in the browser.
 
+---
 ![](https://github.com/gold-silver-copper/egui_ratatui/blob/main/tyorhun.gif)
 ![](https://github.com/gold-silver-copper/egui_ratatui/blob/main/screen3.png)
 
----
 
 ## Highlights
 
 `egui_ratatui` builds on top of the [`soft_ratatui`] library and inherits its features:
 
-* **Software rendering backend for `ratatui`** — no GPU required.
 * **Multiple font backends**: `embedded-graphics`, `embedded-ttf`, `bdf-parser`, `cosmic-text`.
-* **Flexible pixel output**: raw RGB or RGBA pixmaps (with color-to-alpha support).
 * **High performance**: optimized for real-time UIs (hundreds of FPS on normal workloads).
 * **WASM compatible**: run your ratatui apps in the browser via egui.
 * **Full Ratatui `Backend` trait implementation** — works with `ratatui::Terminal`.
-* **Bevy & GUI friendly** — ship TUIs as textures to games or GUI apps.
+* **Bevy & GUI friendly** — bevy and eframe examples included.
 
 ---
 
@@ -126,7 +123,6 @@ fn main() -> eframe::Result {
 
 > Tip: Only enable the font backends you actually use in `Cargo.toml` to keep compile times and binary size down.
 
----
 
 ## Integration notes
 
@@ -135,7 +131,6 @@ fn main() -> eframe::Result {
 * When used as an egui widget, textures are loaded with `TextureOptions::NEAREST` and cached; `RataguiBackend` stores the `TextureHandle` so subsequent frames reuse the texture unless the content changed.
 * For web/WASM deployment, remember to enable the appropriate features and follow the host GUI / wasm backend guide (see links below).
 
----
 
 ## Examples
 
@@ -143,7 +138,6 @@ fn main() -> eframe::Result {
 * `wasm_example/` — run the widget in the browser via egui/eframe.
 * See the `soft_ratatui` repo for font/backend-specific examples (BDF, TTF, CosmicText, embedded-graphics).
 
----
 
 ## Useful links
 
@@ -170,14 +164,12 @@ Font and text engine links:
 * [`embedded-ttf`](https://github.com/peckpeck/embedded-ttf)
 * [`cosmic-text`](https://github.com/pop-os/cosmic-text)
 
----
 
 ## Cool BDF fonts
 
 * [`spleen`]: [https://github.com/fcambus/spleen](https://github.com/fcambus/spleen) — many useful sizes.
 * [`cozette`]: [https://github.com/the-moonwitch/Cozette](https://github.com/the-moonwitch/Cozette) — pretty font.
 
----
 
 ## License
 
