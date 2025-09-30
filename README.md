@@ -166,7 +166,7 @@ Font and text engine links:
 
 ## Cool BDF fonts
 
-* [`spleen`](https://github.com/fcambus/spleen) — many useful sizes.
+* [`spleen`](https://github.com/fcambus/spleen) — many sizes, perfect block drawing.
 * [`cozette`](https://github.com/the-moonwitch/Cozette) — pretty font.
 
 
