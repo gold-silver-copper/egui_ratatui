@@ -103,9 +103,9 @@ fn main() -> eframe::Result {
 }
 ```
 
-![](https://github.com/gold-silver-copper/egui_ratatui/blob/main/new.avif)
-![](https://github.com/gold-silver-copper/egui_ratatui/blob/main/tyorhun.gif)
-![](https://github.com/gold-silver-copper/egui_ratatui/blob/main/screenshot.png)
+![](new.avif)
+![](tyorhun.gif)
+![](screenshot.png)
 
 
 ---
