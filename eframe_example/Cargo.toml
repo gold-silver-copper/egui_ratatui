@@ -5,7 +5,7 @@ license = "MIT OR Apache-2.0"
 edition = "2024"
 
 [dependencies]
-eframe = "0.31.1"
+eframe = "0.32"
 ratatui = { version = "0.29", default-features = false }
 egui_ratatui = { path = "../" }
 soft_ratatui = { path = "../../../soft_ratatui" }

@@ -8,17 +8,12 @@ use soft_ratatui::embedded_graphics_unicodefonts::{
 };
 use soft_ratatui::{EmbeddedGraphics, SoftBackend};
 
-static FONT_DATA: &[u8] = include_bytes!("../../assets/iosevka.ttf");
-
 fn main() -> eframe::Result {
     let options = eframe::NativeOptions {
         viewport: egui::ViewportBuilder::default().with_inner_size([320.0, 240.0]),
         ..Default::default()
     };
 
-    // Our application state:
-    let mut name = "Arthur".to_owned();
-    let mut age = 42;
     let font_regular = mono_8x13_atlas();
     let font_italic = mono_8x13_italic_atlas();
     let font_bold = mono_8x13_bold_atlas();

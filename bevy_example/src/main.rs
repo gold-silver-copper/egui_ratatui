@@ -1,11 +1,14 @@
 use bevy::prelude::*;
-use bevy_egui::{egui, EguiContextPass, EguiContexts, EguiPlugin};
+use bevy_egui::{EguiContextPass, EguiContexts, EguiPlugin, egui};
 use egui_ratatui::RataguiBackend;
 use ratatui::{
     prelude::{Stylize, Terminal},
     widgets::{Block, Borders, Paragraph, Wrap},
 };
-
+use soft_ratatui::embedded_graphics_unicodefonts::{
+    mono_8x13_atlas, mono_8x13_bold_atlas, mono_8x13_italic_atlas,
+};
+use soft_ratatui::{EmbeddedGraphics, SoftBackend};
 static FONT_DATA: &[u8] = include_bytes!("../../assets/iosevka.ttf");
 fn main() {
     App::new()
@@ -44,7 +47,17 @@ struct EguiTerminal(Terminal<RataguiBackend>);
 
 impl Default for EguiTerminal {
     fn default() -> Self {
-        let backend = RataguiBackend::new("soft_rat", 16, FONT_DATA);
+        let font_regular = mono_8x13_atlas();
+        let font_italic = mono_8x13_italic_atlas();
+        let font_bold = mono_8x13_bold_atlas();
+        let soft_backend = SoftBackend::<EmbeddedGraphics>::new(
+            100,
+            50,
+            font_regular,
+            Some(font_bold),
+            Some(font_italic),
+        );
+        let mut backend = RataguiBackend::new("soft_rat", soft_backend);
         //backend.set_font_size(12);
         Self(Terminal::new(backend).unwrap())
     }
