@@ -77,7 +77,6 @@ fn main() -> eframe::Result {
         Some(font_italic),
     );
     let mut backend = RataguiBackend::new("soft_rat", soft_backend);
-    //backend.set_font_size(12);
     let mut terminal = Terminal::new(backend).unwrap();
 
     eframe::run_simple_native("My egui App", options, move |ctx, _frame| {
