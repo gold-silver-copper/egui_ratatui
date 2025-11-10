@@ -20,3 +20,4 @@ examples/demo_web/Cargo.lock
 examples/colors_web/Cargo.lock
 /test_example
 /testik
+Cargo.lock
