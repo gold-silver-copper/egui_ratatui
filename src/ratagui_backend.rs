@@ -3,12 +3,12 @@
 
 use egui::{ColorImage, Response, TextureHandle, TextureOptions, Ui, Vec2};
 
-use ratatui::layout::Position;
+use ratatui_core::{backend::ClearType, layout::Position};
 use soft_ratatui::{RasterBackend, SoftBackend};
 
-use std::io;
+use core::convert::Infallible;
 
-use ratatui::{
+use ratatui_core::{
     backend::{Backend, WindowSize},
     buffer::Cell,
     layout::Size,
@@ -90,42 +90,48 @@ impl<R: RasterBackend> RataguiBackend<R> {
 }
 
 impl<R: RasterBackend> Backend for RataguiBackend<R> {
-    fn draw<'a, I>(&mut self, content: I) -> io::Result<()>
+    type Error = Infallible;
+
+    fn draw<'a, I>(&mut self, content: I) -> Result<(), Self::Error>
     where
         I: Iterator<Item = (u16, u16, &'a Cell)>,
     {
         self.soft_backend.draw(content)
     }
 
-    fn hide_cursor(&mut self) -> io::Result<()> {
+    fn hide_cursor(&mut self) -> Result<(), Self::Error> {
         self.soft_backend.hide_cursor()
     }
 
-    fn show_cursor(&mut self) -> io::Result<()> {
+    fn show_cursor(&mut self) -> Result<(), Self::Error> {
         self.soft_backend.show_cursor()
     }
 
-    fn get_cursor_position(&mut self) -> io::Result<Position> {
+    fn get_cursor_position(&mut self) -> Result<Position, Self::Error> {
         self.soft_backend.get_cursor_position()
     }
 
-    fn set_cursor_position<P: Into<Position>>(&mut self, position: P) -> io::Result<()> {
+    fn set_cursor_position<P: Into<Position>>(&mut self, position: P) -> Result<(), Self::Error> {
         self.soft_backend.set_cursor_position(position)
     }
 
-    fn clear(&mut self) -> io::Result<()> {
+    fn clear(&mut self) -> Result<(), Self::Error> {
         self.soft_backend.clear()
     }
 
-    fn size(&self) -> io::Result<Size> {
+    fn size(&self) -> Result<Size, Self::Error> {
         self.soft_backend.size()
     }
 
-    fn window_size(&mut self) -> io::Result<WindowSize> {
+    fn window_size(&mut self) -> Result<WindowSize, Self::Error> {
         self.soft_backend.window_size()
     }
 
-    fn flush(&mut self) -> io::Result<()> {
+    fn flush(&mut self) -> Result<(), Self::Error> {
         self.soft_backend.flush()
+    }
+
+    fn clear_region(&mut self, clear_type: ClearType) -> Result<(), Self::Error> {
+        self.soft_backend.clear_region(clear_type)
     }
 }
