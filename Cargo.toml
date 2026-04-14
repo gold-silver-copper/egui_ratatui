@@ -1,6 +1,6 @@
 [package]
 name = "egui_ratatui"
-version = "2.1.0"
+version = "2.1.1"
 authors = ["gold-silver-copper"]
 edition = "2024"
 include = ["LICENSE-APACHE", "LICENSE-MIT", "**/*.rs", "Cargo.toml"]
@@ -8,11 +8,18 @@ description = "WASM ratatui with egui works with bevy and macroquad and eframe"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/gold-silver-copper/egui_ratatui"
 
-
 [lib]
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 ratatui-core = { version = "0.1", default-features = false }
-egui = { version = "0.33", default-features = false }
-soft_ratatui = {version = "0.1.3",default-features = false}
+egui = { version = "~0.34.0", default-features = false }
+soft_ratatui = { workspace = true }
+
+[workspace]
+members = [".", "bevy_example", "eframe_example"]
+
+[workspace.dependencies]
+egui_ratatui = { path = "." }
+ratatui = "0.30"
+soft_ratatui = { version = "~0.2.0", default-features = false }
