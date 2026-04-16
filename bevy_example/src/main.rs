@@ -56,8 +56,7 @@ impl Default for EguiTerminal {
             Some(font_bold),
             Some(font_italic),
         );
-        let mut backend = RataguiBackend::new("soft_rat", soft_backend);
-        //backend.set_font_size(12);
+        let backend = RataguiBackend::new("soft_rat", soft_backend);
         Self(Terminal::new(backend).unwrap())
     }
 }

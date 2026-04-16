@@ -6,10 +6,8 @@ edition = "2024"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-bevy = "0.17"
-bevy_egui = "0.38"
-ratatui = { version = "0.30" }
-egui_ratatui = { path = "../" }
-soft_ratatui = {version = "0.1.3"}
-
-
+bevy = { git = "https://github.com/bevyengine/bevy.git", rev = "d06aa47" }
+bevy_egui = { git = "https://github.com/taboky-dev/bevy_egui", rev = "3e807d72125e5e53ebaa5199a3b2eddfdc38ab34" }
+ratatui = { workspace = true }
+egui_ratatui = { workspace = true }
+soft_ratatui = { workspace = true, features = ["unicodefonts"] }
