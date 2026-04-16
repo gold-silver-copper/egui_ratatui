@@ -7,9 +7,7 @@ edition = "2024"
 
 [dependencies]
 bevy = { git = "https://github.com/bevyengine/bevy.git", rev = "d06aa47" }
-bevy_egui = { git = "https://github.com/taboky-dev/bevy_egui", branch = "bevy-0.19" }
+bevy_egui = { git = "https://github.com/taboky-dev/bevy_egui", rev = "3e807d72125e5e53ebaa5199a3b2eddfdc38ab34" }
 ratatui = { workspace = true }
 egui_ratatui = { workspace = true }
 soft_ratatui = { workspace = true, features = ["unicodefonts"] }
-
-
