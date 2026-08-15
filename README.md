@@ -79,7 +79,7 @@ fn main() -> eframe::Result {
     let mut backend = RataguiBackend::new("soft_rat", soft_backend);
     let mut terminal = Terminal::new(backend).unwrap();
 
-    eframe::run_simple_native("My egui App", options, move |ctx, _frame| {
+    eframe::run_ui_native("My egui App", options, move |ctx, _frame| {
         terminal
             .draw(|frame| {
                 let area = frame.area();
