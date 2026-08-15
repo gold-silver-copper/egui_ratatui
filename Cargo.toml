@@ -13,7 +13,7 @@ crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 ratatui-core = { version = "0.1", default-features = false }
-egui = { version = "~0.34.0", default-features = false }
+egui = { version = "~0.36.0", default-features = false }
 soft_ratatui = { workspace = true }
 
 [workspace]
